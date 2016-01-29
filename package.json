@@ -1,0 +1,8 @@
+{
+  "name": "hikari",
+  "version": "0.1.0",
+  "devDependencies": {
+    "nodemailer": "*",
+    "express": "*"
+  }
+}
