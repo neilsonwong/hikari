@@ -1,30 +1,36 @@
 var nodemailer = require('nodemailer');
-var schedule = require('node-schedule');
-var config = require('./config')
+var Mail = require('./mail');
 
-// create reusable transporter object using the default SMTP transport
-var encodedEmail = encodeURI(config.email);
-var transporter = nodemailer.createTransport('smtps://'+ encodedEmail+':'+config.pass+'@smtp.gmail.com');
+var Mailer = function() {};
 
-// setup e-mail data with unicode symbols
-var mailOptions = {
-    from: 'bot chan 👥 <bot.t3csg@gmail.com>', // sender address
-    to: config.test, // list of receivers
-    subject: 'hai gaiz', // Subject line
-    text: 'Hello worldz 🐴', // plaintext body
-    html: '<b>Hello world!! 🐴</b>' // html body
-};
+var init = function(config) {
+    if (!config) {
+        return null;
+    }
+    Mailer.encodedEmail = encodeURI(config.email);
+    Mailer.password = config.pass;
+    Mailer.testEmail = config.test;
 
-function sendTheMail(){
-	// send mail with defined transport object
-	transporter.sendMail(mailOptions, function(error, info){
-	    if(error){
-	        return console.log(error);
-	    }
-	    console.log('Message sent: ' + info.response);
-	});
+    // create reusable transporter object using the default SMTP transport
+    Mailer.transporter = nodemailer.createTransport('smtps://' + Mailer.encodedEmail + ':' + Mailer.password + '@smtp.gmail.com');
+
+    return Mailer;
 }
 
+Mailer.sendMail = function(mail) {
+    // send mail with defined transport object
+    Mailer.transporter.sendMail(mail, function(error, info) {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: ' + info.response);
+    });
+};
 
-//schedule the job to fire on fridays @ 2:30
-var j = schedule.scheduleJob({hour: 14, minute: 30, dayOfWeek: 5}, sendTheMail);
+Mailer.test = function() {
+    var testMail = new Mail('bot chan', 'bot.t3csg@gmail.com', Mailer.testEmail, 'this is a test', '光testing 123', '<b>光 (ひかり)</b>');
+    Mailer.sendMail(testMail);
+    return;
+};
+
+module.exports = init;
