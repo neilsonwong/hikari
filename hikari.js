@@ -2,10 +2,19 @@ var schedule = require('node-schedule');
 
 var config = require('./config');
 var mailer = require('./mailer')(config);
+var Template = require('./template')(config);
+
+
+
 
 //schedule the job to fire on fridays @ 2:30
 var j = schedule.scheduleJob({
-    hour: 15,
-    minute: 29,
+    hour: 16,
+    minute: 43,
     dayOfWeek: 5
-}, mailer.test);
+}, function(){
+	console.log('hi');
+});
+
+// mailer.mail(Template.test());
+mailer.sendMail(Template.devoMail("Neilson", config.test));	

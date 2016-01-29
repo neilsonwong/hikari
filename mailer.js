@@ -9,7 +9,6 @@ var init = function(config) {
     }
     Mailer.encodedEmail = encodeURI(config.email);
     Mailer.password = config.pass;
-    Mailer.testEmail = config.test;
 
     // create reusable transporter object using the default SMTP transport
     Mailer.transporter = nodemailer.createTransport('smtps://' + Mailer.encodedEmail + ':' + Mailer.password + '@smtp.gmail.com');
@@ -25,12 +24,6 @@ Mailer.sendMail = function(mail) {
         }
         console.log('Message sent: ' + info.response);
     });
-};
-
-Mailer.test = function() {
-    var testMail = new Mail('bot chan', 'bot.t3csg@gmail.com', Mailer.testEmail, 'this is a test', '光testing 123', '<b>光 (ひかり)</b>');
-    Mailer.sendMail(testMail);
-    return;
 };
 
 module.exports = init;

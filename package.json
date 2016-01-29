@@ -4,6 +4,8 @@
   "devDependencies": {
     "nodemailer": "*",
     "express": "*",
-    "node-schedule": "*"
+    "node-schedule": "*",
+    "jquery": "*",
+    "jsdom": "*"
   }
 }
