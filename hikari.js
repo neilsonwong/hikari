@@ -5,6 +5,8 @@ var mailer = require('./mailer')(config);
 var Template = require('./template')(config);
 var Program = require('./Program');
 var TaskList = require('./TaskList');
+var SmallGroup = require('./SmallGroup');
+var User = require('./User');
 
 
 
@@ -20,6 +22,16 @@ var j = schedule.scheduleJob({
 
 // mailer.mail(Template.test());
 // mailer.sendMail(Template.devoMail("Neilson", config.test));	
-var p = new Program('test program', 'Feb 5', '8:00pm', 'neilson\'s house', new TaskList('Lydia', 'Teann', 'Neilson', 'Andrew'));
-mailer.sendMail(Template.remindLeadMail(p));
-mailer.sendMail(Template.generalWeeklyMail(p));
+// var p = new Program('test program', 'Feb 5', '8:00pm', 'neilson\'s house', new TaskList('Lydia', 'Teann', 'Neilson', 'Andrew'));
+// mailer.sendMail(Template.remindLeadMail(p));
+// mailer.sendMail(Template.generalWeeklyMail(p));
+
+// var neilson = new User('neilson', 'wong', 'rin', 'neilson.hc.wong@gmail.com');
+// var lydia = new User('lydia', 'chan', null, 'lydiachan@lydiachan.asdfasdf');
+// var pablo = new User('pablo', 'lam', 'pawbs', 'pablolam12345@123jdkfjkdjfkj.skjdfkj');
+
+// var s = new SmallGroup('Lydia\'s Small Group', [lydia], [neilson, pablo]);
+// s.save();
+
+var s = SmallGroup.load('Lydia\'s Small Group');
+console.log(JSON.stringify(s));
