@@ -8,8 +8,10 @@ var TaskList = require('./TaskList');
 var SmallGroup = require('./SmallGroup');
 var User = require('./User');
 var webServer = require('./webserver');
+var Auth = require('./auth');
 
-
+Auth.load();
+Auth.makeNewToken("bot.t3csg@gmail.com");
 SmallGroup.loadAll();
 
 //schedule the job to fire on fridays @ 2:30
