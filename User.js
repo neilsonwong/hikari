@@ -1,4 +1,5 @@
 var Auth = require('./auth');
+var UsersDataFile = './data/users/users.json';
 
 function User(firstName, lastName, nickName, email){
 	this.name = nickName || firstName;
