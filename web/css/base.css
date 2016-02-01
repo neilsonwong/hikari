@@ -1,0 +1,147 @@
+html { font-size: 62.5%; } 
+/* http://paletton.com/#uid=33p0u0k8fSD0d+Z3XYycEJAh2xY */
+
+body {
+	background-color: lightblue;
+	font-family: 'Open Sans', sans-serif;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	font-size: 6.4em;
+}
+
+.line {
+	margin-left: 0.3em;
+	font-weight: 300;
+}
+
+.indent {
+	margin-left: 0.8em;
+}
+
+.indentMore {
+	margin-left: 1.3em;
+}
+
+/* font weights */
+.light {
+	font-weight: 300;
+}
+
+.medium {
+	font-weight: 400;
+}
+
+.chubby {
+	font-weight: 600;
+}
+
+.heavy {
+	font-weight: 700;
+}
+
+.omoi {
+	font-weight: 800;
+}
+
+/* fontsize */
+.big {
+	font-size: 1.25em;
+}
+
+/* fontstyle */
+.italic {
+	font-style: italic;
+}
+
+/* font colors */
+.darkPink {
+	color: #FF8C77;
+}
+
+.darkBlue {
+	color: #5190A5;
+}
+
+.darkYellow {
+	color: #FFD777;
+}
+
+.black {
+	color: black;
+}
+
+/* page specific */
+#welcome, #introduce_yourself, #choose_your_smallgroup {
+	color: #5190A5;
+}
+
+/* style inputs */
+input[type="text"] {
+	width: 80%;
+	background: none;
+	border: none;
+	border-bottom: 3px solid #5190A5;
+	color: #FF8C77;
+    font-size: 0.7em;
+}
+
+input:focus{
+    outline: none;
+}
+
+.tooltip {
+	margin-left: 0.6em;
+	font-size: 0.5em;
+	color: #7EB8CB;
+}
+
+.disabled {
+	display:none;
+}
+
+button {
+    background: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.4em;
+    font-style: italic;
+	margin-left: 0.5em;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+#sgList {
+	margin-top: 30px;
+}
+
+#sgList li {
+	display: inline-block;
+	list-style: none;
+	/*border: 2px solid black;*/
+	padding: 20px;
+	font-size: 18px;
+	background-color: #FFE4E0;
+	box-shadow:0px 0px 0px 3px #FFFEFD inset;
+	border-radius: 10px 10px;
+}
+
+#sgList li img {
+	padding-right: 10px;
+}
+#sgList li.selected {
+	box-shadow:0px 0px 0px 10px #FFAA9A inset;
+}
+
+#sgList li:hover {
+	cursor: pointer;
+	box-shadow:0px 0px 0px 3px #FFAA9A inset;
+
+}

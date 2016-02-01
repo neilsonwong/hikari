@@ -5,7 +5,7 @@
     "nodemailer": "*",
     "express": "*",
     "node-schedule": "*",
-    "jquery": "*",
-    "jsdom": "*"
+    "cookie-parser": "*",
+    "serve-favicon": "*"
   }
 }

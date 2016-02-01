@@ -170,22 +170,22 @@ function makeSignature(){
 }
 
 
-Template.devoMail = function(name, email) {
-    var html = generateSecondary(name);
+Template.devoMail = function(program, recipients) {
+    var html = generateSecondary(program.responsibilities.devo);
     var subject = 'SG Devo Reminder';
     return new Mail(Template.botName, Template.botEmail, email, subject, "helloz", html);
 }
 
-Template.remindLeadMail = function(program){
+Template.remindLeadMail = function(program, recipients){
     var html = generatePrimary(program);
     var subject = 'SG Program Lead Reminder';
-    return new Mail(Template.botName, Template.botEmail, Template.testEmail, subject, "hi", html);
+    return new Mail(Template.botName, Template.botEmail, recipients, subject, "hi", html);
 }
 
-Template.generalWeeklyMail = function(program){
+Template.generalWeeklyMail = function(program, recipients){
     var html = generateGeneral(program);
     var subject = 'SG Weekly Program Reminder (Friday, ' + program.date + ', 2016' + ' @' + program.time + ')';
-    return new Mail(Template.botName, Template.botEmail, Template.testEmail, subject, "hi", html);
+    return new Mail(Template.botName, Template.botEmail, recipients, subject, "hi", html);
 }
 
 Template.test = function() {

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>T3C Small Groups</title>
+    <link rel="stylesheet" href="css/base.css" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300,400italic,300italic,600italic,700italic' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+    <div id="content">
+        <div id="welcome">
+            <div class="line"><span class="chubby big">Welcome!</span></div>
+            <div class="line">Looks like you're <span class="darkPink italic">new</span>.</div>
+            <div class="line">What's your <span class="chubby black">email</span>?</div>
+            <div class="line"><input id="email" type="text" placeholder="email" /></div>
+            <!-- <div class="line tooltip">Press enter when you are done</div> -->
+            <button id="step1Done">next</button>
+        </div>
+        <div id="introduce_yourself" class="disabled">
+            <div class="line">Alright. Got it.</div>
+            <div class="line">Can you tell me a bit about yourself?</div>
+            <div class="line"><input id="firstname" type="text" placeholder="First Name" /></div>
+            <div class="line"><input id="lastname" type="text" placeholder="Last Name" /></div>
+            <div class="line"><input id="nickname" type="text" placeholder="Nickname" /></div>
+            <div class="line tooltip">The nickname is optional</div>
+            <button id="step2Done">next</button>            
+        </div>
+        <div id="choose_your_smallgroup" class="disabled">
+            <div class="line">Thanks!</div>
+            <div class="line">Which small group are you in?</div>
+            <ul id="sgList"></ul>
+        </div>
+        <div id="all_done" class="disabled">
+            <div class="line">Cool!</div>
+            <div class="line">I'll let them know about this.</div>
+            <div class="line">For now sit tight!</div>
+        </div>
+    </div>
+    <script>
+    </script>
+  </body>
+</html>
