@@ -38,8 +38,6 @@ function Token(email) {
 }
 
 Authenticator.check = function(token) {
-    console.log('checking token ' + token);
-    console.log(Authenticator.tokens[token]);
     return Authenticator.tokens[token] !== undefined;
 }
 
