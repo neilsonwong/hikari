@@ -56,11 +56,19 @@ app.post('/checkEmail', function(req, res) {
 });
 
 app.get('/sglist', function(req, res) {
-    res.status(200).send(Object.keys(SmallGroup.list));
+    res.status(200).send(getSGList());
 });
 
+app.get('/sgDetailList', function(req, res) {
+    res.status(200).send(getSGList(true));
+});
+
+function getSGList(details){
+    return details ? SmallGroup.list : Object.keys(SmallGroup.list);
+}
+
 app.get('/letmein/:kagi', function(req, res) {
-    if (req.params.kagi){
+    if (req.params.kagi) {
         res.cookie('kagi', req.params.kagi, {
             maxAge: 900000000,
             httpOnly: true
@@ -74,22 +82,27 @@ app.get('/letmein/:kagi', function(req, res) {
 });
 
 app.get('/admin', function(req, res) {
-    if (Auth.isAdmin(req.cookies.kagi)){
+    if (adminOnly(req, res)) {
         res.sendFile('web/admin.html', {
             root: __dirname
         });
     }
-    else {
-        res.send('NOPE BOI');
-    }
 });
 
-app.get('*', function(req, res){
+app.get('*', function(req, res) {
     res.status(404).sendFile('');
 });
 
 function nope(req, res) {
     res.redirect('/welcome');
+}
+
+function adminOnly(req, res) {
+    if (Auth.isAdmin(req.cookies.kagi)) {
+        return true;
+    }
+    res.end('NOPE BOI');
+    return false;
 }
 
 app.listen(3000, function() {
