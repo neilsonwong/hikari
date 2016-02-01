@@ -1,4 +1,5 @@
 var fs = require('fs');
+var config = require('./config');
 
 var Authenticator = function() {};
 var AuthenticatorDataFile = './data/auth/tokens.json';
@@ -40,6 +41,10 @@ Authenticator.check = function(token) {
     console.log('checking token ' + token);
     console.log(Authenticator.tokens[token]);
     return Authenticator.tokens[token] !== undefined;
+}
+
+Authenticator.isAdmin = function(token){
+    return Authenticator.tokens[token] === config.email;
 }
 
 Authenticator.load = function() {

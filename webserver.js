@@ -26,8 +26,8 @@ app.use(function(req, res, next) {
     }
 
     var cookie = req.cookies;
-    if (!cookie || !cookie.kagi || !Auth.check(cookie.kagi)) {
-        console.log('oh no');
+    var email;
+    if (!cookie || !cookie.kagi || !(email = Auth.check(cookie.kagi))) {
         //invalid cookie!
         return nope(req, res);
     }
@@ -53,7 +53,7 @@ app.post('/checkEmail', function(req, res) {
     res.status(200).send({
         "result": false
     });
-})
+});
 
 app.get('/sglist', function(req, res) {
     res.status(200).send(Object.keys(SmallGroup.list));
@@ -73,16 +73,24 @@ app.get('/letmein/:kagi', function(req, res) {
     });
 });
 
+app.get('/admin', function(req, res) {
+    if (Auth.isAdmin(req.cookies.kagi)){
+        res.sendFile('web/admin.html', {
+            root: __dirname
+        });
+    }
+    else {
+        res.send('NOPE BOI');
+    }
+});
+
 app.get('*', function(req, res){
     res.status(404).sendFile('');
 });
 
 function nope(req, res) {
-    console.log('nope');
     res.redirect('/welcome');
 }
-
-
 
 app.listen(3000, function() {
     console.log('Example app listening on port 3000!');
