@@ -12,7 +12,8 @@ $(function() {
             }, function(res) {
                 if (res.result) {
                     window.location.href('hello');
-                } else {
+                }
+                else {
                     notFound();
                 }
             });
@@ -34,30 +35,13 @@ $(function() {
         });
 
         $('#step2Done').click(function() {
-            console.log('hi')
             //load the small list
-            $.get('/sgList', function(groups) {
-                console.log(groups)
+            $.get('/sgDetailList', function(groups) {
+                var keys = Object.keys(groups);
                 //populate the sg list
                 var i;
-
-                function makeListItem(smallGroup) {
-                    var a = $('<li>');
-                    var b = $('<div>');
-                    var c = $('<img>', {
-                        src: "images/pokemon/" + pkmnPng[i] + ".png"
-                    });
-                    var d = $('<span>', {
-                        html: smallGroup
-                    });
-
-                    b.append(c).append(d);
-                    a.append(b);
-                    return a;
-                }
-
-                for (i = 0; i < groups.length; ++i) {
-                    $('#sgList').append(makeListItem(groups[i]));
+                for (i = 0; i < keys.length; ++i) {
+                    $('#sgList').append(makeListItem(groups[keys[i]], true));
                 }
 
                 $('#introduce_yourself').toggleClass('disabled');
@@ -76,54 +60,14 @@ $(function() {
             var keys = Object.keys(groups);
             //populate the sg list
             var i;
-
-            function makeListItem(smallGroup) {
-                var a = $('<li>');
-                var b = $('<div>');
-                var c = $('<img>', {
-                    src: 'images/pokemon/' + pkmnPng[i] + '.png'
-                });
-                var d = $('<div>', {
-                    class: 'sgtitle'
-                });
-
-                var e = $('<span>', {
-                    html: smallGroup.name
-                });
-
-                d.append(e);
-
-                var f = $('<div>', {
-                    class: 'userList'
-                });
-
-                var j;
-                for (j = 0; j < smallGroup.leaders.length; ++j){
-                    f.append($('<div>', {
-                        class: 'leaderTag',
-                        html: smallGroup.leaders[j].name
-                    }));
-                }
-                for (j = 0; j < smallGroup.members.length; ++j){
-                    f.append($('<div>', {
-                        class: 'memberTag',
-                        html: smallGroup.members[j].name
-                    }));
-                }
-
-                b.append(c).append(d).append(f);
-                a.append(b);
-                return a;
-            }
-
             for (i = 0; i < keys.length; ++i) {
                 $('#sgDetailList').append(makeListItem(groups[keys[i]]));
             }
 
-            //fix font sizes
-            // $('.sgtitle').textfill({
-            //     'maxFontPixels': 21
-            // });
+            // fix font sizes
+            $('.sgtitle').textfill({
+                'maxFontPixels': 21
+            });
 
 
         });
@@ -138,7 +82,8 @@ $(function() {
             }, function(smallGroup) {
                 if (smallGroup) {
                     console.log(smallGroup);
-                } else {
+                }
+                else {
                     console('HUH? WHAT IS WRONG');
                 }
             });
@@ -157,3 +102,46 @@ $(function() {
         default:
     }
 });
+
+function makeListItem(smallGroup, simple) {
+    var a = $('<li>');
+    var b = $('<div>');
+    var c = $('<img>', {
+        src: 'images/pokemon/' + smallGroup.logo + '.png'
+    });
+    var d = $('<div>', {
+        class: 'sgtitle'
+    });
+
+    var e = $('<span>', {
+        html: smallGroup.name
+    });
+
+    d.append(e);
+    b.append(c).append(d);
+
+    if (!simple) {
+        var f = $('<div>', {
+            class: 'userList'
+        });
+
+        var j;
+        for (j = 0; j < smallGroup.leaders.length; ++j) {
+            f.append($('<div>', {
+                class: 'leaderTag',
+                'data-fname': smallGroup.leaders[j].firstName,
+                'data-name': smallGroup.leaders[j].name
+            }));
+        }
+        for (j = 0; j < smallGroup.members.length; ++j) {
+            f.append($('<div>', {
+                class: 'memberTag',
+                'data-fname': smallGroup.members[j].firstName,
+                'data-name': smallGroup.members[j].name
+            }));
+        }
+        b.append(f);
+    }
+    a.append(b);
+    return a;
+}

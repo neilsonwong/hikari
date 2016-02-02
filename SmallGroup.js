@@ -12,7 +12,15 @@ function SmallGroup(name, leaders, members) {
 
     this.pastPrograms = [];
     this.futurePrograms = [];
-    this.save();
+    this.logo = 25;
+
+    if (!SmallGroup.list[name]){
+        this.save();
+    }
+}
+
+function instance(smallGroupData){
+    return new SmallGroup(smallGroupData.name, smallGroupData.leaders, smallGroupData.members);
 }
 
 function setUsers(source) {
@@ -21,7 +29,9 @@ function setUsers(source) {
     for (i = 0; i < source.length; ++i) {
         arr.push({
             email: source[i].email,
-            name: source[i].name
+            name: source[i].name,
+            firstName: source[i].firstName,
+            lastName: source[i].lastName
         });
     }
     return arr;
@@ -29,15 +39,17 @@ function setUsers(source) {
 
 SmallGroup.prototype.addMember = function(user) {
     this.members.push(user);
+    this.save();
 }
 
 SmallGroup.load = function(name) {
     if (SmallGroup.list[name]) {
-        return SmallGroup.list[name];
-    } else {
+        return instance(SmallGroup.list[name]);
+    }
+    else {
         var sg = JSON.parse(fs.readFileSync(SmallGroupDataDir + SmallGroup.getFileName(name) + '.json', 'utf8'));
         SmallGroup.list[sg.name] = sg;
-        return sg;
+        return instance(sg);
     }
 }
 
@@ -52,7 +64,8 @@ SmallGroup.loadAll = function() {
             try {
                 sg = JSON.parse(fs.readFileSync(SmallGroupDataDir + element, 'utf8'));
                 SmallGroup.list[sg.name] = sg;
-            } catch (e) {
+            }
+            catch (e) {
                 console.log(e);
             }
         }

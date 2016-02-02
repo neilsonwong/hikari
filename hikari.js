@@ -14,6 +14,8 @@ Auth.load();
 Auth.makeNewToken("bot.t3csg@gmail.com");
 SmallGroup.loadAll();
 
+// console.log(sg);
+
 //schedule the job to fire on fridays @ 2:30
 // var j = schedule.scheduleJob({
 //     hour: 16,

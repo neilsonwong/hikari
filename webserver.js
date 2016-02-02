@@ -104,9 +104,9 @@ app.post('/admin/newSmallGroup', function(req, res) {
     }
 });
 
-app.get('*', function(req, res) {
-    res.status(404).sendFile('');
-});
+// app.get('*', function(req, res) {
+//     res.status(404).sendFile('');
+// });
 
 function nope(req, res) {
     res.redirect('/welcome');

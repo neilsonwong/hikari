@@ -7,6 +7,7 @@
     "node-schedule": "*",
     "cookie-parser": "*",
     "serve-favicon": "*",
-    "parseurl": "*"
+    "parseurl": "*",
+    "body-parser": "*"
   }
 }
