@@ -6,6 +6,7 @@
     "express": "*",
     "node-schedule": "*",
     "cookie-parser": "*",
-    "serve-favicon": "*"
+    "serve-favicon": "*",
+    "parseurl": "*"
   }
 }

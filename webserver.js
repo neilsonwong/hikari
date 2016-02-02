@@ -1,7 +1,10 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
+var bodyParser = require("body-parser");
 var favicon = require('serve-favicon');
 var parseUrl = require('parseurl');
+var SmallGroup = require('./SmallGroup');
+var User = require('./User');
 
 //app reqs
 var SmallGroup = require('./SmallGroup');
@@ -16,6 +19,10 @@ app.use('/js', express.static('web/js'));
 app.use('/images', express.static('web/images'));
 
 app.use(cookieParser());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(function(req, res, next) {
     var url = parseUrl(req).pathname;
     if (url === '/' ||
@@ -32,7 +39,7 @@ app.use(function(req, res, next) {
         return nope(req, res);
     }
 
-    console.log('cookie detected: ' + cookie.kagi);
+    // console.log('cookie detected: ' + cookie.kagi);
     //seems like we are ok
     return next();
 });
@@ -63,7 +70,7 @@ app.get('/sgDetailList', function(req, res) {
     res.status(200).send(getSGList(true));
 });
 
-function getSGList(details){
+function getSGList(details) {
     return details ? SmallGroup.list : Object.keys(SmallGroup.list);
 }
 
@@ -86,6 +93,14 @@ app.get('/admin', function(req, res) {
         res.sendFile('web/admin.html', {
             root: __dirname
         });
+    }
+});
+
+app.post('/admin/newSmallGroup', function(req, res) {
+    if (adminOnly(req, res)) {
+        var leader = new User(req.body.leaderFname, req.body.leaderLname, req.body.leaderNickname, req.body.leaderEmail);
+        var sg = new SmallGroup(req.body.sgname, [leader], []);
+        res.status(200).send(sg);
     }
 });
 

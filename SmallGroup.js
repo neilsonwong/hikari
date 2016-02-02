@@ -4,12 +4,27 @@ var SmallGroupDataDir = './data/sg/';
 
 function SmallGroup(name, leaders, members) {
     this.name = name;
-    this.leaders = leaders;
-    this.members = members;
+
+    //loop through leaders and members
+    this.leaders = setUsers(leaders);
+    this.members = setUsers(members);
     this.emailSettings = new EmailSettings();
 
     this.pastPrograms = [];
     this.futurePrograms = [];
+    this.save();
+}
+
+function setUsers(source) {
+    var arr = [];
+    var i;
+    for (i = 0; i < source.length; ++i) {
+        arr.push({
+            email: source[i].email,
+            name: source[i].name
+        });
+    }
+    return arr;
 }
 
 SmallGroup.prototype.addMember = function(user) {
@@ -26,23 +41,22 @@ SmallGroup.load = function(name) {
     }
 }
 
-SmallGroup.loadAll = function(){
-	var groups = fs.readdirSync(SmallGroupDataDir);
+SmallGroup.loadAll = function() {
+    var groups = fs.readdirSync(SmallGroupDataDir);
 
-	var i, sg;
-	for(i = 0; i < groups.length; ++i){
-		element = groups[i];
-		if (element.charAt(0) !== '.' && element.indexOf('.json') !== -1 && (element.length - 5 === element.indexOf('.json'))){
-			//valid file
-			try {
-				sg = JSON.parse(fs.readFileSync(SmallGroupDataDir + element, 'utf8'));
-				SmallGroup.list[sg.name] = sg;
-			}
-			catch (e){
-				console.log(e);
-			}
-		}
-	}
+    var i, sg;
+    for (i = 0; i < groups.length; ++i) {
+        element = groups[i];
+        if (element.charAt(0) !== '.' && element.indexOf('.json') !== -1 && (element.length - 5 === element.indexOf('.json'))) {
+            //valid file
+            try {
+                sg = JSON.parse(fs.readFileSync(SmallGroupDataDir + element, 'utf8'));
+                SmallGroup.list[sg.name] = sg;
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    }
 }
 
 SmallGroup.prototype.save = function(callback) {

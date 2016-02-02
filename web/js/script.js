@@ -12,8 +12,7 @@ $(function() {
             }, function(res) {
                 if (res.result) {
                     window.location.href('hello');
-                }
-                else {
+                } else {
                     notFound();
                 }
             });
@@ -74,100 +73,75 @@ $(function() {
         console.log('init Admin');
         //load sg list
         $.get('/sgDetailList', function(groups) {
-            console.log(groups)
+            var keys = Object.keys(groups);
             //populate the sg list
             var i;
 
             function makeListItem(smallGroup) {
                 var a = $('<li>');
-                var b = $('<div>', {
-                    class: 'left'
-                });
+                var b = $('<div>');
                 var c = $('<img>', {
-                    src: 'images/pokemon/151.png'
+                    src: 'images/pokemon/' + pkmnPng[i] + '.png'
                 });
-                var d = $('<div>', { class: 'sgtitle' });
+                var d = $('<div>', {
+                    class: 'sgtitle'
+                });
 
-                var title = $('<span>', {
+                var e = $('<span>', {
                     html: smallGroup.name
                 });
 
-                d.append(title);
+                d.append(e);
 
-                //sg creation needs name, leaders
-                var e = $('<div>');
-
-                var right = $('<div>', {
-                    class: 'right'
+                var f = $('<div>', {
+                    class: 'userList'
                 });
 
-                b.append(c).append(d);
-                right.append(e);
+                var j;
+                for (j = 0; j < smallGroup.leaders.length; ++j){
+                    f.append($('<div>', {
+                        class: 'leaderTag',
+                        html: smallGroup.leaders[j].name
+                    }));
+                }
+                for (j = 0; j < smallGroup.members.length; ++j){
+                    f.append($('<div>', {
+                        class: 'memberTag',
+                        html: smallGroup.members[j].name
+                    }));
+                }
+
+                b.append(c).append(d).append(f);
                 a.append(b);
-                a.append(right);
                 return a;
             }
 
-            function newSG() {
-                var a = $('<li>');
-                var b = $('<div>', {
-                    class: 'left'
-                });
-                var c = $('<img>', {
-                    src: 'images/pokemon/151.png'
-                });
-                var d = $('<div>', { class: 'sgtitle' });
-
-                var title = $('<span>', {
-                    html: 'New Group'
-                });
-
-                d.append(title);
-
-                //sg creation needs name, leaders
-                var e = $('<input>', {
-                    id: 'sgname',
-                    type: 'text',
-                    placeholder: 'Small Group Name'
-                });
-
-                var f = $('<input>', {
-                    id: 'leaderFirstName',
-                    type: 'text',
-                    placeholder: 'Leader\'s First Name'
-                });
-
-                var g = $('<input>', {
-                    id: 'leaderLastName',
-                    type: 'text',
-                    placeholder: 'Leader\'s Last Name'
-                });
-
-                var h = $('<input>', {
-                    id: 'leaderNickName',
-                    type: 'text',
-                    placeholder: 'Leader\'s Nickname'
-                });
-
-                var right = $('<div>', {
-                    class: 'right'
-                });
-
-                b.append(c).append(d);
-                right.append(e).append(f).append(g).append(h);
-                a.append(b);
-                a.append(right);
-                return a;
+            for (i = 0; i < keys.length; ++i) {
+                $('#sgDetailList').append(makeListItem(groups[keys[i]]));
             }
-
-            for (i = 0; i < groups.length; ++i) {
-                $('#sgDetailList').append(makeListItem(groups[i].name));
-            }
-            $('#sgDetailList').append(newSG());
-            $('#sgDetailList').append(makeListItem('Samantha and Dexter'));
 
             //fix font sizes
-            $('.sgtitle').textfill({'maxFontPixels':21});
+            // $('.sgtitle').textfill({
+            //     'maxFontPixels': 21
+            // });
+
+
+        });
+
+        $('#saveNewGroup').click(function() {
+            $.post('/admin/newSmallGroup', {
+                'sgname': $('#newSgName').val(),
+                'leaderFname': $('#leaderFirstName').val(),
+                'leaderLname': $('#leaderLastName').val(),
+                'leaderNickname': $('#leaderNickName').val(),
+                'leaderEmail': $('#leaderEmail').val()
+            }, function(smallGroup) {
+                if (smallGroup) {
+                    console.log(smallGroup);
+                } else {
+                    console('HUH? WHAT IS WRONG');
+                }
+            });
         });
     };
 
