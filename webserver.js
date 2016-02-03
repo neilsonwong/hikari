@@ -20,7 +20,9 @@ app.use('/images', express.static('web/images'));
 
 app.use(cookieParser());
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
@@ -71,7 +73,8 @@ app.get('/sgDetailList', function(req, res) {
 });
 
 function getSGList(details) {
-    return details ? SmallGroup.list : Object.keys(SmallGroup.list);
+    // console.log(SmallGroup.detailedList());
+    return details ? SmallGroup.detailedList() : Object.keys(SmallGroup.list);
 }
 
 app.get('/letmein/:kagi', function(req, res) {
@@ -102,6 +105,21 @@ app.post('/admin/newSmallGroup', function(req, res) {
         var sg = new SmallGroup(req.body.sgname, [leader], []);
         res.status(200).send(sg);
     }
+});
+
+app.post('/join', function(req, res) {
+    console.log(req.body)
+    var sg = SmallGroup.load(req.body.appliedSG);
+    var regStatus = {
+        "result": false
+    };
+    if (sg) {
+        //make user for this guy
+        var applicant = new User(req.body.firstname, req.body.lastname, req.body.nickname, req.body.email);
+        sg.addApplicant(applicant);
+        regStatus.result = true;
+    }
+    res.status(200).send(regStatus);
 });
 
 // app.get('*', function(req, res) {

@@ -3,6 +3,11 @@ var Auth = require('./auth');
 var UsersDataFile = './data/users/users.json';
 
 function User(firstName, lastName, nickName, email) {
+    //uniqueness check
+    if (User.list[email]){
+        return User.list[email];
+    }
+
     this.name = nickName || firstName;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -19,7 +24,7 @@ User.prototype.save = function(callback) {
     User.list[this.email] = this;
 
     //persist to file
-    fs.writeFileSync(UsersDataFile, JSON.stringify(this), 'utf8');
+    fs.writeFileSync(UsersDataFile, JSON.stringify(User.list), 'utf8');
 }
 
 User.load = function() {
@@ -30,5 +35,14 @@ User.load = function() {
 };
 
 User.list = {};
+
+function fileExists(filePath) {
+    try {
+        return fs.statSync(filePath).isFile();
+    }
+    catch (err) {
+        return false;
+    }
+}
 
 module.exports = User;

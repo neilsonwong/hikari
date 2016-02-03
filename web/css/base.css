@@ -123,7 +123,7 @@ button:hover {
 }
 
 #sgList {
-	margin-top: 30px;
+	margin: 20px 30px;
 }
 
 #sgList li {
@@ -145,15 +145,15 @@ button:hover {
 	margin-bottom: 10px;
 	display: block;
 }
-#sgList li.selected {
-	box-shadow:0px 0px 0px 10px #FFAA9A inset;
+#sgList li.chosen {
+	box-shadow:0px 0px 0px 3px #FFAA9A inset;
 }
 
 #sgList li:hover {
 	cursor: pointer;
 	box-shadow:0px 0px 0px 3px #FFAA9A inset;
-
 }
+
 
 #sgDetailList {
 	padding:0px 40px;

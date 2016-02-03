@@ -1,5 +1,6 @@
 var fs = require('fs');
 var Program = require('./Program');
+var User = require('./User');
 var SmallGroupDataDir = './data/sg/';
 
 function SmallGroup(name, leaders, members) {
@@ -12,6 +13,9 @@ function SmallGroup(name, leaders, members) {
 
     this.pastPrograms = [];
     this.futurePrograms = [];
+
+    this.applicants = [];
+
     this.logo = 25;
 
     if (!SmallGroup.list[name]){
@@ -23,22 +27,48 @@ function instance(smallGroupData){
     return new SmallGroup(smallGroupData.name, smallGroupData.leaders, smallGroupData.members);
 }
 
+SmallGroup.getFullDetails = function(name){
+    var sg = SmallGroup.load(name);
+    sg.leaders = getUsers(sg.leaders);
+    sg.members = getUsers(sg.members);
+    return sg;
+}
+
 function setUsers(source) {
     var arr = [];
     var i;
     for (i = 0; i < source.length; ++i) {
-        arr.push({
-            email: source[i].email,
-            name: source[i].name,
-            firstName: source[i].firstName,
-            lastName: source[i].lastName
-        });
+        arr.push(source[i].email === undefined ? source[i] : source[i].email);
     }
     return arr;
 }
 
+function getUsers(source) {
+    var arr = [];
+    var i, email;
+    for (i = 0; i < source.length; ++i) {
+        email = source[i];
+        arr.push(User.list[email]);
+    }
+    return arr;
+}
+
+SmallGroup.prototype.approveApplicant = function(user) {
+    this.members.push(user.email);
+    var index = this.applicants.indexOf(user.email);
+    if (index > -1) {
+        this.applicants.splice(index, 1);
+    }
+    this.save();
+}
+
+SmallGroup.prototype.addApplicant = function(user) {
+    this.applicants.push(user.email);
+    this.save();
+}
+
 SmallGroup.prototype.addMember = function(user) {
-    this.members.push(user);
+    this.members.push(user.email);
     this.save();
 }
 
@@ -47,9 +77,15 @@ SmallGroup.load = function(name) {
         return instance(SmallGroup.list[name]);
     }
     else {
-        var sg = JSON.parse(fs.readFileSync(SmallGroupDataDir + SmallGroup.getFileName(name) + '.json', 'utf8'));
-        SmallGroup.list[sg.name] = sg;
-        return instance(sg);
+        try {
+            var sg = JSON.parse(fs.readFileSync(SmallGroupDataDir + SmallGroup.getFileName(name) + '.json', 'utf8'));
+            SmallGroup.list[sg.name] = sg;
+            return instance(sg);
+        }
+        catch (e) {
+            console.log(e);
+        }
+        return false;
     }
 }
 
@@ -81,6 +117,17 @@ SmallGroup.prototype.save = function(callback) {
 }
 
 SmallGroup.list = {};
+
+SmallGroup.detailedList = function(){
+    var details = {};
+    var keys = Object.keys(SmallGroup.list);
+    var i;
+    for (i = 0; i < keys.length; ++i){
+        //keysp[i] is the SG name
+        details[keys[i]] = SmallGroup.getFullDetails(keys[i]);
+    }
+    return details;
+}
 
 function EmailSettings() {
     this.weekly = true;

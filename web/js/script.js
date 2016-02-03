@@ -39,18 +39,52 @@ $(function() {
             $.get('/sgDetailList', function(groups) {
                 var keys = Object.keys(groups);
                 //populate the sg list
-                var i;
+                var i, groupButton;
                 for (i = 0; i < keys.length; ++i) {
-                    $('#sgList').append(makeListItem(groups[keys[i]], true));
+                    groupButton = makeListItem(groups[keys[i]], true);
+                    groupButton.click(clickGroup);
+                    $('#sgList').append(groupButton);
                 }
 
                 $('#introduce_yourself').toggleClass('disabled');
                 $('#choose_your_smallgroup').toggleClass('disabled');
                 $('#choose_your_smallgroup').focus();
 
-                window.location.replace('welcome#introduce_yourself');
+                window.location.replace('welcome#choose_your_smallgroup');
             });
         });
+
+        $('#step3Done').click(function() {
+            $.post('/join', {
+                'appliedSG': $('#sgname').val(),
+                'firstname': $('#firstname').val(),
+                'lastName': $('#lastName').val(),
+                'nickname': $('#nickname').val(),
+                'email': $('#email').val()
+            }, function(res) {
+                if (res.result){
+                    console.log('cool');
+
+                    $('#choose_your_smallgroup').toggleClass('disabled');
+                    $('#all_done').toggleClass('disabled');
+                    $('#all_done').focus();
+
+                    window.location.replace('welcome#all_done');
+                }
+                else {
+                    alert('ALART');
+                }
+            });
+
+        });
+
+        function clickGroup(event) {
+            var chosen = $(event.currentTarget);
+            $('.chosen').toggleClass('chosen');
+            chosen.addClass('chosen');
+            $('#sgname').val(chosen.attr('data-sgname'));
+            console.log($('#sgname').val());
+        }
     };
 
     Admin.init = function() {
@@ -104,7 +138,9 @@ $(function() {
 });
 
 function makeListItem(smallGroup, simple) {
-    var a = $('<li>');
+    var a = $('<li>', {
+        'data-sgname': smallGroup.name
+    });
     var b = $('<div>');
     var c = $('<img>', {
         src: 'images/pokemon/' + smallGroup.logo + '.png'
