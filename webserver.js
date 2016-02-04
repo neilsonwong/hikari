@@ -122,9 +122,22 @@ app.post('/join', function(req, res) {
     res.status(200).send(regStatus);
 });
 
-// app.get('*', function(req, res) {
-//     res.status(404).sendFile('');
-// });
+app.get('/smallgroup/:sg', function(req, res) {
+    if (req.params.sg) {
+
+    }
+    oops(res);
+});
+
+app.get('*', function(req, res) {
+    oops(res);
+});
+
+function oops(res) {
+    res.status(404).sendFile('web/lost.html', {
+        root: __dirname
+    });
+}
 
 function nope(req, res) {
     res.redirect('/welcome');

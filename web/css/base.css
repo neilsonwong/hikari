@@ -202,6 +202,10 @@ button:hover {
 	margin-top: 10px;
 }
 
+.userList{
+	padding-top: 10px;
+}
+
 .leaderTag,
 .memberTag {
 	font-size: 0.7em;
