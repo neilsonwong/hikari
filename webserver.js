@@ -60,7 +60,7 @@ app.get('/', function(req, res) {
         }
     }
     else {
-        nope();
+        nope(req, res);
     }
 });
 
