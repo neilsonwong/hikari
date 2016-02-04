@@ -1,3 +1,4 @@
+var fs = require('fs');
 var programDataDir = './data/programs/';
 
 function Program(program, date, time, location, taskList){
