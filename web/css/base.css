@@ -229,3 +229,16 @@ button:hover {
 	display:block;
 	content: attr(data-fname);
 }
+
+.member {
+
+}
+
+.leader:before {
+	content: '[L]';
+	margin-right: 10px;
+}
+
+#memberList li {
+	list-style: none;
+}

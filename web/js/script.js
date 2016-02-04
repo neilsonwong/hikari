@@ -63,7 +63,7 @@ $(function() {
                 'nickname': $('#nickname').val(),
                 'email': $('#email').val()
             }, function(res) {
-                if (res.result){
+                if (res.result) {
                     console.log('cool');
 
                     $('#choose_your_smallgroup').toggleClass('disabled');
@@ -126,8 +126,13 @@ $(function() {
     };
 
     SmallGroup.init = function() {
-        alert('ALART HELLO');
+        //test out json injection
+        //set page stuff
+        $('#sgTop').html(smallgroup.name);
+        populateMembers($('#memberList'), smallgroup.leaders, true);
+        populateMembers($('#memberList'), smallgroup.members, false);
     };
+
     //init the right function
     var page = $('meta[name="page"]').attr('content');
     switch (page) {
@@ -187,4 +192,24 @@ function makeListItem(smallGroup, simple) {
     }
     a.append(b);
     return a;
+}
+
+function populateMembers(list, members, isLeader) {
+    var i;
+    var css = isLeader ? 'leader' : 'member';
+    for (i = 0; i < members.length; ++i) {
+        list.append(makeMemberItem(members[i], css));
+    }
+}
+
+function makeMemberItem(member, css) {
+    var li = $('<li>');
+    // var img = $('');
+    var name = $('<div>', {
+        html: member.name,
+        class: css
+    });
+
+    li.append(name);
+    return li;
 }

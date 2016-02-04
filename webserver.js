@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var parseUrl = require('parseurl');
 var SmallGroup = require('./SmallGroup');
 var User = require('./User');
+var Surgeon = require('./Surgeon');
 
 //app reqs
 var SmallGroup = require('./SmallGroup');
@@ -137,12 +138,16 @@ app.post('/join', function(req, res) {
 app.get('/sg/:sg', function(req, res) {
     var email = Auth.tokens[req.cookies.kagi];
     if (req.params.sg !== undefined && email) {
-        var sg = SmallGroup.load(req.params.sg);
+        var sg = SmallGroup.getFullDetails(req.params.sg);
         if (sg && sg.isMember(email)) {
             //valid sg and is a member
-            res.sendFile('web/smallgroup.html', {
-                root: __dirname
-            });
+            //render the right sg
+            var html = Surgeon.inject('smallgroup.html', {'smallgroup': sg});
+            res.end(html);
+
+            // res.sendFile('web/smallgroup.html', {
+            //     root: __dirname
+            // });
             return;
         }
     }
