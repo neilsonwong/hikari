@@ -29,6 +29,10 @@ app.use(function(req, res, next) {
     var url = parseUrl(req).pathname;
     if (url === '/' ||
         url === '/welcome' ||
+        url === '/checkEmail' ||
+        url === '/sglist' ||
+        url === '/sgDetailList' ||
+        url === '/join' ||
         url.indexOf('/letmein') === 0) {
         //bypass cookie check
         return next();
@@ -85,7 +89,6 @@ app.get('/sgDetailList', function(req, res) {
 });
 
 function getSGList(details) {
-    // console.log(SmallGroup.detailedList());
     return details ? SmallGroup.detailedList() : Object.keys(SmallGroup.list);
 }
 
