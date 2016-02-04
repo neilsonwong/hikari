@@ -2,6 +2,7 @@ var pkmnPng = [1, 4, 7, 25, 39, 52, 63, 79, 92, 129, 133, 134, 135, 143];
 var Core = function() {};
 var Admin = function() {};
 var Welcome = function() {};
+var SmallGroup = function() {};
 
 $(function() {
     //jquery ready
@@ -124,6 +125,9 @@ $(function() {
         });
     };
 
+    SmallGroup.init = function() {
+        alert('ALART HELLO');
+    };
     //init the right function
     var page = $('meta[name="page"]').attr('content');
     switch (page) {
@@ -132,6 +136,9 @@ $(function() {
             break;
         case 'Admin':
             Admin.init();
+            break;
+        case 'SmallGroup':
+            SmallGroup.init();
             break;
         default:
     }

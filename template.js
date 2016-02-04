@@ -1,5 +1,3 @@
-
-
 var Mail = require('./mail');
 var EH = require('./emailHelper');
 
@@ -45,14 +43,15 @@ function generateGeneral(program) {
     farewell = farewell || 'See you on Friday! :)';
 
     return EH.wrap([
-            EH.makeLine(greeting),
-            EH.linebreak,
-            EH.makeLine(statement),
-            details,
-            responsibilities,
-            EH.makeLine(farewell),
-            EH.linebreak,
-            makeSignature()].join(''));
+        EH.makeLine(greeting),
+        EH.linebreak,
+        EH.makeLine(statement),
+        details,
+        responsibilities,
+        EH.makeLine(farewell),
+        EH.linebreak,
+        makeSignature()
+    ].join(''));
 
 }
 
@@ -80,7 +79,7 @@ function generatePrimary(program) {
     // See you Friday folks!
 
     //if no member responsibilities or no lead
-    if (!program.responsibilities || !program.responsibilities.lead){
+    if (!program.responsibilities || !program.responsibilities.lead) {
         return;
     }
     var greeting, reminder, statement, details, responsibilities, farewell;
@@ -93,16 +92,17 @@ function generatePrimary(program) {
     farewell = farewell || 'See you on Friday! :)';
 
     return EH.wrap([
-            EH.makeLine(greeting),
-            EH.linebreak,
-            EH.makeLine(reminder),
-            EH.makeLine(statement),
-            EH.linebreak,
-            details,
-            responsibilities,
-            EH.makeLine(farewell),
-            EH.linebreak,
-            makeSignature()].join(''));
+        EH.makeLine(greeting),
+        EH.linebreak,
+        EH.makeLine(reminder),
+        EH.makeLine(statement),
+        EH.linebreak,
+        details,
+        responsibilities,
+        EH.makeLine(farewell),
+        EH.linebreak,
+        makeSignature()
+    ].join(''));
 }
 
 //on 2nd through screw custom emails lol
@@ -120,14 +120,15 @@ function generateSecondary(secondary, greeting, body, farewell) {
     farewell = farewell || 'See you on Friday! :)';
 
     return EH.wrap([
-            EH.makeLine(greeting),
-            EH.makeLine(body),
-            EH.makeLine(farewell),
-            EH.linebreak,
-            makeSignature()].join(''));
+        EH.makeLine(greeting),
+        EH.makeLine(body),
+        EH.makeLine(farewell),
+        EH.linebreak,
+        makeSignature()
+    ].join(''));
 }
 
-function makeProgramDetails(program){
+function makeProgramDetails(program) {
     // Date: @date
     // When: @time
     // Where: @location
@@ -142,7 +143,7 @@ function makeProgramDetails(program){
 }
 
 //takes a TaskList object
-function makeResponsibilities(tasks){
+function makeResponsibilities(tasks) {
     // Leading this week...
     // Program: @leader 
     // Devo: @devo
@@ -155,17 +156,15 @@ function makeResponsibilities(tasks){
     devo = tasks.devo ? EH.makeLine('Devotion: ' + EH.bold(tasks.devo)) : ''
     timeKeeper = tasks.timeKeeper ? EH.makeLine('Time Keeper: ' + EH.bold(tasks.timeKeeper)) : '';
     skype = tasks.skype ? EH.makeLine('Skype/Whatsapp: ' + EH.bold(tasks.skype)) : '';
-    
+
     var result = '' + lead + devo + timeKeeper + skype;
-    if (result.length > 0){
+    if (result.length > 0) {
         result = EH.makeLine(EH.italic('Leading this week:')) + result + EH.linebreak;
     }
     return result;
 }
 
-
-
-function makeSignature(){
+function makeSignature() {
     return EH.makeLine('Robotically Controlled,') + EH.makeLine(Template.botName);
 }
 
@@ -176,13 +175,13 @@ Template.devoMail = function(program, recipients) {
     return new Mail(Template.botName, Template.botEmail, email, subject, "helloz", html);
 }
 
-Template.remindLeadMail = function(program, recipients){
+Template.remindLeadMail = function(program, recipients) {
     var html = generatePrimary(program);
     var subject = 'SG Program Lead Reminder';
     return new Mail(Template.botName, Template.botEmail, recipients, subject, "hi", html);
 }
 
-Template.generalWeeklyMail = function(program, recipients){
+Template.generalWeeklyMail = function(program, recipients) {
     var html = generateGeneral(program);
     var subject = 'SG Weekly Program Reminder (Friday, ' + program.date + ', 2016' + ' @' + program.time + ')';
     return new Mail(Template.botName, Template.botEmail, recipients, subject, "hi", html);

@@ -47,9 +47,21 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-    res.sendFile('web/index.html', {
-        root: __dirname
-    });
+    var sg;
+    var email = Auth.tokens[req.cookies.kagi];
+    //if cookie move them to their appropriate sg
+    if (email !== undefined){
+        //we have a cookie and now their email, move them to their sg
+        sg = SmallGroup.memberMap[email];
+        if (sg){
+            //valid sg found
+            //redirecting
+            res.redirect('/sg/' + encodeURIComponent(sg));
+        }
+    }
+    else {
+        nope();
+    }
 });
 
 app.get('/welcome', function(req, res) {
@@ -122,9 +134,17 @@ app.post('/join', function(req, res) {
     res.status(200).send(regStatus);
 });
 
-app.get('/smallgroup/:sg', function(req, res) {
-    if (req.params.sg) {
-
+app.get('/sg/:sg', function(req, res) {
+    var email = Auth.tokens[req.cookies.kagi];
+    if (req.params.sg !== undefined && email) {
+        var sg = SmallGroup.load(req.params.sg);
+        if (sg && sg.isMember(email)) {
+            //valid sg and is a member
+            res.sendFile('web/smallgroup.html', {
+                root: __dirname
+            });
+            return;
+        }
     }
     oops(res);
 });

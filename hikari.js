@@ -12,6 +12,7 @@ var Auth = require('./auth');
 
 User.load();
 Auth.load();
+Auth.makeNewToken('bot.t3csg@gmail.com');
 SmallGroup.loadAll();
 
 // console.log(sg);
@@ -31,15 +32,15 @@ SmallGroup.loadAll();
 // mailer.sendMail(Template.remindLeadMail(p));
 // mailer.sendMail(Template.generalWeeklyMail(p));
 
-var neilson = new User('neilson', 'wong', 'rin', 'neilson.hc.wong@gmail.com');
-var lydia = new User('lydia', 'chan', null, 'lydiachan@lydiachan.asdfasdf');
-var pablo = new User('pablo', 'lam', 'pawbs', 'pablolam12345@123jdkfjkdjfkj.skjdfkj');
-var asdf = new User('asdf', 'asdf', 'asdf', 'asdf');
-var andrew = new User('andrew', 'andrew', 'andrew', 'andrew');
+// var neilson = new User('neilson', 'wong', 'rin', 'neilson.hc.wong@gmail.com');
+// var lydia = new User('lydia', 'chan', null, 'lydiachan@lydiachan.asdfasdf');
+// var pablo = new User('pablo', 'lam', 'pawbs', 'pablolam12345@123jdkfjkdjfkj.skjdfkj');
+// var asdf = new User('asdf', 'asdf', 'asdf', 'asdf');
+// var andrew = new User('andrew', 'andrew', 'andrew', 'andrew');
 
-var s = new SmallGroup('Lydia\'s Small Group', [lydia], [neilson, pablo, asdf]);
-s.addMember(andrew);
-s.save();
+// var s = new SmallGroup('Lydia\'s Small Group', [lydia], [neilson, pablo, asdf]);
+// s.addMember(andrew);
+// s.save();
 
 // var s = SmallGroup.load('Lydia\'s Small Group');
 // console.log(JSON.stringify(s));
