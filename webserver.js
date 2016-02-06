@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
+    //should change to whitelist cookie check as opposed to black list
     var url = parseUrl(req).pathname;
     if (url === '/' ||
         url === '/welcome' ||
