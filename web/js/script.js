@@ -119,6 +119,7 @@ $(function() {
     };
 
     SmallGroup.init = function() {
+        removeTransplant();
         //test out json injection
         //set page stuff
         $('#sgTop').html(smallgroup.name);
@@ -205,4 +206,9 @@ function makeMemberItem(member, css) {
 
     li.append(name);
     return li;
+}
+
+function removeTransplant(){
+    $('#transplant').remove();
+    return;
 }
