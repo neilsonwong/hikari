@@ -15,17 +15,11 @@ $(function() {
                     window.location.href('hello');
                 }
                 else {
-                    notFound();
+                    //no email means this is a new user!
+                    //WOOT
+                    proceed('welcome', 'introduce_yourself');
                 }
             });
-
-            function notFound() {
-                $('#welcome').toggleClass('disabled');
-                $('#introduce_yourself').toggleClass('disabled');
-                $('#introduce_yourself').focus();
-
-                window.location.replace('welcome#introduce_yourself');
-            }
         });
 
         $('#email').keydown(function(event) {
@@ -33,6 +27,7 @@ $(function() {
                 $('#email').blur();
                 event.preventDefault();
             }
+            return;
         });
 
         $('#step2Done').click(function() {
@@ -46,12 +41,7 @@ $(function() {
                     groupButton.click(clickGroup);
                     $('#sgList').append(groupButton);
                 }
-
-                $('#introduce_yourself').toggleClass('disabled');
-                $('#choose_your_smallgroup').toggleClass('disabled');
-                $('#choose_your_smallgroup').focus();
-
-                window.location.replace('welcome#choose_your_smallgroup');
+                proceed('introduce_yourself', 'choose_your_smallgroup');
             });
         });
 
@@ -63,17 +53,12 @@ $(function() {
                 'nickname': $('#nickname').val(),
                 'email': $('#email').val()
             }, function(res) {
-                if (res.result){
+                if (res.result) {
                     console.log('cool');
-
-                    $('#choose_your_smallgroup').toggleClass('disabled');
-                    $('#all_done').toggleClass('disabled');
-                    $('#all_done').focus();
-
-                    window.location.replace('welcome#all_done');
+                    proceed('choose_your_smallgroup', 'all_done');
                 }
                 else {
-                    alert('ALART');
+                    console.log('something went wrong');
                 }
             });
 
@@ -85,6 +70,14 @@ $(function() {
             chosen.addClass('chosen');
             $('#sgname').val(chosen.attr('data-sgname'));
             console.log($('#sgname').val());
+        }
+
+        function proceed(oldAnchor, newAnchor) {
+            $('#' + oldAnchor).toggleClass('disabled');
+            $('#' + newAnchor).toggleClass('disabled');
+            $('#' + newAnchor).focus();
+
+            window.location.replace('welcome#' + newAnchor);
         }
     };
 
@@ -126,8 +119,13 @@ $(function() {
     };
 
     SmallGroup.init = function() {
-        alert('ALART HELLO');
+        //test out json injection
+        //set page stuff
+        $('#sgTop').html(smallgroup.name);
+        populateMembers($('#memberList'), smallgroup.leaders, true);
+        populateMembers($('#memberList'), smallgroup.members, false);
     };
+
     //init the right function
     var page = $('meta[name="page"]').attr('content');
     switch (page) {
@@ -187,4 +185,24 @@ function makeListItem(smallGroup, simple) {
     }
     a.append(b);
     return a;
+}
+
+function populateMembers(list, members, isLeader) {
+    var i;
+    var css = isLeader ? 'leader' : 'member';
+    for (i = 0; i < members.length; ++i) {
+        list.append(makeMemberItem(members[i], css));
+    }
+}
+
+function makeMemberItem(member, css) {
+    var li = $('<li>');
+    // var img = $('');
+    var name = $('<div>', {
+        html: member.name,
+        class: css
+    });
+
+    li.append(name);
+    return li;
 }
