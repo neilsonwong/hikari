@@ -53,6 +53,10 @@ body {
 	font-size: 1.25em;
 }
 
+.bigger {
+	font-size: 1em;
+}
+
 /* fontstyle */
 .italic {
 	font-style: italic;
@@ -244,4 +248,42 @@ button:hover {
 
 #memberList li {
 	list-style: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* random extra stuff */
+.heart {
+	color: red;
+	font-size: 1em;
 }

@@ -1,6 +1,3 @@
-user exists page 
-	autoredirect to root in 5 seconds
-
 add Program function
 	add Program front end page
 	Program details front end page
