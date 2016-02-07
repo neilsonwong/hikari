@@ -3,16 +3,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require("body-parser");
 var favicon = require('serve-favicon');
 var parseUrl = require('parseurl');
-var SmallGroup = require('./SmallGroup');
-var User = require('./User');
-var Surgeon = require('./Surgeon');
-var UI = require('./dynamicUIGenerator');
-
 
 //app reqs
 var SmallGroup = require('./SmallGroup');
-
 var Auth = require('./auth');
+var UI = require('./dynamicUIGenerator');
+var User = require('./User');
+var Surgeon = require('./Surgeon');
+var config = require('./config');
+var mailer = require('./mailer')(config);
+var Template = require('./template')(config);
 
 var app = express();
 
@@ -74,6 +74,20 @@ app.get('/welcome', function(req, res) {
     });
 });
 
+app.get('/heythere/:email', function(req, res) {
+    //get user since we know who it is
+    var user = User.list[req.params.email];
+    if (user) {
+        //fire the email
+        mailer.sendMail(Template.authMail(Auth.getFullToken(user.email), user));
+        var html = UI.loadHeyThere(user);
+        res.end(html);
+        return;
+    }
+
+    oops(res);
+});
+
 function getSGList(details) {
     return details ? SmallGroup.detailedList() : Object.keys(SmallGroup.list);
 }
@@ -110,7 +124,7 @@ app.post('/admin/newSmallGroup', function(req, res) {
 
 app.post('/api/checkEmail', function(req, res) {
     res.status(200).send({
-        "result": false
+        "result": Auth.userExists(req.body.email)
     });
 });
 
@@ -144,13 +158,8 @@ app.get('/sg/:sg', function(req, res) {
         if (sg && sg.isMember(email)) {
             //valid sg and is a member
             //render the right sg
-            // var html = Surgeon.inject('smallgroup.html', {'smallgroup': sg});
             var html = UI.loadSmallGroup(sg);
             res.end(html);
-
-            // res.sendFile('web/smallgroup.html', {
-            //     root: __dirname
-            // });
             return;
         }
     }
@@ -188,5 +197,5 @@ function checkWhitelist(url) {
 }
 
 app.listen(3000, function() {
-    console.log('Example app listening on port 3000!');
+    console.log('ヒカリ listening on port 3000!');
 });

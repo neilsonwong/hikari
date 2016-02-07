@@ -25,8 +25,8 @@ exports.forcedInject = function(htmlFile, objs){
 		needle = keys[i];
 		replacement = objs[keys[i]].html();
 		htmlString = htmlString.replace(needle, replacement);
-		console.log("needle: " + needle);
-		console.log("replacement : " + replacement);
+		// console.log("needle: " + needle);
+		// console.log("replacement : " + replacement);
 	}
 	return htmlString;
 }

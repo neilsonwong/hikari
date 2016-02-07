@@ -17,7 +17,7 @@ Authenticator.makeNewToken = function(email) {
 
     //valid new user
     return new Token(email);
-}
+};
 
 function Token(email) {
     //gen token
@@ -34,16 +34,27 @@ function Token(email) {
     return {
         'token': token,
         'email': email
-    }
+    };
 }
+
+Authenticator.getFullToken = function(email) {
+    return {
+        'token': Authenticator.emails[email],
+        'email': email
+    };
+};
 
 Authenticator.check = function(token) {
     return Authenticator.tokens[token] !== undefined;
-}
+};
+
+Authenticator.userExists = function(email){
+    return Authenticator.emails[email] !== undefined;
+};
 
 Authenticator.isAdmin = function(token){
     return Authenticator.tokens[token] === config.email;
-}
+};
 
 Authenticator.load = function() {
     if (fileExists(AuthenticatorDataFile)){
@@ -54,13 +65,13 @@ Authenticator.load = function() {
         //load everything in file back into memory (should only be called on startup)
         Authenticator.emails = JSON.parse(fs.readFileSync(AuthenticatorDataFile2, 'utf8'));
     }
-}
+};
 
 Authenticator.save = function() {
     //write to file
     fs.writeFileSync(AuthenticatorDataFile, JSON.stringify(Authenticator.tokens), 'utf8');
     fs.writeFileSync(AuthenticatorDataFile2, JSON.stringify(Authenticator.emails), 'utf8');
-}
+};
 
 function fileExists(filePath) {
     try {
@@ -69,6 +80,6 @@ function fileExists(filePath) {
     catch (err) {
         return false;
     }
-}
+};
 
 module.exports = Authenticator;

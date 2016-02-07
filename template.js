@@ -121,8 +121,27 @@ function generateSecondary(secondary, greeting, body, farewell) {
 
     return EH.wrap([
         EH.makeLine(greeting),
+        EH.linebreak,
         EH.makeLine(body),
         EH.makeLine(farewell),
+        EH.linebreak,
+        makeSignature()
+    ].join(''));
+}
+
+function generateAuth(authObject, user) {
+    //SAMPLE
+    //Hey Neilson,
+    //Go to _____ to login
+
+    var greeting = 'Hey ' + user.name + ',';
+    var loginLink = 'http://hikari:3000/letmein/' + authObject.token;
+    var body = body || 'You can go to ' + loginLink + ' to log in!';
+
+    return EH.wrap([
+        EH.makeLine(greeting),
+        EH.linebreak,
+        EH.makeLine(body),
         EH.linebreak,
         makeSignature()
     ].join(''));
@@ -168,24 +187,30 @@ function makeSignature() {
     return EH.makeLine('Robotically Controlled,') + EH.makeLine(Template.botName);
 }
 
+Template.authMail = function(authObject, user) {
+    var html = generateAuth(authObject, user);
+    var subject = 'T3C Small Groups login';
+    // var textMessage = 
+    return new Mail(Template.botName, Template.botEmail, authObject.email, subject, "helloz", html);
+};
 
 Template.devoMail = function(program, recipients) {
     var html = generateSecondary(program.responsibilities.devo);
     var subject = 'SG Devo Reminder';
-    return new Mail(Template.botName, Template.botEmail, email, subject, "helloz", html);
-}
+    return new Mail(Template.botName, Template.botEmail, recipients, subject, "helloz", html);
+};
 
 Template.remindLeadMail = function(program, recipients) {
     var html = generatePrimary(program);
     var subject = 'SG Program Lead Reminder';
     return new Mail(Template.botName, Template.botEmail, recipients, subject, "hi", html);
-}
+};
 
 Template.generalWeeklyMail = function(program, recipients) {
     var html = generateGeneral(program);
     var subject = 'SG Weekly Program Reminder (Friday, ' + program.date + ', 2016' + ' @' + program.time + ')';
     return new Mail(Template.botName, Template.botEmail, recipients, subject, "hi", html);
-}
+};
 
 Template.test = function() {
     return new Mail(Template.botName, Template.botEmail, Template.testEmail, 'this is a test', '光testing 123', '<b>光 (ひかり)</b>');

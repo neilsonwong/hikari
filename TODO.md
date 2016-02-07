@@ -1,5 +1,5 @@
 user exists page 
-	fire email w/ token link page
+	autoredirect to root in 5 seconds
 
 add Program function
 	add Program front end page
@@ -14,8 +14,11 @@ Util
 
 edit sg page
 
+antispam / CD filter
+
 refactor css
 
 refactor webserver
 
 debug messages
+

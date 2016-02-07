@@ -1,6 +1,22 @@
 var $ = require('jdummy');
 var Surgeon = require('./Surgeon');
 
+exports.loadHeyThere = function(user) {
+    var usernamePlaceholder = $('<span>', {
+        id: 'username'
+    }).html();
+
+    var populatedUsername = $('<span>', {
+        id: 'username',
+        html: user.name
+    });
+
+    var replacements = {};
+    replacements[usernamePlaceholder] = populatedUsername;
+
+    return Surgeon.forcedInject('heythere.html', replacements);
+};
+
 exports.loadSmallGroup = function(smallgroup) {
     var titlePlaceholder = $('<span>', {
         id: 'sgTop',

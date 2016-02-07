@@ -8,11 +8,12 @@ $(function() {
     //jquery ready
     Welcome.init = function() {
         $('#step1Done').click(function() {
+            var email = $('#email').val();
             $.post('/api/checkEmail', {
-                'email': $('#email').val()
+                'email': email
             }, function(res) {
                 if (res.result) {
-                    window.location.href('hello');
+                    window.location.href = 'heythere/' + encodeURIComponent(email);
                 }
                 else {
                     //no email means this is a new user!

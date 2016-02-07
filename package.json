@@ -8,6 +8,7 @@
     "cookie-parser": "*",
     "serve-favicon": "*",
     "parseurl": "*",
-    "body-parser": "*"
+    "body-parser": "*",
+    "jdummy": "*"
   }
 }
