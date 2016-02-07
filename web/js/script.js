@@ -3,6 +3,8 @@ var Core = function() {};
 var Admin = function() {};
 var Welcome = function() {};
 var SmallGroup = function() {};
+var Auth = function() {};
+
 
 $(function() {
     //jquery ready
@@ -118,8 +120,27 @@ $(function() {
         });
     };
 
-    SmallGroup.init = function() {
+    Auth.init = function() {
+        function countdown(i, callback) {
+            var num = i-1;
+            if (num === 0) {
+                return callback();
+            }
+            else {
+                $('#countdown').html(num);
+                return setTimeout(function() {
+                    return countdown(num, callback);
+                }, 1000);
+            }
+        };
+        return countdown(6, function(){
+            window.location.replace('/');
+            return;
+        });
+    };
 
+    SmallGroup.init = function() {
+        return;
     };
 
     //init the right function
@@ -130,6 +151,9 @@ $(function() {
             break;
         case 'Admin':
             Admin.init();
+            break;
+        case 'Auth':
+            Auth.init();
             break;
         case 'SmallGroup':
             SmallGroup.init();
@@ -203,7 +227,7 @@ function makeMemberItem(member, css) {
     return li;
 }
 
-function removeTransplant(){
+function removeTransplant() {
     $('#transplant').remove();
     return;
 }
