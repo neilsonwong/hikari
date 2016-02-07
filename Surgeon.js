@@ -15,3 +15,18 @@ exports.inject = function(htmlFile, objs){
 
 	return htmlString.replace(needle, scriptString);
 }
+
+exports.forcedInject = function(htmlFile, objs){
+	//inject html to replace html templating which is valid html
+	var htmlString = fs.readFileSync(webroot + htmlFile, 'utf8');
+	var keys = Object.keys(objs);
+	var i, needle, replacement;
+	for (i = 0; i < keys.length; ++i){
+		needle = keys[i];
+		replacement = objs[keys[i]].html();
+		htmlString = htmlString.replace(needle, replacement);
+		console.log("needle: " + needle);
+		console.log("replacement : " + replacement);
+	}
+	return htmlString;
+}

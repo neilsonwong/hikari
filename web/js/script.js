@@ -8,7 +8,7 @@ $(function() {
     //jquery ready
     Welcome.init = function() {
         $('#step1Done').click(function() {
-            $.post('/checkEmail', {
+            $.post('/api/checkEmail', {
                 'email': $('#email').val()
             }, function(res) {
                 if (res.result) {
@@ -32,7 +32,7 @@ $(function() {
 
         $('#step2Done').click(function() {
             //load the small list
-            $.get('/sgDetailList', function(groups) {
+            $.get('/api/sgDetailList', function(groups) {
                 var keys = Object.keys(groups);
                 //populate the sg list
                 var i, groupButton;
@@ -46,7 +46,7 @@ $(function() {
         });
 
         $('#step3Done').click(function() {
-            $.post('/join', {
+            $.post('/api/join', {
                 'appliedSG': $('#sgname').val(),
                 'firstname': $('#firstname').val(),
                 'lastName': $('#lastName').val(),
@@ -82,9 +82,8 @@ $(function() {
     };
 
     Admin.init = function() {
-        console.log('init Admin');
         //load sg list
-        $.get('/sgDetailList', function(groups) {
+        $.get('/api/sgDetailList', function(groups) {
             var keys = Object.keys(groups);
             //populate the sg list
             var i;
@@ -119,12 +118,7 @@ $(function() {
     };
 
     SmallGroup.init = function() {
-        removeTransplant();
-        //test out json injection
-        //set page stuff
-        $('#sgTop').html(smallgroup.name);
-        populateMembers($('#memberList'), smallgroup.leaders, true);
-        populateMembers($('#memberList'), smallgroup.members, false);
+
     };
 
     //init the right function

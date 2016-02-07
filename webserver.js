@@ -6,6 +6,8 @@ var parseUrl = require('parseurl');
 var SmallGroup = require('./SmallGroup');
 var User = require('./User');
 var Surgeon = require('./Surgeon');
+var UI = require('./dynamicUIGenerator');
+
 
 //app reqs
 var SmallGroup = require('./SmallGroup');
@@ -29,18 +31,13 @@ app.use(bodyParser.json());
 app.use(function(req, res, next) {
     //should change to whitelist cookie check as opposed to black list
     var url = parseUrl(req).pathname;
-    if (url === '/' ||
-        url === '/welcome' ||
-        url === '/checkEmail' ||
-        url === '/sglist' ||
-        url === '/sgDetailList' ||
-        url === '/join' ||
-        url.indexOf('/letmein') === 0) {
+    if (checkWhitelist(url)) {
         //bypass cookie check
         return next();
     }
 
     var cookie = req.cookies;
+    console.log(cookie)
     var email;
     if (!cookie || !cookie.kagi || !(email = Auth.check(cookie.kagi))) {
         //invalid cookie!
@@ -55,6 +52,7 @@ app.use(function(req, res, next) {
 app.get('/', function(req, res) {
     var sg;
     var email = Auth.tokens[req.cookies.kagi];
+    console.log(req.cookies.kagi);
     //if cookie move them to their appropriate sg
     if (email !== undefined){
         //we have a cookie and now their email, move them to their sg
@@ -74,20 +72,6 @@ app.get('/welcome', function(req, res) {
     res.sendFile('web/welcome.html', {
         root: __dirname
     });
-});
-
-app.post('/checkEmail', function(req, res) {
-    res.status(200).send({
-        "result": false
-    });
-});
-
-app.get('/sglist', function(req, res) {
-    res.status(200).send(getSGList());
-});
-
-app.get('/sgDetailList', function(req, res) {
-    res.status(200).send(getSGList(true));
 });
 
 function getSGList(details) {
@@ -124,7 +108,21 @@ app.post('/admin/newSmallGroup', function(req, res) {
     }
 });
 
-app.post('/join', function(req, res) {
+app.post('/api/checkEmail', function(req, res) {
+    res.status(200).send({
+        "result": false
+    });
+});
+
+app.get('/api/sglist', function(req, res) {
+    res.status(200).send(getSGList());
+});
+
+app.get('/api/sgDetailList', function(req, res) {
+    res.status(200).send(getSGList(true));
+});
+
+app.post('/api/join', function(req, res) {
     console.log(req.body)
     var sg = SmallGroup.load(req.body.appliedSG);
     var regStatus = {
@@ -146,7 +144,8 @@ app.get('/sg/:sg', function(req, res) {
         if (sg && sg.isMember(email)) {
             //valid sg and is a member
             //render the right sg
-            var html = Surgeon.inject('smallgroup.html', {'smallgroup': sg});
+            // var html = Surgeon.inject('smallgroup.html', {'smallgroup': sg});
+            var html = UI.loadSmallGroup(sg);
             res.end(html);
 
             // res.sendFile('web/smallgroup.html', {
@@ -178,6 +177,14 @@ function adminOnly(req, res) {
     }
     res.end('NOPE BOI');
     return false;
+}
+
+function checkWhitelist(url) {
+    return (url === '/' ||
+        url === '/welcome' ||
+        url.indexOf('/letmein') === 0 ||
+        url.indexOf('/api') === 0 ||
+        url.indexOf('/util') === 0);
 }
 
 app.listen(3000, function() {

@@ -1,3 +1,5 @@
+user exists page 
+	fire email w/ token link page
 
 add Program function
 	add Program front end page
@@ -6,8 +8,9 @@ add Program function
 front end client validation for forms
 	animations/scrolling design on welcome
 
-user exists page 
-	fire email w/ token link page
+Util
+	sharing randomizer
+	person random picker
 
 edit sg page
 
@@ -15,6 +18,4 @@ refactor css
 
 refactor webserver
 
-Util
-	sharing randomizer
-	person random picker
+debug messages
