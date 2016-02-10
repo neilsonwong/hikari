@@ -23,14 +23,33 @@ function SmallGroup(name, leaders, members) {
     }
 }
 
+SmallGroup.list = {};
+SmallGroup.memberMap = {};
+
 function instance(smallGroupData){
-    return new SmallGroup(smallGroupData.name, smallGroupData.leaders, smallGroupData.members);
+    var sg = new SmallGroup(smallGroupData.name, smallGroupData.leaders, smallGroupData.members);
+    var keys = Object.keys(smallGroupData);
+    var i;
+    for (i = 0; i < keys.length; ++i){
+        //append properties to make proper object
+        sg[keys[i]] = smallGroupData[keys[i]];
+    }
+    return sg;
 }
 
 SmallGroup.getFullDetails = function(name){
     var sg = SmallGroup.load(name);
+    sg.leaderEmails = sg.leaders;
+    sg.memberEmails = sg.members;
     sg.leaders = getUsers(sg.leaders);
     sg.members = getUsers(sg.members);
+    sg.applicants = getUsers(sg.applicants);
+    sg.isLeader = function(email){
+        return this.leaderEmails.indexOf(email) !== -1;
+    };
+    sg.isMember = function(email){
+        return this.memberEmails.indexOf(email) !== -1 || this.leaderEmails.indexOf(email) !== -1;
+    };
     return sg;
 }
 
@@ -53,8 +72,12 @@ function getUsers(source) {
     return arr;
 }
 
+SmallGroup.prototype.isLeader = function(email) {
+    return this.leaders.indexOf(email) !== -1;
+};
+
 SmallGroup.prototype.isMember = function(email) {
-	return this.members.indexOf(email) !== -1 || this.leaders.indexOf(email);
+	return this.members.indexOf(email) !== -1 || this.leaders.indexOf(email) !== -1;
 };
 
 SmallGroup.prototype.approveApplicant = function(user) {
@@ -131,9 +154,6 @@ SmallGroup.prototype.save = function(callback) {
     //persist to file
     fs.writeFileSync(SmallGroupDataDir + SmallGroup.getFileName(this.name) + '.json', JSON.stringify(this), 'utf8');
 }
-
-SmallGroup.list = {};
-SmallGroup.memberMap = {};
 
 SmallGroup.detailedList = function(){
     var details = {};

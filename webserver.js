@@ -37,7 +37,6 @@ app.use(function(req, res, next) {
     }
 
     var cookie = req.cookies;
-    console.log(cookie)
     var email;
     if (!cookie || !cookie.kagi || !(email = Auth.check(cookie.kagi))) {
         //invalid cookie!
@@ -52,7 +51,6 @@ app.use(function(req, res, next) {
 app.get('/', function(req, res) {
     var sg;
     var email = Auth.tokens[req.cookies.kagi];
-    console.log(req.cookies.kagi);
     //if cookie move them to their appropriate sg
     if (email !== undefined){
         //we have a cookie and now their email, move them to their sg
@@ -85,12 +83,8 @@ app.get('/heythere/:email', function(req, res) {
         return;
     }
 
-    oops(res);
+    return oops(res);
 });
-
-function getSGList(details) {
-    return details ? SmallGroup.detailedList() : Object.keys(SmallGroup.list);
-}
 
 app.get('/letmein/:kagi', function(req, res) {
     if (req.params.kagi) {
@@ -137,7 +131,6 @@ app.get('/api/sgDetailList', function(req, res) {
 });
 
 app.post('/api/join', function(req, res) {
-    console.log(req.body)
     var sg = SmallGroup.load(req.body.appliedSG);
     var regStatus = {
         "result": false
@@ -151,14 +144,29 @@ app.post('/api/join', function(req, res) {
     res.status(200).send(regStatus);
 });
 
+app.post('/api/addProgram', function(req, res) {
+    var sg = SmallGroup.getFullDetails(req.body.sg);
+    var email = Auth.tokens[req.cookies.kagi];
+    var status = {
+        "result": false
+    };
+    if (sg && sg.isLeader(email)) {
+        //valid person is adding the program
+        sg.addProgram(req.body.program, req.body.date, req.body.time, req.body.location, req.body.taskList);
+        status.result = true;
+    }
+    res.status(200).send(status);
+});
+
 app.get('/sg/:sg', function(req, res) {
     var email = Auth.tokens[req.cookies.kagi];
     if (req.params.sg !== undefined && email) {
+
         var sg = SmallGroup.getFullDetails(req.params.sg);
         if (sg && sg.isMember(email)) {
             //valid sg and is a member
             //render the right sg
-            var html = UI.loadSmallGroup(sg);
+            var html = UI.loadSmallGroup(sg, sg.isLeader(email));
             res.end(html);
             return;
         }
@@ -184,8 +192,13 @@ function adminOnly(req, res) {
     if (Auth.isAdmin(req.cookies.kagi)) {
         return true;
     }
-    res.end('NOPE BOI');
-    return false;
+    // res.end('NOPE BOI');
+    return true;
+    // return false;
+}
+
+function getSGList(details) {
+    return details ? SmallGroup.detailedList() : Object.keys(SmallGroup.list);
 }
 
 function checkWhitelist(url) {

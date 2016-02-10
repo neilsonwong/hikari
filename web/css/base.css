@@ -237,8 +237,14 @@ button:hover {
 	content: attr(data-fname);
 }
 
-.member {
+.leader,
+.member,
+.applicant {
+	font-size: 0.5em;
+}
 
+.applicant {
+	display: inline-block;
 }
 
 .leader:before {
@@ -250,8 +256,9 @@ button:hover {
 	list-style: none;
 }
 
-
-
+#applicantList li {
+	list-style: none;
+}
 
 
 
