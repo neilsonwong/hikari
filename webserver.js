@@ -72,6 +72,12 @@ app.get('/welcome', function(req, res) {
     });
 });
 
+app.get('/test', function(req, res) {
+    res.sendFile('web/test.html', {
+        root: __dirname
+    });
+});
+
 app.get('/heythere/:email', function(req, res) {
     //get user since we know who it is
     var user = User.list[req.params.email];
@@ -204,6 +210,8 @@ function getSGList(details) {
 function checkWhitelist(url) {
     return (url === '/' ||
         url === '/welcome' ||
+        url === '/test' ||
+        url.indexOf('/letmein') === 0 ||
         url.indexOf('/letmein') === 0 ||
         url.indexOf('/api') === 0 ||
         url.indexOf('/util') === 0);

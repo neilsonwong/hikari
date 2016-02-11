@@ -91,6 +91,7 @@ function populateApplicants(list, members) {
 function makeApproveButton(member){
     console.log(member.email);
     var button = $('<button>', {
+        class: 'btn btn-sm btn-info',
         'data-email': member.email,
         html: 'Yes'
     });

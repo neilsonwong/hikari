@@ -1,0 +1,334 @@
+html { font-size: 62.5%; } 
+/* http://paletton.com/#uid=33p0u0k8fSD0d+Z3XYycEJAh2xY */
+
+body {
+	background-color: lightblue;
+	font-family: 'Open Sans', sans-serif;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+	font-size: 6.4em;
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.line {
+	margin-left: 0.3em;
+	font-weight: 300;
+}
+
+.indent {
+	margin-left: 0.8em;
+}
+
+.indentMore {
+	margin-left: 1.3em;
+}
+
+/* font weights */
+.light {
+	font-weight: 300;
+}
+
+.medium {
+	font-weight: 400;
+}
+
+.chubby {
+	font-weight: 600;
+}
+
+.heavy {
+	font-weight: 700;
+}
+
+.omoi {
+	font-weight: 800;
+}
+
+/* fontsize */
+.big {
+	font-size: 1.25em;
+}
+
+.bigger {
+	font-size: 1em;
+}
+
+/* fontstyle */
+.italic {
+	font-style: italic;
+}
+
+/* font colors */
+.darkPink {
+	color: #FF8C77;
+}
+
+.darkBlue {
+	color: #5190A5;
+}
+
+.darkYellow {
+	color: #FFD777;
+}
+
+.black {
+	color: black;
+}
+
+/* page specific */
+#welcome, #introduce_yourself, #choose_your_smallgroup {
+	color: #5190A5;
+}
+
+/* style inputs */
+.line input[type="text"] {
+	width: 80%;
+	background: none;
+	border: none;
+	border-bottom: 3px solid #5190A5;
+	color: #FF8C77;
+    font-size: 0.7em;
+}
+
+input:focus{
+    outline: none;
+}
+
+.tooltip {
+	margin-left: 0.6em;
+	font-size: 0.5em;
+	color: #7EB8CB;
+}
+
+.disabled {
+	display:none;
+}
+
+/*.welcome button {
+    font-size: 0.4em;
+    font-style: italic;
+	margin-left: 0.5em;
+}
+
+button {
+    background: #4CAF50;
+    border: none;
+    color: white;
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+	margin-left: 0.5em;
+}
+
+button:hover {
+	cursor: pointer;
+}*/
+
+#sgList {
+	margin: 20px 30px;
+}
+
+#sgList li {
+	display: inline-block;
+	list-style: none;
+	/*border: 2px solid black;*/
+	padding: 20px;
+	font-size: 18px;
+	background-color: #FFE4E0;
+	box-shadow:0px 0px 0px 3px #FFFEFD inset;
+	border-radius: 10px 10px;
+	margin: 15px;
+	min-height: 80px;
+}
+
+#sgList li img {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	display: block;
+}
+#sgList li.chosen {
+	box-shadow:0px 0px 0px 3px #FFAA9A inset;
+}
+
+#sgList li:hover {
+	cursor: pointer;
+	box-shadow:0px 0px 0px 3px #FFAA9A inset;
+}
+
+
+#sgDetailList {
+	padding:0px 40px;
+}
+
+#sgDetailList li {
+	list-style: none;
+	display:inline-block;
+	padding: 20px;
+	margin: 20px;
+	font-size: 0.3em;
+	background-color: #FFE4E0;
+	box-shadow:0px 0px 0px 3px #FFFEFD inset;
+	border-radius: 10px 10px;
+	width: 300px;
+
+}
+
+#sgDetailList img {
+	margin-left: 10px;
+}
+
+#sgDetailList .textbox {
+	width: 100%;
+	background: none;
+	border: none;
+	border-bottom: 2px solid #FF8C77;
+	color: #FF8C77;
+	margin-bottom: 3px;
+}
+
+#leaderFirstName, 
+#leaderLastName, 
+#leaderNickName, 
+#leaderEmail {
+    font-size: 0.7em;
+}
+
+#newSgName {
+	font-size: 1.2em;
+	height: 30px;
+}
+
+#saveNewGroup {
+	font-size: 0.8em;
+	margin-top: 10px;
+}
+
+.userList{
+	padding-top: 10px;
+}
+
+.leaderTag,
+.memberTag {
+	font-size: 0.7em;
+	background-color: #FFF6E0;
+	display: inline-block;
+	padding: 3px 6px;
+	margin: 3px;
+}
+
+.leaderTag {
+	background-color: #DAF0F8;
+}
+
+.leaderTag:after,
+.memberTag:after {
+	content: attr(data-name);
+}
+
+.leaderTag:hover:after,
+.memberTag:hover:after {
+	display:block;
+	content: attr(data-fname);
+}
+
+.leader,
+.member,
+.applicant {
+	font-size: 0.5em;
+}
+
+.applicant {
+    width: 70%;
+}
+
+.leader:before {
+	content: '[L]';
+	margin-right: 10px;
+}
+
+#memberList li {
+	list-style: none;
+}
+
+#applicantList li {
+	list-style: none;
+}
+
+#applicantList .button {
+    display:block;
+    max-width: 20%;
+}
+
+.button {
+    /*display: inline-block;*/
+  margin: 0;
+  padding: 0.75rem 1rem;
+    border: 0;
+    border-radius: 0.317rem;
+    background-color: #aaa;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+  line-height: 1.5;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+.button:hover {
+    opacity: 0.85;
+}
+
+.button:active {
+    box-shadow: inset 0 3px 4px hsla(0, 0%, 0%, 0.2);
+}
+
+.button:focus {
+    outline: thin dotted #444;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.button-icon {
+    display: inline-block;
+  position: relative;
+  top: -0.1em;
+  vertical-align: middle;
+    margin-right: 0.317rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* random extra stuff */
+.heart {
+	color: red;
+	font-size: 1em;
+}

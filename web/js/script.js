@@ -91,15 +91,13 @@ $(function() {
             //populate the sg list
             var i;
             for (i = 0; i < keys.length; ++i) {
-                $('#sgDetailList').append(makeListItem(groups[keys[i]]));
+                $('#sgManagement').append(makeListItem(groups[keys[i]]));
             }
 
             // fix font sizes
             $('.sgtitle').textfill({
                 'maxFontPixels': 21
             });
-
-
         });
 
         $('#saveNewGroup').click(function() {
@@ -166,7 +164,9 @@ function makeListItem(smallGroup, simple) {
     var a = $('<li>', {
         'data-sgname': smallGroup.name
     });
-    var b = $('<div>');
+    var b = $('<div>', {
+        class: 'col-md-4'
+    });
     var c = $('<img>', {
         src: 'images/pokemon/' + smallGroup.logo + '.png'
     });
@@ -204,7 +204,7 @@ function makeListItem(smallGroup, simple) {
         b.append(f);
     }
     a.append(b);
-    return a;
+    return b;
 }
 
 function populateMembers(list, members, isLeader) {
