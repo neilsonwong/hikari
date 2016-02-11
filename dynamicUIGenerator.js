@@ -42,9 +42,9 @@ exports.loadSmallGroup = function(smallgroup, admin) {
     replacements[memberListPlaceholder] = makeMemberList(smallgroup);
 
     //admin mode things
-    if (admin) {
+    // if (admin) {
         replacements[applicantListPlaceholder] = makeApplicantList(smallgroup);
-    }
+    // }
 
     return Surgeon.forcedInject('smallgroup.html', replacements);
 }
@@ -89,8 +89,10 @@ function populateApplicants(list, members) {
 }
 
 function makeApproveButton(member){
+    console.log(member.email);
     var button = $('<button>', {
-        'data-email': member.email
+        'data-email': member.email,
+        html: 'Yes'
     });
     return button;
 }
