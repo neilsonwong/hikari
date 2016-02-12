@@ -1,3 +1,4 @@
+/* core css */
 body {
     background-color: lightblue;
     font-family: 'Open Sans', sans-serif;
@@ -5,15 +6,161 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-    width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-#sgManagement .textbox {
+#content {
+    width: 1140px;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    /*border: 1px solid black;*/
+    font-size: 1.2em;
+}
+
+/* font weights */
+.light  { font-weight: 300; }
+.medium { font-weight: 400; }
+.chubby { font-weight: 600; }
+.heavy  { font-weight: 700; }
+.omoi   { font-weight: 800; }
+
+/* font sizes */
+.tiny   { font-size: 0.5em; }
+.small  { font-size: 0.8em; }
+.big    { font-size: 1.3em; }
+.ooki   { font-size: 1.7em; }
+.TTGL   { font-size: 4em; }
+
+/* built in h */
+h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
+
+/* admin page */
+.sgBox {
+    vertical-align: top;
+	width: 30%;
+    display: inline-block;
+    padding: 2%;
+    min-height: 300px;
+}
+
+.sgBox .line {
+    width: 95%;
+    margin: 5px;
+}
+
+.sgBox > .textbox {
+    font-size: 0.9em;
     background: none;
     border: none;
     border-bottom: 2px solid #FF8C77;
     color: #FF8C77;
-    /*margin-bottom: 3px;*/
+}
+
+.leaderTag,
+.memberTag {
+    background-color: #FFF6E0;
+    display: inline-block;
+    padding: 3px 6px;
+    margin: 3px;
+    min-width: 27%;
+}
+
+.leaderTag {
+    background-color: #DAF0F8;
+}
+
+.leaderTag:after,
+.memberTag:after {
+    content: attr(data-fname);
+}
+
+.leaderTag:hover:after,
+.memberTag:hover:after {
+    content: attr(data-name);
+}
+
+.sgAvatar {
+    min-height: 80px;
+}
+
+
+
+/* Half Screen */
+@media (max-width: 850px ) {
+    body {
+        background-color: red;
+    }
+
+    #content {
+        width: 700px;
+    }
+
+    .sgBox {
+        width: 45%;
+    }
+
+    .leaderTag,
+    .memberTag {
+        min-width: 40%;
+    }
+}
+
+/* Phone */
+@media (max-width: 500px ) {
+    body {
+        background-color: white;
+    }
+
+    #content {
+        width: 90%;
+        font-size: 1.5em;
+    }
+
+    h1 { 
+        font-size: 2em;
+        font-weight: 400;
+    }
+
+    .sgBox {
+        width: 100%;
+    }
+}
+
+
+button.action {
+    margin-top: 10px;
+    /*background: #FFF6E0;*/
+    border: none;
+    color: #fff;
+    background-color: #5bc0de;
+    border-color: #46b8da;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    margin-left: 0.5em;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.action:hover {
+    color: #fff;
+    background-color: #31b0d5;
+    border-color: #269abc;
+}
+
+button.action span {
+    font-size: 24px;
+    vertical-align: top;
+}
+
+
+
+.pokeball {
+    height: 24px;
+    width: 24px;
+    display: inline-block;
+    text-indent: -9999px;
+    background: url(/images/pokemon/poke-ball.svg);
+    background-size: 24px 24px;
 }

@@ -8,29 +8,26 @@
     <title>T3C Small Groups</title>
     <link rel="stylesheet" href="/css/base.css" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300,400italic,300italic,600italic,700italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/base.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
     <div id="content">
-      <div id="page-header">
+      <div>
         <h1>Admin</h1>
       </div>
       <div id="sgManagement">
-        <div class="col-md-4">
-          <img src="images/pokemon/151.png">
-          <input id="newSgName" class="textbox" type="text" placeholder="New Small Group Name">
-          <input id="leaderFirstName" class="textbox" type="text" placeholder="Leader's First Name">
-          <input id="leaderLastName" class="textbox" type="text" placeholder="Leader's Last Name">
-          <input id="leaderNickName" class="textbox" type="text" placeholder="Leader's Nickname">
-          <input id="leaderEmail" class="textbox" type="text" placeholder="Leader's Email">
-          <button id="saveNewGroup">Save</button>
+        <div class="sgBox">
+          <div class="big line sgAvatar"><img  src="images/pokemon/151.png"><span>New Small Group</span></div>
+          <input id="newSgName" class="textbox line" type="text" placeholder="New Small Group Name">
+          <input id="leaderFirstName" class="textbox line" type="text" placeholder="Leader's First Name">
+          <input id="leaderLastName" class="textbox line" type="text" placeholder="Leader's Last Name">
+          <input id="leaderNickName" class="textbox line" type="text" placeholder="Leader's Nickname">
+          <input id="leaderEmail" class="textbox line" type="text" placeholder="Leader's Email">
+          <div class="line"><button id="saveNewGroup" class="action"><span class="indentTiny">Save</span></button></div>
         </div>
       </div>
     </div>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="/js/script.js"></script>
-    <script src="/js/jquery.textfill.min.js"></script>
   </body>
 </html>

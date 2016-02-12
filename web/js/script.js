@@ -93,11 +93,6 @@ $(function() {
             for (i = 0; i < keys.length; ++i) {
                 $('#sgManagement').append(makeListItem(groups[keys[i]]));
             }
-
-            // fix font sizes
-            $('.sgtitle').textfill({
-                'maxFontPixels': 21
-            });
         });
 
         $('#saveNewGroup').click(function() {
@@ -161,50 +156,45 @@ $(function() {
 });
 
 function makeListItem(smallGroup, simple) {
-    var a = $('<li>', {
+    var divContainer = $('<div>', {
+        class: 'sgBox',
         'data-sgname': smallGroup.name
     });
-    var b = $('<div>', {
-        class: 'col-md-4'
+
+    var divTopLine = $('<div>', {
+        class: 'big line sgAvatar'
     });
-    var c = $('<img>', {
+    var logo = $('<img>', {
         src: 'images/pokemon/' + smallGroup.logo + '.png'
     });
-    var d = $('<div>', {
-        class: 'sgtitle'
-    });
-
-    var e = $('<span>', {
+    var title = $('<span>', {
         html: smallGroup.name
     });
 
-    d.append(e);
-    b.append(c).append(d);
 
     if (!simple) {
-        var f = $('<div>', {
-            class: 'userList'
+        var memberList = $('<div>', {
+            class: 'userList line'
         });
 
         var j;
         for (j = 0; j < smallGroup.leaders.length; ++j) {
-            f.append($('<div>', {
+            memberList.append($('<div>', {
                 class: 'leaderTag',
                 'data-fname': smallGroup.leaders[j].firstName,
                 'data-name': smallGroup.leaders[j].name
             }));
         }
         for (j = 0; j < smallGroup.members.length; ++j) {
-            f.append($('<div>', {
+            memberList.append($('<div>', {
                 class: 'memberTag',
                 'data-fname': smallGroup.members[j].firstName,
                 'data-name': smallGroup.members[j].name
             }));
         }
-        b.append(f);
     }
-    a.append(b);
-    return b;
+    divContainer.append(divTopLine.append(logo).append(title)).append(memberList);
+    return divContainer;
 }
 
 function populateMembers(list, members, isLeader) {
