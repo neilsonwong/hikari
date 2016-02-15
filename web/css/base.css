@@ -1,3 +1,7 @@
+/*
+http://paletton.com/#uid=13p0u0k8fSD0d+Z3XYycEJAh2xY
+*/
+
 /* core css */
 body {
     background-color: lightblue;
@@ -6,6 +10,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    color: #5190A5;
 }
 
 #content {
@@ -53,8 +58,8 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     font-size: 0.9em;
     background: none;
     border: none;
-    border-bottom: 2px solid #FF8C77;
-    color: #FF8C77;
+    border-bottom: 2px solid #5190A5;
+    color: #5190A5;
 }
 
 .leaderTag,
@@ -121,17 +126,18 @@ button.action span {
 }
 
 /* Half Screen */
-@media (min-width: 800px) and (max-width: 992px ) {
+@media (min-width: 600px) and (max-width: 992px ) {
     body {
-        background-color: blue;
+        background-color: lightblue;
     }
 
     #content {
-        width: 800px;
+        width: 95%;
     }
 
     .sgBox {
         width: 45%;
+        max-width: 45%;
     }
 
     .leaderTag,
@@ -146,7 +152,7 @@ button.action span {
     and (-webkit-min-device-pixel-ratio : 1.5),
 @media (max-width: 600px ) {
     body {
-        background-color: white;
+        background-color: lightblue;
     }
 
     #content {
