@@ -1,3 +1,7 @@
+SG Page
+	edit functionality for admin
+	approve functionality for admin
+
 add Program function
 	add Program front end page
 	Program details front end page
@@ -8,8 +12,6 @@ front end client validation for forms
 Util
 	sharing randomizer
 	person random picker
-
-edit sg page
 
 antispam / CD filter
 

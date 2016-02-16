@@ -13,12 +13,14 @@ body {
     color: #5190A5;
 }
 
+.yellowBack { background-color: #FFECBD; }
+.pinkBack { background-color: #FFC8BD; }
+
 #content {
-    width: 1140px;
-    padding: 15px;
+    width: 900px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     font-size: 1.2em;
 }
 
@@ -34,12 +36,21 @@ body {
 .small  { font-size: 0.8em; }
 .big    { font-size: 1.3em; }
 .ooki   { font-size: 1.7em; }
+.CGL   { font-size: 2.5em; }
 .TTGL   { font-size: 4em; }
+
+/* font style */
+.italic { font-style: italic; }
+.emph { font-style: italic; color: #5190A5; font-weight: 600; font-size: 1.1em; }
 
 /* built in h */
 h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
 
 /* admin page */
+.admin > #content {
+    width: 1140px;
+}
+
 .sgBox {
     vertical-align: top;
 	width: 30%;
@@ -52,14 +63,6 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
 .sgBox .line {
     width: 95%;
     margin: 5px;
-}
-
-.sgBox > .textbox {
-    font-size: 0.9em;
-    background: none;
-    border: none;
-    border-bottom: 2px solid #5190A5;
-    color: #5190A5;
 }
 
 .leaderTag,
@@ -89,17 +92,55 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     min-height: 80px;
 }
 
+/* welcome page */
+.oakBlock{
+    display: inline-block;
+}
+
+#oak {
+    display: inline-block;
+    width: 188px;
+    height: 342px;
+    background: url(/images/oak.png) no-repeat right;
+    margin: 30px;
+}
+
+.backFill{
+    padding-top: 15vh;
+}
+
+#welcome > .line,
+#introduce_yourself > .line ,
+#choose_your_smallgroup .line {
+    margin: 1% 2%;
+    max-width: 550px;
+}
+
+.welcome .action {
+    margin-top: 30px;
+}
+
+.backFill {
+    height: 100vh;
+    width: 100vw;
+}
+
+.backFill::-webkit-scrollbar { 
+    display: none; 
+}
+
+/* general css */
+
 button.action {
     margin-top: 10px;
-    /*background: #FFF6E0;*/
     border: none;
     color: #fff;
-    background-color: #5bc0de;
-    border-color: #46b8da;
+    background-color: #7EB8CB;
+    border-color: #5190A5;
     padding: 5px 10px;
     text-align: center;
     text-decoration: none;
-    margin-left: 0.5em;
+    /*margin-left: 0.5em;*/
     border: 1px solid transparent;
     border-radius: 4px;
     cursor: pointer;
@@ -107,13 +148,21 @@ button.action {
 
 button.action:hover {
     color: #fff;
-    background-color: #31b0d5;
-    border-color: #269abc;
+    background-color: #5190A5;
+    border-color: #7EB8CB;
 }
 
 button.action span {
     font-size: 24px;
     vertical-align: top;
+}
+
+.textbox {
+    font-size: 0.9em;
+    background: none;
+    border: none;
+    border-bottom: 2px solid #5190A5;
+    color: #5190A5;
 }
 
 .pokeball {
@@ -125,10 +174,12 @@ button.action span {
     background-size: 24px 24px;
 }
 
+
+
 /* Half Screen */
 @media (min-width: 600px) and (max-width: 992px ) {
     body {
-        background-color: lightblue;
+        background-color: blue;
     }
 
     #content {
@@ -144,15 +195,17 @@ button.action span {
     .memberTag {
         min-width: 40%;
     }
+
+    .oakBlock,
+    #oak {
+        display: block;
+    }
 }
 
 /* Phone */
-@media (max-device-width : 800px)
-    and (orientation : portrait) 
-    and (-webkit-min-device-pixel-ratio : 1.5),
-@media (max-width: 600px ) {
+@media (max-device-width : 800px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 1.5), (max-width: 600px ) {
     body {
-        background-color: lightblue;
+        background-color: white;
     }
 
     #content {
@@ -168,4 +221,25 @@ button.action span {
     .sgBox {
         width: 100%;
     }
+
+    #welcome h1 {
+        font-size: 4em;
+    }
+
+    .oakBlock,
+    #oak {
+        display: block;
+    }
+
+    #welcome > .line,
+    #introduce_yourself > .line ,
+    #choose_your_smallgroup .line {
+        max-width: 700px;
+    }
+}
+
+/* override classes */
+
+.disabled {
+    display:none;
 }

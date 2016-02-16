@@ -4,41 +4,89 @@
     <meta charset="utf-8">
     <meta name="page" content="Welcome">
     <title>T3C Small Groups</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
     <link rel="stylesheet" href="/css/base.css" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300,400italic,300italic,600italic,700italic' rel='stylesheet' type='text/css'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="/js/script.js"></script>
   </head>
   <body class="welcome">
-    <div id="content">
-        <div id="welcome">
-            <div class="line"><span class="chubby big">Welcome!</span></div>
-            <div class="line">Looks like you're <span class="darkPink italic">new</span>.</div>
-            <div class="line">What's your <span class="chubby black">email</span>?</div>
-            <div class="line"><input id="email" type="text" placeholder="email" /></div>
-            <!-- <div class="line tooltip">Press enter when you are done</div> -->
-            <button id="step1Done">next</button>
+    <div class="backFill">
+        <div id="content">
+            <div class="container">
+                <div id="welcome" class="oakBlock">
+                    <div><h1 class="medium">Welcome!</h1></div>
+                    <div class="line CGL">Looks like you're <span class="emph">new</span>.</div>
+                    <div class="line CGL">What's your <span class="emph">email</span>?</div>
+                    <div class="line CGL"><input id="email" type="text" placeholder="email" class="textbox" /></div>
+                    <!-- <div class="line tooltip">Press enter when you are done</div> -->
+                    <div class="line ooki"><button id="step1Done" class="action">next</button></div>
+                </div>
+                <div id="introduce_yourself" class="oakBlock disabled">
+                    <div class="line CGL">Alright. Got it.</div>
+                    <div class="line CGL">Can you tell me a bit about <span class="emph">yourself?</span></div>
+                    <div class="line CGL"><input id="firstname" type="text" placeholder="First Name" class="textbox" /></div>
+                    <div class="line CGL"><input id="lastname" type="text" placeholder="Last Name" class="textbox" /></div>
+                    <div class="line CGL"><input id="nickname" type="text" placeholder="Nickname" class="textbox" /></div>
+                    <div class="line tooltip">The nickname is optional</div>
+                    <div class="line ooki"><button id="step2Done" class="action">next</button></div>
+                </div>
+                <div id="choose_your_smallgroup" class="oakBlock disabled">
+                    <div class="line CGL">Thanks!</div>
+                    <div class="line CGL">Which small group are you in?</div>
+                    <ul id="sgList"></ul>
+                    <button id="step3Done" class="action">next</button>   
+                    <input id="sgname" type="hidden" />
+                </div>
+                <div id="all_done" class="oakBlock disabled">
+                    <div>Cool!</div>
+                    <div>I'll let them know about this.</div>
+                    <div>For now sit tight!</div>
+                </div>
+                <div id="oak"></div>
+            </div>
         </div>
-        <div id="introduce_yourself" class="disabled">
-            <div class="line">Alright. Got it.</div>
-            <div class="line">Can you tell me a bit about yourself?</div>
-            <div class="line"><input id="firstname" type="text" placeholder="First Name" /></div>
-            <div class="line"><input id="lastname" type="text" placeholder="Last Name" /></div>
-            <div class="line"><input id="nickname" type="text" placeholder="Nickname" /></div>
-            <div class="line tooltip">The nickname is optional</div>
-            <button id="step2Done">next</button>            
+    </div>
+    <div class="backFill yellowBack">
+        <div id="content">
+            <div class="container">
+                <div id="introduce_yourself" class="oakBlock">
+                    <div class="line CGL">Alright. Got it.</div>
+                    <div class="line CGL">Can you tell me a bit about <span class="emph">yourself?</span></div>
+                    <div class="line CGL"><input id="firstname" type="text" placeholder="First Name" class="textbox" /></div>
+                    <div class="line CGL"><input id="lastname" type="text" placeholder="Last Name" class="textbox" /></div>
+                    <div class="line CGL"><input id="nickname" type="text" placeholder="Nickname" class="textbox" /></div>
+                    <div class="line tooltip">The nickname is optional</div>
+                    <div class="line ooki"><button id="step2Done" class="action">next</button></div>
+                </div>
+                <div id="oak"></div>
+            </div>
         </div>
-        <div id="choose_your_smallgroup" class="disabled">
-            <div class="line">Thanks!</div>
-            <div class="line">Which small group are you in?</div>
-            <ul id="sgList"></ul>
-            <button id="step3Done">next</button>   
-            <input id="sgname" type="hidden" />
+    </div>
+    <div class="backFill pinkBack">
+        <div id="content">
+            <div class="container">
+                <div id="choose_your_smallgroup" class="oakBlock">
+                    <div class="line CGL">Thanks!</div>
+                    <div class="line CGL">Which small group are you in?</div>
+                    <ul id="sgList"></ul>
+                    <button id="step3Done" class="action">next</button>   
+                    <input id="sgname" type="hidden" />
+                </div>
+                <div id="oak"></div>
+            </div>
         </div>
-        <div id="all_done" class="disabled">
-            <div class="line">Cool!</div>
-            <div class="line">I'll let them know about this.</div>
-            <div class="line">For now sit tight!</div>
+    </div>
+    <div class="backFill">
+        <div id="content">
+            <div class="container">
+                <div id="all_done" class="oakBlock">
+                    <div class="line CGL">Cool!</div>
+                    <div class="line CGL">I'll let them know about this.</div>
+                    <div class="line CGL">For now sit tight!</div>
+                </div>
+                <div id="oak"></div>
+            </div>
         </div>
     </div>
     <script>
