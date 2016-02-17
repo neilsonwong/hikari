@@ -52,18 +52,8 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     width: 1140px;
 }
 
-.sgBox {
-    vertical-align: top;
-	width: 30%;
-    max-width: 30%;
-    display: inline-block;
-    padding: 1.5%;
+.admin .sgBox {
     min-height: 300px;
-}
-
-.sgBox .line {
-    width: 95%;
-    margin: 5px;
 }
 
 .leaderTag,
@@ -158,6 +148,15 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     max-width: 550px;
 }
 
+#choose_your_smallgroup .confinedSpace {
+    height: 30vh;
+    overflow: scroll;
+}
+
+#choose_your_smallgroup .confinedSpace::-webkit-scrollbar { 
+    /*display:none;*/
+}
+
 .welcome .action {
     margin-top: 30px;
 }
@@ -215,6 +214,19 @@ button.action span {
     text-indent: -9999px;
     background: url(/images/pokemon/poke-ball.svg);
     background-size: 24px 24px;
+}
+
+.sgBox {
+    vertical-align: top;
+    width: 30%;
+    max-width: 30%;
+    display: inline-block;
+    padding: 1.5%;
+}
+
+.sgBox .line {
+    width: 95%;
+    margin: 5px;
 }
 
 

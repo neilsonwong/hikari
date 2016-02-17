@@ -5,6 +5,7 @@ var Welcome = function() {};
 var SmallGroup = function() {};
 var Auth = function() {};
 
+bambi = {};
 
 $(function() {
     //jquery ready
@@ -14,6 +15,12 @@ $(function() {
         var anchors = ['welcome', 'introduce_yourself', 'choose_your_smallgroup', 'all_done'];
         $('body').on({
             'mousewheel': function(e) {
+                bambi = e.target;
+                console.log(e.target)
+                if (e.target.parentNode.className.indexOf('sg') > -1 || e.target.parentNode.id === 'sgList' || e.target.id === 'sgList') {
+                    //fix issue with scrollbox scrolling weird for sgBox
+                    return;
+                }
                 e.preventDefault();
                 e.stopPropagation();
                 //mutex
