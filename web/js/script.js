@@ -10,9 +10,13 @@ bambi = {};
 $(function() {
     //jquery ready
     Welcome.init = function() {
+        var up = true;
+        var down = false;
         var scrollMutex = false;
+        var direction;
         var pageHeight = $(window).height();
         var pages = [pageHeight, 2 * pageHeight, 3 * pageHeight, 4 * pageHeight];
+        var pagesSnapPoints = [pageHeight / 2, pageHeight, 1.5 * pageHeight, 2 * pageHeight, 2.5 * pageHeight, 3 * pageHeight, 3.5 * pageHeight, 4 * pageHeight];
         var anchors = ['welcome', 'introduce_yourself', 'choose_your_smallgroup', 'all_done'];
         var inBoundingBox = function(x, y) {
             var rect = document.getElementById('sgList').getBoundingClientRect();
@@ -20,8 +24,7 @@ $(function() {
         };
 
         //performance of scroll is bad, handle each event type individually
-        //mousewheel
-        $('body').on({
+        $(document).on({
             'mousewheel': function(e) {
                 var pageY = e.originalEvent.pageY;
                 if (pageY < pages[2] && inBoundingBox(e.clientX, e.clientY)) {
@@ -36,50 +39,100 @@ $(function() {
                 }
                 scrollMutex = true;
 
-                var direction = e.originalEvent.wheelDelta / 120 > 0;
+                direction = e.originalEvent.wheelDelta / 120 > 0;
                 scrollPage(direction, pageY);
                 return;
+            },
+            'keydown': function(e) {
+                //make sure we care about this key
+                switch (e.which) {
+                    case 32:
+                    case 34:
+                    case 35:
+                    case 40:
+                        direction = down;
+                        break;
+                    case 33:
+                    case 36:
+                    case 38:
+                        direction = up;
+                        break;
+                    default:
+                        //we don't care so lets let it run its natural course
+                        return;
+                }
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                if ($('input:focus').length !== 0) {
+                    //user is typing; ignore keyboard scrolling keys
+                    return;
+                }
+
+                //mutex
+                if (scrollMutex) {
+                    return;
+                }
+                scrollMutex = true;
+
+                var pageY = $(document).scrollTop();
+                scrollPage(direction, pageY);
+            },
+            'scroll': function(e){
+                clearTimeout($.data(this, 'scrollTimer'));
+                $.data(this, 'scrollTimer', setTimeout(function() {
+                    handleScroll(e);
+                }, 250));
+
+                function handleScroll(event){
+                    if (scrollMutex) {
+                        return;
+                    }
+                    scrollMutex = true;
+
+                    //ignore scrolling stuff if our location is good;
+                    var pageY = $(document).scrollTop();
+                    if (pages.indexOf(pageY) > -1){
+                        //we're at a good spot DONE.
+                        scrollMutex = false;
+                        return;
+                    }
+
+                    //we're in a weird spot, let's simply snap to closest frame
+                    switch (true) {
+                        case (pageY < pagesSnapPoints[0]):
+                            direction = up;
+                            break;
+                        case (pageY < pagesSnapPoints[1]):
+                            direction = down;
+                            break;
+                        case (pageY < pagesSnapPoints[2]):
+                            direction = up;
+                            break;
+                        case (pageY < pagesSnapPoints[3]):
+                            direction = down;
+                            break;
+                        case (pageY < pagesSnapPoints[4]):
+                            direction = up;
+                            break;
+                        case (pageY < pagesSnapPoints[5]):
+                            direction = down;
+                            break;
+                        case (pageY < pagesSnapPoints[6]):
+                            direction = up;
+                            break;
+                        case (pageY < pagesSnapPoints[7]):
+                            direction = down;
+                            break;
+                        default:
+                            console.log('huh');
+                            return;
+                    }
+                    scrollPage(direction, pageY);
+                }
             }
         });
-
-        //keyboard
-        $(document).keydown(function(e) {
-            var direction;
-            switch (e.which){
-                case 32:
-                case 34:
-                case 35:
-                case 40:
-                    direction = false;
-                    break;
-                case 33:
-                case 36:
-                case 38:
-                    direction = true;
-                    break;
-                default:
-                    return;
-            }
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            if ($('input:focus').length !== 0){
-                //user is typing; ignore keyboard scrolling keys
-                return;
-            }
-
-            //mutex
-            if (scrollMutex) {
-                return;
-            }
-            scrollMutex = true;
-
-            var pageY = $(document).scrollTop();
-            scrollPage(direction, pageY);
-        }); 
-
-
 
         function scrollPage(direction, pageY, callback) {
             var origin, destination;
@@ -100,7 +153,10 @@ $(function() {
             destination = direction ? Math.max(0, origin - 1) : Math.min(3, origin + 1);
             //check if we are allowed to go there
             if (!$('#' + anchors[destination]).hasClass('disabled')) {
-                proceed(anchors[origin], anchors[destination], callback);
+                proceed(anchors[destination], callback);
+            }
+            else {
+                scrollMutex = false;
             }
         }
 
@@ -115,7 +171,7 @@ $(function() {
                 else {
                     //no email means this is a new user!
                     //WOOT
-                    proceed('welcome', 'introduce_yourself');
+                    proceed('introduce_yourself');
                 }
             });
         });
@@ -139,7 +195,7 @@ $(function() {
                     groupButton.click(clickGroup);
                     $('#sgList').append(groupButton);
                 }
-                proceed('introduce_yourself', 'choose_your_smallgroup');
+                proceed('choose_your_smallgroup');
             });
         });
 
@@ -152,7 +208,7 @@ $(function() {
                 'email': $('#email').val()
             }, function(res) {
                 if (res.result) {
-                    proceed('choose_your_smallgroup', 'all_done');
+                    proceed('all_done');
                 }
                 else {
                     console.log('something went wrong');
@@ -169,9 +225,10 @@ $(function() {
             console.log($('#sgname').val());
         }
 
-        function proceed(oldAnchor, newAnchor, callback) {
-            // $('#' + oldAnchor).toggleClass('disabled');
-            callback = callback || function() { scrollMutex = false; };
+        function proceed(newAnchor, callback) {
+            callback = callback || function() {
+                scrollMutex = false;
+            };
             $('#' + newAnchor).removeClass('disabled');
             $('#' + newAnchor).focus();
 
