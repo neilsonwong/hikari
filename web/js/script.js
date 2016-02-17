@@ -9,6 +9,51 @@ var Auth = function() {};
 $(function() {
     //jquery ready
     Welcome.init = function() {
+        var scrollMutex = false;
+        var pageHeight = $(window).height();
+        var anchors = ['welcome', 'introduce_yourself', 'choose_your_smallgroup', 'all_done'];
+        $('body').on({
+            'mousewheel': function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                //mutex
+                if (scrollMutex){
+                    return;
+                }
+                console.log('mutex false');
+                scrollMutex = true;
+
+                var direction = e.originalEvent.wheelDelta /120 > 0;
+                var pageY = e.originalEvent.pageY;
+                var origin, destination;
+
+                switch (true) {
+                    case (pageY < pageHeight):
+                        origin = 0;
+                        break;
+                    case (pageY < 2*pageHeight):
+                        origin = 1;
+                        break;
+                    case (pageY < 3*pageHeight):
+                        origin = 2;
+                        break;
+                    case (pageY < 4*pageHeight):
+                        origin = 3;
+                        break;
+                }
+                destination = direction ? Math.max(0, origin - 1) : Math.min(3, origin + 1);
+                //check if we are allowed to go there
+                if (!$('#'+anchors[destination]).hasClass('disabled')){
+                    proceed(anchors[origin], anchors[destination]);
+                }
+                else {
+                    //not allowed to scroll, can release mutex
+                    scrollMutex = false;
+                }
+                return;
+            }
+        });
+
         $('#step1Done').click(function() {
             var email = $('#email').val();
             $.post('/api/checkEmail', {
@@ -76,11 +121,18 @@ $(function() {
         }
 
         function proceed(oldAnchor, newAnchor) {
-            $('#' + oldAnchor).toggleClass('disabled');
-            $('#' + newAnchor).toggleClass('disabled');
+            // $('#' + oldAnchor).toggleClass('disabled');
+            $('#' + newAnchor).removeClass('disabled');
             $('#' + newAnchor).focus();
+                console.log(newAnchor);
 
-            window.location.replace('welcome#' + newAnchor);
+            // window.location.replace('welcome#' + newAnchor);
+            $('html, body').animate({
+               'scrollTop':   $('#'+newAnchor).offset().top
+             }, 200, function(){
+                scrollMutex = false;
+             });
+
         }
     };
 

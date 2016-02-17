@@ -136,8 +136,10 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     float: right;
 }
 
-.backFill{
+/*.backFill{*/
+.welcome .container {
     padding-top: 15vh;
+    /* solve this somehow 0__0 extra space >.< */
 }
 
 .welcome {
@@ -268,7 +270,7 @@ button.action span {
     #oak {
         display: block;
         top: auto;
-        background: url(/images/oakHead2.png) no-repeat right;
+        background: url(/images/oakHead2.png) no-repeat bottom right;
         height: 197px;
         width: 216px;
         margin-bottom: 0px;
@@ -279,7 +281,7 @@ button.action span {
 /* Phone */
 @media (max-device-width : 800px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 1.5), (max-width: 600px ) {
     body {
-        background-color: black;
+        background-color: lightblue;
     }
 
     .content,
@@ -332,9 +334,10 @@ button.action span {
     #oak {
         display: block;
         top: auto;
-        background: url(/images/oakHead2.png) no-repeat right;
-        height: 197px;
-        width: 216px;
+        background: url(/images/oakHead2.png) no-repeat bottom right;
+        background-size: 30vh;
+        height: 30vh;
+        width: 100%;
         margin-bottom: 0px;
         float:right;
     }
@@ -351,3 +354,10 @@ button.action span {
 .disabled {
     display:none;
 }
+
+
+/* material icons */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
