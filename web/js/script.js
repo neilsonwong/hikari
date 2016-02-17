@@ -12,54 +12,97 @@ $(function() {
     Welcome.init = function() {
         var scrollMutex = false;
         var pageHeight = $(window).height();
+        var pages = [pageHeight, 2 * pageHeight, 3 * pageHeight, 4 * pageHeight];
         var anchors = ['welcome', 'introduce_yourself', 'choose_your_smallgroup', 'all_done'];
+        var inBoundingBox = function(x, y) {
+            var rect = document.getElementById('sgList').getBoundingClientRect();
+            return (rect.left < x && x < rect.right) && (rect.top < y && y < rect.bottom);
+        };
+
+        //performance of scroll is bad, handle each event type individually
+        //mousewheel
         $('body').on({
             'mousewheel': function(e) {
-                bambi = e.target;
-                console.log(e.target)
-                if (e.target.parentNode.className.indexOf('sg') > -1 || e.target.parentNode.id === 'sgList' || e.target.id === 'sgList') {
-                    //fix issue with scrollbox scrolling weird for sgBox
+                var pageY = e.originalEvent.pageY;
+                if (pageY < pages[2] && inBoundingBox(e.clientX, e.clientY)) {
                     return;
                 }
                 e.preventDefault();
                 e.stopPropagation();
+
                 //mutex
-                if (scrollMutex){
+                if (scrollMutex) {
                     return;
                 }
-                console.log('mutex false');
                 scrollMutex = true;
 
-                var direction = e.originalEvent.wheelDelta /120 > 0;
-                var pageY = e.originalEvent.pageY;
-                var origin, destination;
-
-                switch (true) {
-                    case (pageY < pageHeight):
-                        origin = 0;
-                        break;
-                    case (pageY < 2*pageHeight):
-                        origin = 1;
-                        break;
-                    case (pageY < 3*pageHeight):
-                        origin = 2;
-                        break;
-                    case (pageY < 4*pageHeight):
-                        origin = 3;
-                        break;
-                }
-                destination = direction ? Math.max(0, origin - 1) : Math.min(3, origin + 1);
-                //check if we are allowed to go there
-                if (!$('#'+anchors[destination]).hasClass('disabled')){
-                    proceed(anchors[origin], anchors[destination]);
-                }
-                else {
-                    //not allowed to scroll, can release mutex
-                    scrollMutex = false;
-                }
+                var direction = e.originalEvent.wheelDelta / 120 > 0;
+                scrollPage(direction, pageY);
                 return;
             }
         });
+
+        //keyboard
+        $(document).keydown(function(e) {
+            var direction;
+            switch (e.which){
+                case 32:
+                case 34:
+                case 35:
+                case 40:
+                    direction = false;
+                    break;
+                case 33:
+                case 36:
+                case 38:
+                    direction = true;
+                    break;
+                default:
+                    return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if ($('input:focus').length !== 0){
+                //user is typing; ignore keyboard scrolling keys
+                return;
+            }
+
+            //mutex
+            if (scrollMutex) {
+                return;
+            }
+            scrollMutex = true;
+
+            var pageY = $(document).scrollTop();
+            scrollPage(direction, pageY);
+        }); 
+
+
+
+        function scrollPage(direction, pageY, callback) {
+            var origin, destination;
+            switch (true) {
+                case (pageY < pages[0]):
+                    origin = 0;
+                    break;
+                case (pageY < pages[1]):
+                    origin = 1;
+                    break;
+                case (pageY < pages[2]):
+                    origin = 2;
+                    break;
+                case (pageY < pages[3]):
+                    origin = 3;
+                    break;
+            }
+            destination = direction ? Math.max(0, origin - 1) : Math.min(3, origin + 1);
+            //check if we are allowed to go there
+            if (!$('#' + anchors[destination]).hasClass('disabled')) {
+                proceed(anchors[origin], anchors[destination], callback);
+            }
+        }
 
         $('#step1Done').click(function() {
             var email = $('#email').val();
@@ -109,7 +152,6 @@ $(function() {
                 'email': $('#email').val()
             }, function(res) {
                 if (res.result) {
-                    console.log('cool');
                     proceed('choose_your_smallgroup', 'all_done');
                 }
                 else {
@@ -127,18 +169,18 @@ $(function() {
             console.log($('#sgname').val());
         }
 
-        function proceed(oldAnchor, newAnchor) {
+        function proceed(oldAnchor, newAnchor, callback) {
             // $('#' + oldAnchor).toggleClass('disabled');
+            callback = callback || function() { scrollMutex = false; };
             $('#' + newAnchor).removeClass('disabled');
             $('#' + newAnchor).focus();
-                console.log(newAnchor);
 
             // window.location.replace('welcome#' + newAnchor);
-            $('html, body').animate({
-               'scrollTop':   $('#'+newAnchor).offset().top
-             }, 200, function(){
-                scrollMutex = false;
-             });
+            //turn on mutex just in case
+            scrollMutex = true;
+            $('body').animate({
+                'scrollTop': $('#' + newAnchor).offset().top
+            }, 200, callback);
 
         }
     };
@@ -174,7 +216,7 @@ $(function() {
 
     Auth.init = function() {
         function countdown(i, callback) {
-            var num = i-1;
+            var num = i - 1;
             if (num === 0) {
                 return callback();
             }
@@ -185,7 +227,7 @@ $(function() {
                 }, 1000);
             }
         };
-        return countdown(6, function(){
+        return countdown(6, function() {
             window.location.replace('/');
             return;
         });
@@ -221,7 +263,7 @@ function makeListItem(smallGroup, simple) {
     });
 
     var divTopLine = $('<div>', {
-        class: 'big line sgAvatar'
+        class: 'line sgAvatar'
     });
     var logo = $('<img>', {
         src: 'images/pokemon/' + smallGroup.logo + '.png'
