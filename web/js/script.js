@@ -105,9 +105,12 @@ $(function() {
                 return;
             },
             'keydown': function(e) {
-                //make sure we care about this key
+                //make sure this key actually scrolls the page
                 switch (e.which) {
-                    case 32:
+                    case 32: //space
+                        if (document.activeElement.tagName === 'INPUT'){
+                            return;
+                        }
                     case 34:
                     case 35:
                     case 40:
