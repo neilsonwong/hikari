@@ -1,3 +1,7 @@
+Welcome Page
+	strange scrolling on sgList
+	front end client validation for forms
+
 SG Page
 	edit functionality for admin
 	approve functionality for admin
@@ -5,9 +9,6 @@ SG Page
 add Program function
 	add Program front end page
 	Program details front end page
-
-front end client validation for forms
-	animations/scrolling design on welcome
 
 Util
 	sharing randomizer
@@ -17,9 +18,8 @@ user profile
 
 antispam / CD filter
 
-refactor css
+refactor css again
 
 refactor webserver
 
 debug messages
-
