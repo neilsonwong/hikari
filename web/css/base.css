@@ -128,21 +128,8 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     float: right;
 }
 
-.welcome .sgBox {
-    background-color: #FFE4E0;
-    box-shadow:0px 0px 0px 3px #ADD8E6 inset;
-    border-radius: 10px 10px;
-    cursor: pointer;
-}
-
-.welcome .sgBox.chosen {
-    background-color: #FFECBD; 
-}
-
-/*.backFill{*/
 .welcome .container {
     padding-top: 15vh;
-    /* solve this somehow 0__0 extra space >.< */
 }
 
 .welcome {
@@ -167,8 +154,50 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     overflow-x: hidden;
 }
 
-#choose_your_smallgroup .confinedSpace::-webkit-scrollbar { 
-    /*display:none;*/
+/*#choose_your_smallgroup .confinedSpace::-webkit-scrollbar { 
+    display: none;
+}*/
+#choose_your_smallgroup .confinedSpace::-webkit-scrollbar {
+    width:  10px;
+}
+
+#choose_your_smallgroup .confinedSpace::-webkit-scrollbar-thumb {
+    background: #FFE4E0;
+}
+
+#choose_your_smallgroup .confinedSpace::-webkit-scrollbar-track {
+    background: #FFFFFF;
+}
+
+/*#sgList:after {
+    content: "";
+    position: absolute;
+    border-width: 10px 40px 0 40px;
+    border-style: solid;
+    border-color: #DDDDDD transparent;
+    width: 0px;
+    display: block;
+    margin-left: calc(45% - 20px);
+}*/
+
+.welcome .sgBox {
+    background-color: #FFE4E0;
+    box-shadow:0px 0px 0px 3px #ADD8E6 inset;
+    border-radius: 10px 10px;
+    cursor: pointer;
+    display: block;
+    width: inherit;
+    max-width: 100%;
+}
+
+.welcome .sgAvatar {
+    min-height: 60px;
+}
+
+.welcome .sgBox.chosen {
+    background-color: #FFECBD;
+    border-width: 5px;
+    box-shadow:0px 0px 0px 3px #84DAA1 inset;
 }
 
 .welcome .action {
@@ -244,6 +273,22 @@ button.action span {
     margin: 5px;
 }
 
+.sprite-wrapper {
+    width: 80px;
+    padding-right: 5px;
+    display: inline-block;
+}
+
+.sgAvatar img {
+    display: block;
+    width: auto;
+    margin: auto;
+}
+
+.sgAvatar span {
+    max-width: 70%;
+    display: inline-block;
+}
 
 
 /* Half Screen */
@@ -330,6 +375,15 @@ button.action span {
         width: 90%;
         max-width: 90%;
         display: block;
+    }
+
+    .admin .sgBox {
+        margin-bottom: 5%;
+    }
+    .welcome .textbox {
+        font-size: 0.7em;
+        height: 60px;
+        width: 100%;
     }
 
     #welcome h1 {

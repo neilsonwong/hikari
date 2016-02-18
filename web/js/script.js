@@ -5,26 +5,87 @@ var Welcome = function() {};
 var SmallGroup = function() {};
 var Auth = function() {};
 
-bambi = {};
+var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
 $(function() {
     //jquery ready
     Welcome.init = function() {
-        var up = true;
-        var down = false;
-        var scrollMutex = false;
         var direction;
-        var pageHeight = $(window).height();
-        var pages = [pageHeight, 2 * pageHeight, 3 * pageHeight, 4 * pageHeight];
-        var pagesSnapPoints = [pageHeight / 2, pageHeight, 1.5 * pageHeight, 2 * pageHeight, 2.5 * pageHeight, 3 * pageHeight, 3.5 * pageHeight, 4 * pageHeight];
-        var anchors = ['welcome', 'introduce_yourself', 'choose_your_smallgroup', 'all_done'];
+        var up = true,
+            down = false,
+            stay = null,
+            scrollMutex = false,
+            pageHeight = $(window).height(),
+            pages = [pageHeight, 2 * pageHeight, 3 * pageHeight, 4 * pageHeight],
+            pagesSnapPoints = [pageHeight / 2, pageHeight, 1.5 * pageHeight, 2 * pageHeight, 2.5 * pageHeight, 3 * pageHeight, 3.5 * pageHeight, 4 * pageHeight],
+            anchors = ['welcome', 'introduce_yourself', 'choose_your_smallgroup', 'all_done'];
+
         var inBoundingBox = function(x, y) {
             var rect = document.getElementById('sgList').getBoundingClientRect();
-            return (rect.left < x && x < rect.right) && (rect.top < y && y < rect.bottom);
+            return (rect.left < x) && (x < rect.right) && (rect.top < y) && (y < rect.bottom);
         };
 
         //performance of scroll is bad, handle each event type individually
-        $(document).on({
+        $(document).on(isMobile ? {
+            'scroll': function(e) {
+                clearTimeout($.data(this, 'scrollTimer'));
+                $.data(this, 'scrollTimer', setTimeout(function() {
+                    handleScroll(e);
+                }, 250));
+
+                function handleScroll(event) {
+                    if (scrollMutex) {
+                        return;
+                    }
+                    scrollMutex = true;
+
+                    //ignore scrolling stuff if our location is good;
+                    var pageY = $(document).scrollTop();
+                    if (pageY == 0) {
+                        scrollMutex = false;
+                        return;
+                    }
+                    if (pages.indexOf(pageY) > -1) {
+                        //we're at a good spot DONE.
+                        scrollMutex = false;
+                        return;
+                    }
+
+                    //we're in a weird spot, let's simply snap to closest frame
+                    //this switch has to occur in this order so don't try to combine the up and downs!
+                    switch (true) {
+                        case (pageY < pagesSnapPoints[0]):
+                            direction = stay;
+                            break;
+                        case (pageY < pagesSnapPoints[1]):
+                            direction = down;
+                            break;
+                        case (pageY < pagesSnapPoints[2]):
+                            direction = stay;
+                            break;
+                        case (pageY < pagesSnapPoints[3]):
+                            direction = down;
+                            break;
+                        case (pageY < pagesSnapPoints[4]):
+                            direction = stay;
+                            break;
+                        case (pageY < pagesSnapPoints[5]):
+                            direction = down;
+                            break;
+                        case (pageY < pagesSnapPoints[6]):
+                            direction = stay;
+                            break;
+                        case (pageY < pagesSnapPoints[7]):
+                            direction = down;
+                            break;
+                        default:
+                            console.log('huh');
+                            return;
+                    }
+                    scrollPage(direction, pageY);
+                }
+            }
+        } : {
             'mousewheel': function(e) {
                 var pageY = e.originalEvent.pageY;
                 if (pageY < pages[2] && inBoundingBox(e.clientX, e.clientY)) {
@@ -76,63 +137,11 @@ $(function() {
                 }
                 scrollMutex = true;
 
-                var pageY = $(document).scrollTop();
-                scrollPage(direction, pageY);
-            },
-            'scroll': function(e){
-                clearTimeout($.data(this, 'scrollTimer'));
-                $.data(this, 'scrollTimer', setTimeout(function() {
-                    handleScroll(e);
-                }, 250));
-
-                function handleScroll(event){
-                    if (scrollMutex) {
-                        return;
-                    }
-                    scrollMutex = true;
-
-                    //ignore scrolling stuff if our location is good;
-                    var pageY = $(document).scrollTop();
-                    if (pages.indexOf(pageY) > -1){
-                        //we're at a good spot DONE.
-                        scrollMutex = false;
-                        return;
-                    }
-
-                    //we're in a weird spot, let's simply snap to closest frame
-                    switch (true) {
-                        case (pageY < pagesSnapPoints[0]):
-                            direction = up;
-                            break;
-                        case (pageY < pagesSnapPoints[1]):
-                            direction = down;
-                            break;
-                        case (pageY < pagesSnapPoints[2]):
-                            direction = up;
-                            break;
-                        case (pageY < pagesSnapPoints[3]):
-                            direction = down;
-                            break;
-                        case (pageY < pagesSnapPoints[4]):
-                            direction = up;
-                            break;
-                        case (pageY < pagesSnapPoints[5]):
-                            direction = down;
-                            break;
-                        case (pageY < pagesSnapPoints[6]):
-                            direction = up;
-                            break;
-                        case (pageY < pagesSnapPoints[7]):
-                            direction = down;
-                            break;
-                        default:
-                            console.log('huh');
-                            return;
-                    }
-                    scrollPage(direction, pageY);
-                }
+                // var pageY = $(document).scrollTop();
+                scrollPage(direction, $(document).scrollTop());
             }
         });
+
 
         function scrollPage(direction, pageY, callback) {
             var origin, destination;
@@ -150,7 +159,21 @@ $(function() {
                     origin = 3;
                     break;
             }
-            destination = direction ? Math.max(0, origin - 1) : Math.min(3, origin + 1);
+
+            switch (direction) {
+                case down:
+                    destination = Math.min(3, origin + 1);
+                    break;
+                case up:
+                    destination = Math.max(0, origin - 1);
+                    break;
+                case stay:
+                    destination = origin;
+                    break;
+                default:
+                    console.log("WHY");
+            }
+
             //check if we are allowed to go there
             if (!$('#' + anchors[destination]).hasClass('disabled')) {
                 proceed(anchors[destination], callback);
@@ -158,6 +181,31 @@ $(function() {
             else {
                 scrollMutex = false;
             }
+            return;
+        }
+
+        function clickGroup(event) {
+            var chosen = $(event.currentTarget);
+            $('.chosen').toggleClass('chosen');
+            chosen.addClass('chosen');
+            $('#sgname').val(chosen.attr('data-sgname'));
+            // console.log($('#sgname').val());
+        }
+
+        function proceed(newAnchor, callback) {
+            callback = callback || function() {
+                scrollMutex = false;
+            };
+            $('#' + newAnchor).removeClass('disabled');
+            $('#' + newAnchor).focus();
+
+            // window.location.replace('welcome#' + newAnchor);
+            //turn on mutex just in case
+            scrollMutex = true;
+            $('body').animate({
+                'scrollTop': $('#' + newAnchor).offset().top
+            }, 200, callback);
+
         }
 
         $('#step1Done').click(function() {
@@ -173,6 +221,7 @@ $(function() {
                     //WOOT
                     proceed('introduce_yourself');
                 }
+                return;
             });
         });
 
@@ -196,6 +245,7 @@ $(function() {
                     $('#sgList').append(groupButton);
                 }
                 proceed('choose_your_smallgroup');
+                return;
             });
         });
 
@@ -213,33 +263,10 @@ $(function() {
                 else {
                     console.log('something went wrong');
                 }
+                return;
             });
 
         });
-
-        function clickGroup(event) {
-            var chosen = $(event.currentTarget);
-            $('.chosen').toggleClass('chosen');
-            chosen.addClass('chosen');
-            $('#sgname').val(chosen.attr('data-sgname'));
-            console.log($('#sgname').val());
-        }
-
-        function proceed(newAnchor, callback) {
-            callback = callback || function() {
-                scrollMutex = false;
-            };
-            $('#' + newAnchor).removeClass('disabled');
-            $('#' + newAnchor).focus();
-
-            // window.location.replace('welcome#' + newAnchor);
-            //turn on mutex just in case
-            scrollMutex = true;
-            $('body').animate({
-                'scrollTop': $('#' + newAnchor).offset().top
-            }, 200, callback);
-
-        }
     };
 
     Admin.init = function() {
@@ -262,7 +289,7 @@ $(function() {
                 'leaderEmail': $('#leaderEmail').val()
             }, function(smallGroup) {
                 if (smallGroup) {
-                    console.log(smallGroup);
+                    // console.log(smallGroup);
                 }
                 else {
                     console('HUH? WHAT IS WRONG');
@@ -322,6 +349,9 @@ function makeListItem(smallGroup, simple) {
     var divTopLine = $('<div>', {
         class: 'line sgAvatar'
     });
+    var logoContainer = $('<div>', {
+        class: 'sprite-wrapper'
+    });
     var logo = $('<img>', {
         src: 'images/pokemon/' + smallGroup.logo + '.png'
     });
@@ -351,7 +381,7 @@ function makeListItem(smallGroup, simple) {
             }));
         }
     }
-    divContainer.append(divTopLine.append(logo).append(title)).append(memberList);
+    divContainer.append(divTopLine.append(logoContainer.append(logo)).append(title)).append(memberList);
     return divContainer;
 }
 
