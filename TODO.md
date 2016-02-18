@@ -1,6 +1,5 @@
 Welcome Page
 	strange scrolling on sgList
-	front end client validation for forms
 
 SG Page
 	edit functionality for admin

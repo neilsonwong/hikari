@@ -142,7 +142,6 @@ $(function() {
             }
         });
 
-
         function scrollPage(direction, pageY, callback) {
             var origin, destination;
             switch (true) {
@@ -205,11 +204,14 @@ $(function() {
             $('body').animate({
                 'scrollTop': $('#' + newAnchor).offset().top
             }, 200, callback);
-
         }
 
-        $('#step1Done').click(function() {
+        $('#emailForm').submit(function(e) {
+            e.preventDefault();
+
             var email = $('#email').val();
+            //validate email
+
             $.post('/api/checkEmail', {
                 'email': email
             }, function(res) {
@@ -223,17 +225,13 @@ $(function() {
                 }
                 return;
             });
+
+            return false;
         });
 
-        $('#email').keydown(function(event) {
-            if (event.keyCode == 13) {
-                $('#email').blur();
-                event.preventDefault();
-            }
-            return;
-        });
+        $('#userDetailsForm').submit(function(e) {
+            e.preventDefault();
 
-        $('#step2Done').click(function() {
             //load the small list
             $.get('/api/sgDetailList', function(groups) {
                 var keys = Object.keys(groups);
@@ -247,6 +245,7 @@ $(function() {
                 proceed('choose_your_smallgroup');
                 return;
             });
+            return false;
         });
 
         $('#step3Done').click(function() {

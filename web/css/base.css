@@ -290,7 +290,6 @@ button.action span {
     display: inline-block;
 }
 
-
 /* Half Screen */
 @media (min-width: 600px) and (max-width: 992px ) {
     body {
