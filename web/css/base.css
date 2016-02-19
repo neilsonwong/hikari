@@ -337,6 +337,10 @@ button.action span {
 
     #oaksLab {
         bottom: 0vh;
+        left: auto;
+        right: 0vw;
+        max-width: 50vw;
+    	margin: 0px;
         padding-top: 0px;
         z-index: 99;
     }
@@ -353,7 +357,7 @@ button.action span {
 }
 
 /* Phone */
-@media (max-device-width : 800px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 1.5), (max-width: 600px ) {
+@media (max-width : 800px) and (-webkit-min-device-pixel-ratio : 1.5), (max-width: 600px ) {
     body {
         background-color: lightblue;
     }
@@ -431,6 +435,26 @@ button.action span {
     #choose_your_smallgroup .line {
         max-width: 700px;
     }
+}
+
+@media (max-height : 700px) {
+	body {
+		background-color: red;
+		font-size: 0.6em;
+	}
+
+	.welcome .container {
+	    padding-top: 15px;
+	}
+
+	.welcome .textbox {
+        height: 40px;
+        font-size: 0.9em;
+    }
+
+    .welcome .action {
+	    margin-top: 10px;
+	}
 }
 
 /* override classes */
