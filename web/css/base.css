@@ -437,7 +437,7 @@ button.action span {
     }
 }
 
-@media (max-height : 700px) {
+@media (max-height : 800px) {
 	body {
 		background-color: red;
 		font-size: 0.6em;
@@ -455,6 +455,10 @@ button.action span {
     .welcome .action {
 	    margin-top: 10px;
 	}
+
+    #oaksLab {
+        padding-top: 15px;
+    }
 }
 
 /* override classes */
