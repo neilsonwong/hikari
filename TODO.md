@@ -13,6 +13,8 @@ Util
 	sharing randomizer
 	person random picker
 
+mouse wheel debounce for laptop scrolls that fire many times
+
 user profile
 
 antispam / CD filter
