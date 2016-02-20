@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,300,400italic,300italic,600italic,700italic' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/base.css" />
-    <script src="/js/script.js"></script>
   </head>
   <body class="welcome">
     <div id="oaksLab" class="content">
@@ -22,9 +20,9 @@
                     <div><h1 class="medium">Welcome!</h1></div>
                     <div class="line CGL">Looks like you're <span class="emph">new</span>.</div>
                     <div class="line CGL">What's your <span class="emph">email</span>?</div>
-                    <div class="line CGL"><input id="email" type="text" placeholder="email" class="textbox" /></div>
+                    <div class="line CGL"><form id="emailForm"><input id="email" type="email" placeholder="email" class="textbox" required /></form></div>
                     <!-- <div class="line tooltip">Press enter when you are done</div> -->
-                    <div class="line ooki"><button id="step1Done" class="action">next</button></div>
+                    <div class="line ooki"><button id="step1Done" class="action" type="submit" form="emailForm">next</button></div>
                 </div>
             </div>
         </div>
@@ -35,11 +33,13 @@
                 <div class="oakBlock speech">
                     <div class="line CGL">Alright. Got it.</div>
                     <div class="line CGL">Can you tell me a bit about <span class="emph">yourself?</span></div>
-                    <div class="line CGL"><input id="firstname" type="text" placeholder="First Name" class="textbox" /></div>
-                    <div class="line CGL"><input id="lastname" type="text" placeholder="Last Name" class="textbox" /></div>
-                    <div class="line CGL"><input id="nickname" type="text" placeholder="Nickname" class="textbox" /></div>
-                    <div class="line tooltip">The nickname is optional</div>
-                    <div class="line ooki"><button id="step2Done" class="action">next</button></div>
+                    <form id="userDetailsForm">
+                        <div class="line CGL"><input id="firstname" type="text" placeholder="First Name" class="textbox" pattern=".{3,}" required /></div>
+                        <div class="line CGL"><input id="lastname" type="text" placeholder="Last Name" class="textbox" pattern=".{2,}" required /></div>
+                        <div class="line CGL"><input id="nickname" type="text" placeholder="Nickname" class="textbox" /></div>
+                        <div class="line tooltip">The nickname is optional</div>
+                    </form>
+                    <div class="line ooki"><button id="step2Done" class="action" type="submit" form="userDetailsForm">next</button></div>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
             </div>
         </div>
     </div>
-    <script>
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/js/script.js"></script>
   </body>
 </html>

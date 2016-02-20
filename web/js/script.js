@@ -105,9 +105,12 @@ $(function() {
                 return;
             },
             'keydown': function(e) {
-                //make sure we care about this key
+                //make sure this key actually scrolls the page
                 switch (e.which) {
-                    case 32:
+                    case 32: //space
+                        if (document.activeElement.tagName === 'INPUT'){
+                            return;
+                        }
                     case 34:
                     case 35:
                     case 40:
@@ -141,7 +144,6 @@ $(function() {
                 scrollPage(direction, $(document).scrollTop());
             }
         });
-
 
         function scrollPage(direction, pageY, callback) {
             var origin, destination;
@@ -205,11 +207,14 @@ $(function() {
             $('body').animate({
                 'scrollTop': $('#' + newAnchor).offset().top
             }, 200, callback);
-
         }
 
-        $('#step1Done').click(function() {
+        $('#emailForm').submit(function(e) {
+            e.preventDefault();
+
             var email = $('#email').val();
+            //validate email
+
             $.post('/api/checkEmail', {
                 'email': email
             }, function(res) {
@@ -223,17 +228,13 @@ $(function() {
                 }
                 return;
             });
+
+            return false;
         });
 
-        $('#email').keydown(function(event) {
-            if (event.keyCode == 13) {
-                $('#email').blur();
-                event.preventDefault();
-            }
-            return;
-        });
+        $('#userDetailsForm').submit(function(e) {
+            e.preventDefault();
 
-        $('#step2Done').click(function() {
             //load the small list
             $.get('/api/sgDetailList', function(groups) {
                 var keys = Object.keys(groups);
@@ -247,6 +248,7 @@ $(function() {
                 proceed('choose_your_smallgroup');
                 return;
             });
+            return false;
         });
 
         $('#step3Done').click(function() {

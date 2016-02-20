@@ -61,16 +61,14 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
 
 .leaderTag,
 .memberTag {
-    background-color: #FFF6E0;
     display: inline-block;
     padding: 3px 6px;
     margin: 3px;
     min-width: 27%;
 }
 
-.leaderTag {
-    background-color: #DAF0F8;
-}
+.memberTag { background-color: #FFF6E0; }
+.leaderTag { background-color: #DAF0F8; }
 
 .leaderTag:after,
 .memberTag:after {
@@ -87,12 +85,12 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
 }
 
 /* welcome page */
-.oakBlock{
+.oakBlock {
     display: block;
 }
 
 .oakBlock.speech {
-    background-color: white;
+    background-color: #FFFFFF;
     border-radius: 10px;
     padding: 2%;
     max-width: 600px;
@@ -154,11 +152,8 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     overflow-x: hidden;
 }
 
-/*#choose_your_smallgroup .confinedSpace::-webkit-scrollbar { 
-    display: none;
-}*/
 #choose_your_smallgroup .confinedSpace::-webkit-scrollbar {
-    width:  10px;
+    width: 10px;
 }
 
 #choose_your_smallgroup .confinedSpace::-webkit-scrollbar-thumb {
@@ -168,17 +163,6 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
 #choose_your_smallgroup .confinedSpace::-webkit-scrollbar-track {
     background: #FFFFFF;
 }
-
-/*#sgList:after {
-    content: "";
-    position: absolute;
-    border-width: 10px 40px 0 40px;
-    border-style: solid;
-    border-color: #DDDDDD transparent;
-    width: 0px;
-    display: block;
-    margin-left: calc(45% - 20px);
-}*/
 
 .welcome .sgBox {
     background-color: #FFE4E0;
@@ -197,7 +181,7 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
 .welcome .sgBox.chosen {
     background-color: #FFECBD;
     border-width: 5px;
-    box-shadow:0px 0px 0px 3px #84DAA1 inset;
+    box-shadow: 0px 0px 0px 3px #84DAA1 inset;
 }
 
 .welcome .action {
@@ -224,14 +208,13 @@ button.action {
     padding: 5px 10px;
     text-align: center;
     text-decoration: none;
-    /*margin-left: 0.5em;*/
     border: 1px solid transparent;
     border-radius: 4px;
     cursor: pointer;
 }
 
 button.action:hover {
-    color: #fff;
+    color: #FFFFFF;
     background-color: #5190A5;
     border-color: #7EB8CB;
 }
@@ -290,7 +273,6 @@ button.action span {
     display: inline-block;
 }
 
-
 /* lost page 404 */
 .lost {
     background-color: #000000;
@@ -306,11 +288,13 @@ button.action span {
     display: block;
     margin: auto;
 }
+
 /* Half Screen */
 @media (min-width: 600px) and (max-width: 992px ) {
     body {
-        background-color: blue;
+        /*background-color: blue;*/
     }
+
     .content,
     .admin > #content,
     #content {
@@ -353,6 +337,10 @@ button.action span {
 
     #oaksLab {
         bottom: 0vh;
+        left: auto;
+        right: 0vw;
+        max-width: 50vw;
+    	margin: 0px;
         padding-top: 0px;
         z-index: 99;
     }
@@ -369,9 +357,9 @@ button.action span {
 }
 
 /* Phone */
-@media (max-device-width : 800px) and (orientation : portrait) and (-webkit-min-device-pixel-ratio : 1.5), (max-width: 600px ) {
+@media (max-width : 800px) and (-webkit-min-device-pixel-ratio : 1.5), (max-width: 600px ) {
     body {
-        background-color: lightblue;
+        /*background-color: lightblue;*/
     }
 
     .content,
@@ -452,8 +440,31 @@ button.action span {
     .lost img { width: 80%; }
 }
 
-/* override classes */
+@media (max-height : 800px) {
+	body {
+		/*background-color: red;*/
+		font-size: 0.6em;
+	}
 
+	.welcome .container {
+	    padding-top: 15px;
+	}
+
+	.welcome .textbox {
+        height: 40px;
+        font-size: 0.9em;
+    }
+
+    .welcome .action {
+	    margin-top: 10px;
+	}
+
+    #oaksLab {
+        padding-top: 15px;
+    }
+}
+
+/* override classes */
 .disabled {
     display:none;
 }
