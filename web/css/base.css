@@ -291,6 +291,21 @@ button.action span {
 }
 
 
+/* lost page 404 */
+.lost {
+    background-color: #000000;
+    padding-top: 15vh;
+}
+.lost h1 {
+    color: #FFFFFF;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.lost img {
+    display: block;
+    margin: auto;
+}
 /* Half Screen */
 @media (min-width: 600px) and (max-width: 992px ) {
     body {
@@ -432,6 +447,9 @@ button.action span {
     #choose_your_smallgroup .line {
         max-width: 700px;
     }
+
+    .lost h1 { font-size: 4em; }
+    .lost img { width: 80%; }
 }
 
 /* override classes */
