@@ -83,7 +83,7 @@ app.get('/heythere/:email', function(req, res) {
     var user = User.list[req.params.email];
     if (user) {
         //fire the email
-        mailer.sendMail(Template.authMail(Auth.getFullToken(user.email), user));
+        // mailer.sendMail(Template.authMail(Auth.getFullToken(user.email), user));
         var html = UI.loadHeyThere(user);
         res.end(html);
         return;
@@ -211,7 +211,7 @@ function checkWhitelist(url) {
     return (url === '/' ||
         url === '/welcome' ||
         url === '/test' ||
-        url.indexOf('/letmein') === 0 ||
+        url.indexOf('/heythere') === 0 ||
         url.indexOf('/letmein') === 0 ||
         url.indexOf('/api') === 0 ||
         url.indexOf('/util') === 0);

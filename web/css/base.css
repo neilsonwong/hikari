@@ -276,6 +276,8 @@ button.action span {
 /* lost page 404 */
 .lost {
     background-color: #000000;
+}
+.lost #content {
     padding-top: 15vh;
 }
 .lost h1 {
@@ -287,6 +289,15 @@ button.action span {
 .lost img {
     display: block;
     margin: auto;
+}
+
+/* hey there */
+.heyThere #content {
+    padding-top: 15vh;
+}
+
+.heyThere .line {
+    padding-left: 2%;
 }
 
 /* Half Screen */
@@ -469,6 +480,10 @@ button.action span {
     display:none;
 }
 
+/* random extra stuff */
+.heart {
+    color: red;
+}
 
 /* material icons */
 .material-icons.md-18 { font-size: 18px; }
