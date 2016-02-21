@@ -300,6 +300,21 @@ button.action span {
     padding-left: 2%;
 }
 
+/* let me in */
+.letmein #content {
+    padding-top: 15vh;
+}
+
+.letmein img {
+    display: block;
+    margin: auto;
+}
+
+.letmein h1, 
+.letmein .line {
+    text-align: center;
+}
+
 /* Half Screen */
 @media (min-width: 600px) and (max-width: 992px ) {
     body {
