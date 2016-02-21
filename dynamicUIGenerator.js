@@ -18,14 +18,12 @@ exports.loadHeyThere = function(user) {
 };
 
 exports.loadSmallGroup = function(smallgroup, admin) {
-    var titlePlaceholder = $('<span>', {
+    var titlePlaceholder = $('<h1>', {
         id: 'sgTop',
-        class: 'chubby big'
     }).html();
 
-    var populatedTitle = $('<span>', {
+    var populatedTitle = $('<h1>', {
         id: 'sgTop',
-        class: 'chubby big',
         html: smallgroup.name
     });
 
@@ -43,7 +41,7 @@ exports.loadSmallGroup = function(smallgroup, admin) {
 
     //admin mode things
     // if (admin) {
-        replacements[applicantListPlaceholder] = makeApplicantList(smallgroup);
+        // replacements[applicantListPlaceholder] = makeApplicantList(smallgroup);
     // }
 
     return Surgeon.forcedInject('smallgroup.html', replacements);
@@ -53,10 +51,15 @@ function makeMemberList(smallgroup) {
     var list = $('<div>', {
         id: 'memberList'
     });
-    var ul = $('<ul>');
-    list.append(ul);
-    populateMembers(ul, smallgroup.leaders, true);
-    populateMembers(ul, smallgroup.members, false);
+    var title = $('<div>', {
+        class: 'big',
+        html: 'Members'
+    });
+    var div = $('<div>');
+    list.append(title).append(div);
+    populateMembers(div, smallgroup.leaders, 'leader');
+    populateMembers(div, smallgroup.members, 'member');
+    populateMembers(div, smallgroup.applicants, 'applicant');
     return list;
 }
 
@@ -64,32 +67,24 @@ function makeApplicantList(smallgroup) {
     var list = $('<div>', {
         id: 'applicantList'
     });
-    var ul = $('<ul>');
-    list.append(ul);
-    populateApplicants(ul, smallgroup.applicants);
+    var title = $('<div>', {
+        class: 'big',
+        html: 'Applicants'
+    });
+    var div = $('<div>');
+    list.append(title).append(div);
+    populateApplicants(div, smallgroup.applicants);
     return list;
 }
 
-function populateMembers(list, members, isLeader) {
+function populateMembers(list, members, css) {
     var i;
-    var css = isLeader ? 'leader' : 'member';
     for (i = 0; i < members.length; ++i) {
         list.append(makeMemberItem(members[i], css));
     }
 }
 
-function populateApplicants(list, members) {
-    var i;
-    var li;
-    for (i = 0; i < members.length; ++i) {
-        li = makeMemberItem(members[i], 'applicant');
-        li.append(makeApproveButton(members[i]));
-        list.append(li);
-    }
-}
-
 function makeApproveButton(member){
-    console.log(member.email);
     var button = $('<button>', {
         class: 'btn btn-sm btn-info',
         'data-email': member.email,
@@ -99,13 +94,17 @@ function makeApproveButton(member){
 }
 
 function makeMemberItem(member, css) {
-    var li = $('<li>');
+    var div = $('<div>');
     // var img = $('');
     var name = $('<div>', {
-        html: member.name,
         class: css
     });
+    var span = $('<span>', {
+        html: member.name,
+    });
 
-    li.append(name);
-    return li;
+    //append extra if birthday
+
+    div.append(name.append(span));
+    return div;
 }

@@ -46,6 +46,7 @@ body {
 
 /* built in h */
 h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
+h2 { font-weight: 300; font-size: 2em; margin: 0px; }
 
 /* admin page */
 .admin > #content {
@@ -197,6 +198,63 @@ h1 { font-weight: 300; font-size: 4em; margin: 0px; padding-left: 2%; }
     display: none; 
 }
 
+/* small group */
+
+.smallGroup #content {
+    /*padding-top: 15vh;*/
+}
+
+.smallGroup .left {
+    width: 20%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.smallGroup .right {
+    width: 75%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*.smallGroup #memberList .leader,
+.smallGroup #memberList .member,
+.smallGroup #memberList .applicant {
+    height: 35px;
+}*/
+
+.smallGroup #memberList .leader > span,
+.smallGroup #memberList .member > span,
+.smallGroup #memberList .applicant > span {
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.smallGroup #memberList .leader:before,
+.smallGroup #memberList .member:before,
+.smallGroup #memberList .applicant:before {
+    content: "";
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.smallGroup #memberList .leader:before {
+    background-color: red;
+}
+
+.smallGroup #memberList .member:before {
+    background-color: blue;
+}
+
+.smallGroup #memberList .applicant:before {
+    background-color: yellow;
+}
+
+
+
 /* general css */
 
 button.action {
@@ -277,9 +335,11 @@ button.action span {
 .lost {
     background-color: #000000;
 }
+
 .lost #content {
     padding-top: 15vh;
 }
+
 .lost h1 {
     color: #FFFFFF;
     text-align: center;
