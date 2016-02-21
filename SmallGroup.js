@@ -4,22 +4,25 @@ var User = require('./User');
 var SmallGroupDataDir = './data/sg/';
 
 function SmallGroup(name, leaders, members) {
-    this.name = name;
+    if (arguments.length > 0){
+        this.name = name;
+        this.uniqueName = SmallGroup.getFileName(name);
 
-    //loop through leaders and members
-    this.leaders = setUsers(leaders);
-    this.members = setUsers(members);
-    this.emailSettings = new EmailSettings();
+        //loop through leaders and members
+        this.leaders = setUsers(leaders);
+        this.members = setUsers(members);
+        this.emailSettings = new EmailSettings();
 
-    this.pastPrograms = [];
-    this.futurePrograms = [];
+        this.pastPrograms = [];
+        this.futurePrograms = [];
 
-    this.applicants = [];
+        this.applicants = [];
 
-    this.logo = 25;
+        this.logo = 25;
 
-    if (!SmallGroup.list[name]){
-        this.save();
+        if (!SmallGroup.list[name]){
+            this.save();
+        }
     }
 }
 
@@ -27,29 +30,36 @@ SmallGroup.list = {};
 SmallGroup.memberMap = {};
 
 function instance(smallGroupData){
-    var sg = new SmallGroup(smallGroupData.name, smallGroupData.leaders, smallGroupData.members);
+    var sg = new SmallGroup();
     var keys = Object.keys(smallGroupData);
     var i;
     for (i = 0; i < keys.length; ++i){
         //append properties to make proper object
         sg[keys[i]] = smallGroupData[keys[i]];
     }
+    if (sg.applicants.length === 0){
+        console.log('WHY');
+    }
     return sg;
 }
 
-SmallGroup.getFullDetails = function(name){
-    var sg = SmallGroup.load(name);
-    sg.leaderEmails = sg.leaders;
-    sg.memberEmails = sg.members;
-    sg.leaders = getUsers(sg.leaders);
-    sg.members = getUsers(sg.members);
-    sg.applicants = getUsers(sg.applicants);
-    sg.isLeader = function(email){
-        return this.leaderEmails.indexOf(email) !== -1;
-    };
-    sg.isMember = function(email){
-        return this.memberEmails.indexOf(email) !== -1 || this.leaderEmails.indexOf(email) !== -1;
-    };
+SmallGroup.getFullDetails = function(uname){
+    var sg = SmallGroup.load(uname);
+    //check if it is an instance
+    if (sg.leaderEmails === undefined && sg.memberEmails === undefined){
+        sg.leaderEmails = sg.leaders;
+        sg.memberEmails = sg.members;
+        sg.applicantEmails = sg.applicants;
+        sg.leaders = getUsers(sg.leaders);
+        sg.members = getUsers(sg.members);
+        sg.applicants = getUsers(sg.applicants);
+        sg.isLeader = function(email){
+            return this.leaderEmails.indexOf(email) !== -1;
+        };
+        sg.isMember = function(email){
+            return this.memberEmails.indexOf(email) !== -1 || this.leaderEmails.indexOf(email) !== -1;
+        };
+    }
     return sg;
 }
 
@@ -100,13 +110,15 @@ SmallGroup.prototype.addMember = function(user) {
 }
 
 SmallGroup.load = function(name) {
+    //assume it is the unique name first
     if (SmallGroup.list[name]) {
         return instance(SmallGroup.list[name]);
     }
+    //prolly not the unique name so lets try to change it to that
     else {
         try {
             var sg = JSON.parse(fs.readFileSync(SmallGroupDataDir + SmallGroup.getFileName(name) + '.json', 'utf8'));
-            SmallGroup.list[sg.name] = sg;
+            SmallGroup.list[sg.uniqueName] = sg;
             return instance(sg);
         }
         catch (e) {
@@ -126,7 +138,7 @@ SmallGroup.loadAll = function() {
             //valid file
             try {
                 sg = JSON.parse(fs.readFileSync(SmallGroupDataDir + element, 'utf8'));
-                SmallGroup.list[sg.name] = sg;
+                SmallGroup.list[sg.uniqueName] = sg;
                 mapMembersToGroup(sg);
 
             }
@@ -140,19 +152,21 @@ SmallGroup.loadAll = function() {
 function mapMembersToGroup(sg){
 	var i;
 	for (i = 0; i < sg.leaders.length; ++i){
-		SmallGroup.memberMap[sg.leaders[i]] = sg.name;
+		SmallGroup.memberMap[sg.leaders[i]] = sg.uniqueName;
 	}
 	for (i = 0; i < sg.members.length; ++i){
-		SmallGroup.memberMap[sg.members[i]] = sg.name;
+		SmallGroup.memberMap[sg.members[i]] = sg.uniqueName;
 	}
 }
 
 SmallGroup.prototype.save = function(callback) {
     //save to internal array
-    SmallGroup.list[this.name] = this;
+    SmallGroup.list[this.uniqueName] = this;
+
+    console.trace("Writing!");
 
     //persist to file
-    fs.writeFileSync(SmallGroupDataDir + SmallGroup.getFileName(this.name) + '.json', JSON.stringify(this), 'utf8');
+    fs.writeFileSync(SmallGroupDataDir + this.uniqueName + '.json', JSON.stringify(this), 'utf8');
 }
 
 SmallGroup.detailedList = function(){
