@@ -16,6 +16,12 @@ function User(firstName, lastName, nickName, email) {
     this.unsubscribe = false;
     this.id = Auth.makeNewToken(email);
 
+    //optional details
+    this.gender = null;
+    this.description = null;
+    this.birthday = null;
+    this.avatar = null;
+
     this.save();
 }
 
