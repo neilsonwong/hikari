@@ -180,6 +180,22 @@ app.get('/sg/:sg', function(req, res) {
     oops(res);
 });
 
+app.get('/user/:userEmail', function(req, res) {
+    var email = Auth.tokens[req.cookies.kagi];
+    var userEmail = req.params.userEmail;
+    var editable = email === userEmail;
+    var user = User.list[userEmail];
+    if (user){
+        //user found
+        var html = UI.loadUserProfile(user, editable);
+        res.end(html);
+        return;
+    }
+    else {
+        return oops(res);
+    }
+});
+
 app.get('*', function(req, res) {
     oops(res);
 });
