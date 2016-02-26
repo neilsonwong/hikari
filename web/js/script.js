@@ -4,6 +4,7 @@ var Admin = function() {};
 var Welcome = function() {};
 var SmallGroup = function() {};
 var Auth = function() {};
+var Test = function() {};
 
 var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
@@ -323,6 +324,17 @@ $(function() {
         return;
     };
 
+    Test.init = function() {
+        $('.date input').on('input', function(e) {
+            //get day
+            //get month
+            //year
+            var text = $('.date input').val();
+            $('.date .inputDisplay').html();
+        });
+        return;
+    };
+
     //init the right function
     var page = $('meta[name="page"]').attr('content');
     switch (page) {
@@ -337,6 +349,9 @@ $(function() {
             break;
         case 'SmallGroup':
             SmallGroup.init();
+            break;
+        case 'Test':
+            Test.init();
             break;
         default:
     }
