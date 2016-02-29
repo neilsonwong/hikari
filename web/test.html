@@ -14,8 +14,18 @@
     <div id="content">
       <form id="testForm">
       <div class="timeInput">
-        <input type="text" pattern="[0-9]{1,2}[:][0-9]{1,2}[ ]?[AP][M]" required />
-        <select></select>
+        <input type="text" list="dlTime" pattern="[0-9]{1,2}[:][0-9]{1,2}[ ]?[AP][M]" placeholder="hh:mm" required />
+        <datalist id="dlTime"></datalist>
+      </div>
+      <div class="dateInput">
+        <input type="text" list="dlDateWeekday" placeholder="Monday" required />
+        <input type="text" list="dlDateMonth" placeholder="January" required />
+        <input type="text" list="dlDateDay" placeholder="1" required />
+        <input type="text" list="dlDateYear" placeholder="2016" required />
+        <datalist id="dlDateWeekday"></datalist>
+        <datalist id="dlDateMonth"></datalist>
+        <datalist id="dlDateDay"></datalist>
+        <datalist id="dlDateYear"></datalist>
       </div>
       </form>
       <button type="submit" form="testForm" style="z-index: -99;">submit</button>

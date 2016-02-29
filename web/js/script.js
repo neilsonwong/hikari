@@ -109,7 +109,7 @@ $(function() {
                 //make sure this key actually scrolls the page
                 switch (e.which) {
                     case 32: //space
-                        if (document.activeElement.tagName === 'INPUT'){
+                        if (document.activeElement.tagName === 'INPUT') {
                             return;
                         }
                     case 34:
@@ -333,60 +333,12 @@ $(function() {
         //     $('.date .inputDisplay').html();
         // });
         // return;
-        initTimeInput();
+        initTimeInputs();
+        initDateInputs();
         $('#testForm').submit(function(e) {
             e.preventDefault();
         });
     };
-
-    function initTimeInput() {
-        $('.timeInput').each(function(index, element){
-            var baseDiv = $(element);
-            var inputBox = baseDiv.find('input');
-            var dropDown = baseDiv.find('select');
-
-            //populate dropdown
-            var hour = 0;
-            var minute = 0;
-            var time;
-
-            for (hour = 0; hour < 24; ++hour){
-                for (minute = 0; minute < 60; minute += 15){
-                    time = (hour > 11) ? (((hour > 12) ? hour - 12 : hour ) + ':' + ('0' + minute).slice(-2) + ' PM' ) : hour + ':' + ('0' + minute).slice(-2) + ' AM';
-                    dropDown.append($('<option>', {
-                        value: time,
-                        html: time
-                    }));
-                }
-            }
-
-            inputBox.on('focus', function(e) {
-                dropDown.css('display', 'block');
-            });
-
-            inputBox.on('blur', handleFocusOut);
-            dropDown.on('blur', handleFocusOut);
-            function handleFocusOut(e) {
-                setTimeout(function(){
-                console.log(document.activeElement)
-                    if (dropDown.is(':focus') || inputBox.is(':focus')) {
-                        return;
-                    }
-                    dropDown.css('display', 'block');
-                }, 100);
-            };
-
-            dropDown.on('change', function(e){
-                var value = dropDown.find(' option:selected').text();
-                inputBox.val(value);
-                dropDown.css('display', 'none');
-            });
-
-            inputBox.on('input', function(e) {
-                //someone typed, parse input
-            });
-        });
-    }
 
     //init the right function
     var page = $('meta[name="page"]').attr('content');
@@ -478,4 +430,50 @@ function makeMemberItem(member, css) {
 function removeTransplant() {
     $('#transplant').remove();
     return;
+}
+
+function initTimeInputs() {
+    var dataList = $('#dlTime');
+
+    //populate datalist
+    var hour, minute, time;
+
+    for (hour = 0; hour < 24; ++hour) {
+        for (minute = 0; minute < 60; minute += 15) {
+            time = (hour > 11) ? (((hour > 12) ? hour - 12 : hour) + ':' + ('0' + minute).slice(-2) + ' PM') : hour + ':' + ('0' + minute).slice(-2) + ' AM';
+            dataList.append($('<option>', { value: time }));
+        }
+    }
+}
+
+function initDateInputs() {
+    var dataListWeekday = $('#dlDateWeekday');
+    dataListWeekday.append($('<option>', { value: 'Monday' }));
+    dataListWeekday.append($('<option>', { value: 'Tuesday' }));
+    dataListWeekday.append($('<option>', { value: 'Wednesday' }));
+    dataListWeekday.append($('<option>', { value: 'Thursday' }));
+    dataListWeekday.append($('<option>', { value: 'Friday' }));
+    dataListWeekday.append($('<option>', { value: 'Saturday' }));
+    dataListWeekday.append($('<option>', { value: 'Sunday' }));
+    var i;
+    for (i = 1; i <= 7; ++i){
+        dataListWeekday.append($('<option>', { value: i }));
+    }
+
+    var dataListMonth = $('#dlDateMonth');
+    dataListMonth.append($('<option>', { value: 'January' }));
+    dataListMonth.append($('<option>', { value: 'February' }));
+    dataListMonth.append($('<option>', { value: 'March' }));
+    dataListMonth.append($('<option>', { value: 'April' }));
+    dataListMonth.append($('<option>', { value: 'May' }));
+    dataListMonth.append($('<option>', { value: 'June' }));
+    dataListMonth.append($('<option>', { value: 'July' }));
+    dataListMonth.append($('<option>', { value: 'August' }));
+    dataListMonth.append($('<option>', { value: 'September' }));
+    dataListMonth.append($('<option>', { value: 'October' }));
+    dataListMonth.append($('<option>', { value: 'November' }));
+    dataListMonth.append($('<option>', { value: 'December' }));
+    for (i = 1; i <= 12; ++i){
+        dataListMonth.append($('<option>', { value: i }));
+    }
 }

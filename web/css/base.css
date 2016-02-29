@@ -590,3 +590,13 @@ button.action span {
     z-index: 2;
     display: none;
 }
+
+.dateInput input {
+    display: inline-block;
+    background: none;
+    width: 200px;
+    height: 50px;
+    font-size: 1.1em;
+    border: none;
+    padding: 0px;
+}
