@@ -12,10 +12,13 @@
   </head>
   <body>
     <div id="content">
-      <div class="date">
-        <input type="number"/>
-        <div class="inputDisplay"></div>
+      <form id="testForm">
+      <div class="timeInput">
+        <input type="text" pattern="[0-9]{1,2}[:][0-9]{1,2}[ ]?[AP][M]" required />
+        <select></select>
       </div>
+      </form>
+      <button type="submit" form="testForm" style="z-index: -99;">submit</button>
     </div>
     <script>
     </script>

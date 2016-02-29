@@ -568,32 +568,25 @@ button.action span {
 
 /* test */
 
-.date {
+.timeInput {
     margin-top: 15vh;
-    position: relative;
 }
 
-.date input {
-    opacity: 0;
-}
-
-.date input:hover {
+.timeInput input:hover {
     cursor: text;
 }
 
-.date .inputDisplay {
-    z-index: -1;
-}
-
-.date .inputDisplay,
-.date input {
-    position: absolute;
-    left: 0;
-    top: 0;
+.timeInput input {
     display: block;
+    background: none;
     width: 500px;
     height: 50px;
     font-size: 1.1em;
     border: none;
     padding: 0px;
+}
+
+.timeInput select {
+    z-index: 2;
+    display: none;
 }

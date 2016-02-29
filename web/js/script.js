@@ -325,15 +325,68 @@ $(function() {
     };
 
     Test.init = function() {
-        $('.date input').on('input', function(e) {
-            //get day
-            //get month
-            //year
-            var text = $('.date input').val();
-            $('.date .inputDisplay').html();
+        // $('.timeInput input').on('input', function(e) {
+        //     //get hour
+        //     //get minute
+        //     var text = $('.date input').val();
+
+        //     $('.date .inputDisplay').html();
+        // });
+        // return;
+        initTimeInput();
+        $('#testForm').submit(function(e) {
+            e.preventDefault();
         });
-        return;
     };
+
+    function initTimeInput() {
+        $('.timeInput').each(function(index, element){
+            var baseDiv = $(element);
+            var inputBox = baseDiv.find('input');
+            var dropDown = baseDiv.find('select');
+
+            //populate dropdown
+            var hour = 0;
+            var minute = 0;
+            var time;
+
+            for (hour = 0; hour < 24; ++hour){
+                for (minute = 0; minute < 60; minute += 15){
+                    time = (hour > 11) ? (((hour > 12) ? hour - 12 : hour ) + ':' + ('0' + minute).slice(-2) + ' PM' ) : hour + ':' + ('0' + minute).slice(-2) + ' AM';
+                    dropDown.append($('<option>', {
+                        value: time,
+                        html: time
+                    }));
+                }
+            }
+
+            inputBox.on('focus', function(e) {
+                dropDown.css('display', 'block');
+            });
+
+            inputBox.on('blur', handleFocusOut);
+            dropDown.on('blur', handleFocusOut);
+            function handleFocusOut(e) {
+                setTimeout(function(){
+                console.log(document.activeElement)
+                    if (dropDown.is(':focus') || inputBox.is(':focus')) {
+                        return;
+                    }
+                    dropDown.css('display', 'block');
+                }, 100);
+            };
+
+            dropDown.on('change', function(e){
+                var value = dropDown.find(' option:selected').text();
+                inputBox.val(value);
+                dropDown.css('display', 'none');
+            });
+
+            inputBox.on('input', function(e) {
+                //someone typed, parse input
+            });
+        });
+    }
 
     //init the right function
     var page = $('meta[name="page"]').attr('content');
