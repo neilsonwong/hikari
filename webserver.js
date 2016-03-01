@@ -55,15 +55,14 @@ app.get('/', function(req, res) {
     if (email !== undefined){
         //we have a cookie and now their email, move them to their sg
         sg = SmallGroup.memberMap[email];
+        console.log(SmallGroup.memberMap)
         if (sg){
             //valid sg found
             //redirecting
             res.redirect('/sg/' + encodeURIComponent(sg));
         }
     }
-    else {
-        nope(req, res);
-    }
+    nope(req, res);
 });
 
 app.get('/welcome', function(req, res) {
