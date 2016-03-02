@@ -47,6 +47,45 @@ exports.loadSmallGroup = function(smallgroup, admin) {
     return Surgeon.forcedInject('smallgroup.html', replacements);
 }
 
+exports.loadUserProfile = function(user) {
+    var topPlaceHolder = $('<div>', { id: 'top' }).append($('<div>', { id: 'avatar' })).append($('<h1>', { id: 'nickName' })).html();
+    var containerPlaceHolder = $('<div>', { class: 'info' }).append($('<div>', { id: 'firstName' })).append($('<div>', { id: 'lastName' }))    
+        .append($('<div>', { id: 'email' })).append($('<div>', { id: 'gender' })).append($('<div>', { id: 'birthday' }))
+        .append($('<div>', { id: 'description' })).html();
+
+    var top = $('<div>', {
+        id: 'top'
+    });
+
+    var avatar = $('<div>', { id: 'avatar' }).append($('<img>', { src: '/images/pokemon/'+user.avatar+'.png' }));
+    // console.log(avatar.html());
+    var nickName = $('<h1>', { id: 'nickName', html: user.name });
+    console.log(nickName.html())
+
+    var container = $('<div>', {
+        class: 'info'
+    });
+
+    var firstName = $('<div>', { id: 'firstName' }).append($('<span>', { html: user.firstName }));
+    var lastName = $('<div>', { id: 'lastName' }).append($('<span>', { html: user.lastName }));
+    var email = $('<div>', { id: 'email' }).append($('<span>', { html: user.email }));
+    var gender = $('<div>', { id: 'gender' }).append($('<span>', { html: '' + user.gender }));
+    var birthday = $('<div>', { id: 'birthday' }).append($('<span>', { html: '' + user.birthday }));
+    var description = $('<div>', { id: 'description' }).append($('<span>', { html: '' + user.description }));
+
+    top.append(avatar).append(nickName);
+    container.append(firstName).append(lastName).append(email).append(gender).append(birthday).append(description);
+
+    var replacements = {};
+    replacements[topPlaceHolder] = top;
+    replacements[containerPlaceHolder] = container;
+
+    console.log(top.html())
+    console.log(container.html())
+
+    return Surgeon.forcedInject('userProfile.html', replacements);
+}
+
 function makeMemberList(smallgroup) {
     var list = $('<div>', {
         id: 'memberList'
@@ -108,3 +147,4 @@ function makeMemberItem(member, css) {
     div.append(name.append(span));
     return div;
 }
+
