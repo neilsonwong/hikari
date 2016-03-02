@@ -90,8 +90,7 @@ function makeMemberList(smallgroup) {
     var list = $('<div>', {
         id: 'memberList'
     });
-    var title = $('<div>', {
-        class: 'big',
+    var title = $('<h2>', {
         html: 'Members'
     });
     var div = $('<div>');
@@ -121,15 +120,6 @@ function populateMembers(list, members, css) {
     for (i = 0; i < members.length; ++i) {
         list.append(makeMemberItem(members[i], css));
     }
-}
-
-function makeApproveButton(member){
-    var button = $('<button>', {
-        class: 'btn btn-sm btn-info',
-        'data-email': member.email,
-        html: 'Yes'
-    });
-    return button;
 }
 
 function makeMemberItem(member, css) {
