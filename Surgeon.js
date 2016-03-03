@@ -1,4 +1,5 @@
 var fs = require('fs');
+var minify = require('html-minifier').minify;
 var webroot = './web/'
 
 exports.inject = function(htmlFile, objs){
@@ -18,7 +19,7 @@ exports.inject = function(htmlFile, objs){
 
 exports.forcedInject = function(htmlFile, objs){
 	//inject html to replace html templating which is valid html
-	var htmlString = fs.readFileSync(webroot + htmlFile, 'utf8');
+	var htmlString = minify(fs.readFileSync(webroot + htmlFile, 'utf8'), { collapseWhitespace: true });
 	var keys = Object.keys(objs);
 	var i, needle, replacement;
 	for (i = 0; i < keys.length; ++i){

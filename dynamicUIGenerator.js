@@ -57,10 +57,9 @@ exports.loadUserProfile = function(user) {
         id: 'top'
     });
 
-    var avatar = $('<div>', { id: 'avatar' }).append($('<img>', { src: '/images/pokemon/'+user.avatar+'.png' }));
+    var avatar = $('<div>', { id: 'avatar' }).append($('<img>', { src: '/images/pokemon/'+ (user.avatar || 25) +'.png' }));
     // console.log(avatar.html());
     var nickName = $('<h1>', { id: 'nickName', html: user.name });
-    console.log(nickName.html())
 
     var container = $('<div>', {
         class: 'info'
@@ -79,9 +78,6 @@ exports.loadUserProfile = function(user) {
     var replacements = {};
     replacements[topPlaceHolder] = top;
     replacements[containerPlaceHolder] = container;
-
-    console.log(top.html())
-    console.log(container.html())
 
     return Surgeon.forcedInject('userProfile.html', replacements);
 }

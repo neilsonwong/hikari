@@ -312,6 +312,21 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
 #programDay { width: 6%; }
 #programYear { width: 12.5%; margin-right: 0px; }
 
+/* User Profile */
+
+.userProfile .info {
+    padding-left: 2%;
+}
+
+.userProfile .info > div {
+    display: block;
+    margin: 0.5%;
+}
+
+.userProfile #firstName,
+.userProfile #lastName {
+    display: inline-block;
+}
 
 /* general css */
 
