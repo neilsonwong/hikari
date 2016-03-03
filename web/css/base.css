@@ -139,6 +139,10 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
     display: none; 
 }
 
+.welcome .textbox {
+    background: #FDFFFF;
+}
+
 #welcome .line,
 #introduce_yourself .line ,
 #choose_your_smallgroup .line ,
@@ -264,6 +268,49 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
     background: url(/images/pokemon/miniSprites.png) no-repeat -50px 0px;
 }
 
+/* Add Program */
+
+.timeInput input:hover {
+    cursor: text;
+}
+
+.timeInput input {
+    display: block;
+    padding: 0px;
+}
+
+.timeInput select {
+    z-index: 2;
+    display: none;
+}
+
+.dateInput {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dateInput input {
+    display: inline-block;
+    padding: 0px;
+    margin-right: 1%;
+}
+
+.addProgram .line {
+    margin: 2% 0;
+}
+
+.addProgram .textbox {
+    padding: 0 1%;
+}
+
+#programName,
+#programTime,
+#programLocation,
+#programDescription { width: 98%; height: 10%;}
+#programWeekday { width: 36%; }
+#programMonth { width: 30%; }
+#programDay { width: 6%; }
+#programYear { width: 12.5%; margin-right: 0px; }
 
 
 /* general css */
@@ -295,7 +342,7 @@ button.action span {
 
 .textbox {
     font-size: 0.9em;
-    background: none;
+    background: #DAF0F8;
     border: none;
     border-bottom: 2px solid #5190A5;
     color: #5190A5;
@@ -576,38 +623,3 @@ button.action span {
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
-
-/* test */
-
-.timeInput {
-    margin-top: 15vh;
-}
-
-.timeInput input:hover {
-    cursor: text;
-}
-
-.timeInput input {
-    display: block;
-    background: none;
-    width: 500px;
-    height: 50px;
-    font-size: 1.1em;
-    border: none;
-    padding: 0px;
-}
-
-.timeInput select {
-    z-index: 2;
-    display: none;
-}
-
-.dateInput input {
-    display: inline-block;
-    background: none;
-    width: 200px;
-    height: 50px;
-    font-size: 1.1em;
-    border: none;
-    padding: 0px;
-}

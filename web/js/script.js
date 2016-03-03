@@ -1,10 +1,11 @@
 var pkmnPng = [1, 4, 7, 25, 39, 52, 63, 79, 92, 129, 133, 134, 135, 143];
 var Core = function() {};
+var Test = function() {};
 var Admin = function() {};
 var Welcome = function() {};
 var SmallGroup = function() {};
 var Auth = function() {};
-var Test = function() {};
+var AddProgram = function() {};
 
 var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
@@ -324,15 +325,7 @@ $(function() {
         return;
     };
 
-    Test.init = function() {
-        // $('.timeInput input').on('input', function(e) {
-        //     //get hour
-        //     //get minute
-        //     var text = $('.date input').val();
-
-        //     $('.date .inputDisplay').html();
-        // });
-        // return;
+    AddProgram.init = function() {
         initTimeInputs();
         initDateInputs();
         $('#testForm').submit(function(e) {
@@ -355,8 +348,8 @@ $(function() {
         case 'SmallGroup':
             SmallGroup.init();
             break;
-        case 'Test':
-            Test.init();
+        case 'AddProgram':
+            AddProgram.init();
             break;
         default:
     }

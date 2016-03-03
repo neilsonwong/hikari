@@ -59,7 +59,7 @@ app.get('/', function(req, res) {
         if (sg){
             //valid sg found
             //redirecting
-            res.redirect('/sg/' + encodeURIComponent(sg));
+            return res.redirect('/sg/' + encodeURIComponent(sg));
         }
     }
     nope(req, res);
@@ -173,6 +173,22 @@ app.get('/sg/:sg', function(req, res) {
             //render the right sg
             var html = UI.loadSmallGroup(sg, sg.isLeader(email));
             res.end(html);
+            return;
+        }
+    }
+    oops(res);
+});
+
+app.get('/sg/:sg/addProgram', function(req, res) {
+    var email = Auth.tokens[req.cookies.kagi];
+    if (req.params.sg !== undefined && email) {
+        var sg = SmallGroup.getFullDetails(req.params.sg);
+        if (sg && sg.isMember(email)) {
+            //valid sg and is a member
+            //render the right sg
+            res.sendFile('web/addProgram.html', {
+                root: __dirname
+            });
             return;
         }
     }
