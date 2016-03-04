@@ -222,8 +222,16 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
     padding: 1%;
 }
 
+.smallGroup #memberList .leader,
 .smallGroup #memberList .member,
 .smallGroup #memberList .applicant {
+    padding: 5px 10px;
+    min-width: 120px;
+    display: inline-block;
+    border-radius: 5px 5px;
+    box-shadow:0px 0px 0px 2px #5190A5 inset;
+    background: #FFE4E0;
+    margin: 2px;
 }
 
 .smallGroup #memberList .leader > span,
@@ -245,8 +253,11 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
     vertical-align: middle;
 }
 
+.smallGroup #memberList .leader {
+    box-shadow:0px 0px 0px 2px #5190A5 inset;
+}
 .smallGroup #memberList .leader > span {
-    /*font-weight: 600;*/
+    font-weight: 600;
 }
 .smallGroup #memberList .leader:before {
     background: url(/images/pokemon/miniSprites.png) no-repeat -200px 0px;
@@ -260,9 +271,9 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
     background: url(/images/pokemon/miniSprites.png) no-repeat -25px 0px;
 }
 
-.smallGroup #memberList .applicant > span {
+.smallGroup #memberList .applicant{
     /*font-weight: 300;*/
-    opacity: 0.7;   
+    opacity: 0.5;   
 }
 .smallGroup #memberList .applicant:before {
     background: url(/images/pokemon/miniSprites.png) no-repeat -50px 0px;
@@ -314,6 +325,7 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
 
 /* User Profile */
 
+.userProfile #top,
 .userProfile .info {
     padding-left: 2%;
 }
@@ -323,9 +335,33 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
     margin: 0.5%;
 }
 
+.userProfile #avatar {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+.userProfile #avatar .helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.userProfile #avatar > img {
+    vertical-align: middle; 
+}
+
+.userProfile #nickName {
+    vertical-align: bottom;
+}
+
 .userProfile #firstName,
 .userProfile #lastName {
     display: inline-block;
+}
+
+.userProfile #nickName {
+    padding: 0px;
 }
 
 /* general css */

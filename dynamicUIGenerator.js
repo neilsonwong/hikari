@@ -48,7 +48,7 @@ exports.loadSmallGroup = function(smallgroup, admin) {
 }
 
 exports.loadUserProfile = function(user) {
-    var topPlaceHolder = $('<div>', { id: 'top' }).append($('<div>', { id: 'avatar' })).append($('<h1>', { id: 'nickName' })).html();
+    var topPlaceHolder = $('<div>', { id: 'top' }).append($('<h1>', { id: 'nickName' })).append($('<div>', { id: 'avatar' })).html();
     var containerPlaceHolder = $('<div>', { class: 'info' }).append($('<div>', { id: 'firstName' })).append($('<div>', { id: 'lastName' }))    
         .append($('<div>', { id: 'email' })).append($('<div>', { id: 'gender' })).append($('<div>', { id: 'birthday' }))
         .append($('<div>', { id: 'description' })).html();
@@ -57,8 +57,7 @@ exports.loadUserProfile = function(user) {
         id: 'top'
     });
 
-    var avatar = $('<div>', { id: 'avatar' }).append($('<img>', { src: '/images/pokemon/'+ (user.avatar || 25) +'.png' }));
-    // console.log(avatar.html());
+    var avatar = $('<div>', { id: 'avatar' }).append($('<span>', { class: 'helper' })).append($('<img>', { src: '/images/pokemon/'+ (user.avatar || 25) +'.png' }));
     var nickName = $('<h1>', { id: 'nickName', html: user.name });
 
     var container = $('<div>', {
@@ -72,7 +71,7 @@ exports.loadUserProfile = function(user) {
     var birthday = $('<div>', { id: 'birthday' }).append($('<span>', { html: '' + user.birthday }));
     var description = $('<div>', { id: 'description' }).append($('<span>', { html: '' + user.description }));
 
-    top.append(avatar).append(nickName);
+    top.append(nickName).append(avatar);
     container.append(firstName).append(lastName).append(email).append(gender).append(birthday).append(description);
 
     var replacements = {};
