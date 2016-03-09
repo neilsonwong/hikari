@@ -159,7 +159,9 @@ function mapMembersToGroup(sg){
 SmallGroup.prototype.save = function(callback) {
     //save to internal array
     //additional processing to stop heisenbuglike errors with our files
-    if (!isDBReady(this)){
+    var sg = this;
+    
+    if (!isDBReady(sg)){
         sg.leaders = sg.leaderEmails
         sg.members = sg.memberEmails;
         sg.applicants = sg.applicantEmails;
@@ -169,10 +171,11 @@ SmallGroup.prototype.save = function(callback) {
         delete sg.isLeader;
         delete sg.isMember;
     }
-    SmallGroup.list[this.uniqueName] = this;
+
+    SmallGroup.list[sg.uniqueName] = sg;
 
     //persist to file
-    fs.writeFileSync(SmallGroupDataDir + this.uniqueName + '.json', JSON.stringify(this), 'utf8');
+    fs.writeFileSync(SmallGroupDataDir + sg.uniqueName + '.json', JSON.stringify(sg), 'utf8');
 }
 
 SmallGroup.detailedList = function(){
