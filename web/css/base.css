@@ -323,6 +323,27 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
 #programDay { width: 6%; }
 #programYear { width: 12.5%; margin-right: 0px; }
 
+#addTask {
+    margin-left: 2%;
+    cursor: pointer;
+}
+
+#addTask:hover {
+    color: #1C657D;
+}
+
+.newTask > * {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.newTask input {
+    width: 47%;
+}
+.newTask input:first-child {
+    margin-right: 2%;
+}
+
 /* User Profile */
 
 .userProfile #top,

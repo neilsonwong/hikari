@@ -326,10 +326,74 @@ $(function() {
     };
 
     AddProgram.init = function() {
+        //injection magic
+        //var smallgroup = getSmallGroup();
+        //var responsibilityList = getTaskList();
+        console.log(smallGroup)
+
+
         initTimeInputs();
         initDateInputs();
-        $('#testForm').submit(function(e) {
+
+        responsibilityList.forEach(function(task) {
+            $('#dlResponsibilities').append($('<option>', {
+                value: task
+            }));
+        });
+
+        var appendMembers = function(member) {
+            $('#dlMembers').append($('<option>', {
+                value: member.fullName
+            }));
+        };
+
+        smallGroup.leaders.forEach(appendMembers);
+        smallGroup.members.forEach(appendMembers);
+
+        $('#addTask').click(function(e) {
+            //make new add task item
+            var div = $('<div>', {
+                class: 'newTask'
+            });
+            var task = $('<input>', {
+                type: 'text',
+                list: 'dlResponsibilities',
+                class: 'textbox'
+            });
+            var users = $('<input>', {
+                type: 'text',
+                list: 'dlMembers',
+                class: 'textbox'
+            });
+            div.append(task).append(users);
+            div.insertBefore($('#addTask'));
+            return;
+        });
+
+        $('#addNewProgramForm').submit(function(e) {
             e.preventDefault();
+
+            var taskList = {};
+
+            $('.newTask').each(function(i, obj){
+                taskList[obj.children[0].value] = obj.children[1].value;
+            });
+
+            $.post('/api/addProgram', {
+                sg: smallGroup.uniqueName,
+                program: $('#programName').val(),
+                date: new Date(programYear, programMonth, programDay),
+                time: $('#programTime').val(),
+                location: $('#programName').val(),
+                taskList: taskList
+            }, function(res) {
+                if (res.result) {
+                    console.log('program added');
+                    return;
+                }
+                console.log('add failed');
+            });
+
         });
     };
 
@@ -353,6 +417,7 @@ $(function() {
             break;
         default:
     }
+    removeTransplant();
 });
 
 function makeListItem(smallGroup, simple) {
@@ -434,39 +499,83 @@ function initTimeInputs() {
     for (hour = 0; hour < 24; ++hour) {
         for (minute = 0; minute < 60; minute += 15) {
             time = (hour > 11) ? (((hour > 12) ? hour - 12 : hour) + ':' + ('0' + minute).slice(-2) + ' PM') : hour + ':' + ('0' + minute).slice(-2) + ' AM';
-            dataList.append($('<option>', { value: time }));
+            dataList.append($('<option>', {
+                value: time
+            }));
         }
     }
 }
 
 function initDateInputs() {
     var dataListWeekday = $('#dlDateWeekday');
-    dataListWeekday.append($('<option>', { value: 'Monday' }));
-    dataListWeekday.append($('<option>', { value: 'Tuesday' }));
-    dataListWeekday.append($('<option>', { value: 'Wednesday' }));
-    dataListWeekday.append($('<option>', { value: 'Thursday' }));
-    dataListWeekday.append($('<option>', { value: 'Friday' }));
-    dataListWeekday.append($('<option>', { value: 'Saturday' }));
-    dataListWeekday.append($('<option>', { value: 'Sunday' }));
+    dataListWeekday.append($('<option>', {
+        value: 'Monday'
+    }));
+    dataListWeekday.append($('<option>', {
+        value: 'Tuesday'
+    }));
+    dataListWeekday.append($('<option>', {
+        value: 'Wednesday'
+    }));
+    dataListWeekday.append($('<option>', {
+        value: 'Thursday'
+    }));
+    dataListWeekday.append($('<option>', {
+        value: 'Friday'
+    }));
+    dataListWeekday.append($('<option>', {
+        value: 'Saturday'
+    }));
+    dataListWeekday.append($('<option>', {
+        value: 'Sunday'
+    }));
     var i;
-    for (i = 1; i <= 7; ++i){
-        dataListWeekday.append($('<option>', { value: i }));
+    for (i = 1; i <= 7; ++i) {
+        dataListWeekday.append($('<option>', {
+            value: i
+        }));
     }
 
     var dataListMonth = $('#dlDateMonth');
-    dataListMonth.append($('<option>', { value: 'January' }));
-    dataListMonth.append($('<option>', { value: 'February' }));
-    dataListMonth.append($('<option>', { value: 'March' }));
-    dataListMonth.append($('<option>', { value: 'April' }));
-    dataListMonth.append($('<option>', { value: 'May' }));
-    dataListMonth.append($('<option>', { value: 'June' }));
-    dataListMonth.append($('<option>', { value: 'July' }));
-    dataListMonth.append($('<option>', { value: 'August' }));
-    dataListMonth.append($('<option>', { value: 'September' }));
-    dataListMonth.append($('<option>', { value: 'October' }));
-    dataListMonth.append($('<option>', { value: 'November' }));
-    dataListMonth.append($('<option>', { value: 'December' }));
-    for (i = 1; i <= 12; ++i){
-        dataListMonth.append($('<option>', { value: i }));
+    dataListMonth.append($('<option>', {
+        value: 'January'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'February'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'March'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'April'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'May'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'June'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'July'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'August'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'September'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'October'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'November'
+    }));
+    dataListMonth.append($('<option>', {
+        value: 'December'
+    }));
+    for (i = 1; i <= 12; ++i) {
+        dataListMonth.append($('<option>', {
+            value: i
+        }));
     }
 }

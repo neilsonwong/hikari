@@ -10,6 +10,7 @@ var Auth = require('./auth');
 var UI = require('./dynamicUIGenerator');
 var User = require('./User');
 var Surgeon = require('./Surgeon');
+var TaskList = require('./TaskList');
 var config = require('./config');
 var mailer = require('./mailer')(config);
 var Template = require('./template')(config);
@@ -135,6 +136,11 @@ app.get('/api/sgDetailList', function(req, res) {
     res.status(200).send(getSGList(true));
 });
 
+app.post('/api/sg/', function(req, res) {
+    var sg = SmallGroup.load(req.body.sg);
+    return res.status(200).send(sg);
+});
+
 app.post('/api/join', function(req, res) {
     var sg = SmallGroup.load(req.body.appliedSG);
     var regStatus = {
@@ -186,9 +192,11 @@ app.get('/sg/:sg/addProgram', function(req, res) {
         if (sg && sg.isMember(email)) {
             //valid sg and is a member
             //render the right sg
-            res.sendFile('web/addProgram.html', {
-                root: __dirname
-            });
+            var html = Surgeon.inject('addProgram.html', { 'smallGroup': sg, 'responsibilityList':  TaskList.list });
+            // res.sendFile('web/addProgram.html', {
+            //     root: __dirname
+            // });
+            res.end(html);
             return;
         }
     }

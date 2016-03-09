@@ -5,4 +5,11 @@ function TaskList(lead, devo, timeKeeper, skype){
 	this.skype = skype;
 }
 
+TaskList.list = [
+	'Program Lead', 
+	'Devotion',
+	'Time Keeper',
+	'Skype'
+];
+
 module.exports = TaskList;
