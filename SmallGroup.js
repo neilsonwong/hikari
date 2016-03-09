@@ -37,16 +37,13 @@ function instance(smallGroupData){
         //append properties to make proper object
         sg[keys[i]] = smallGroupData[keys[i]];
     }
-    if (sg.applicants.length === 0){
-        console.log('WHY');
-    }
     return sg;
 }
 
 SmallGroup.getFullDetails = function(uname){
     var sg = SmallGroup.load(uname);
     //check if it is an instance
-    if (sg.leaderEmails === undefined && sg.memberEmails === undefined){
+    if (isDBReady(this)){
         sg.leaderEmails = sg.leaders;
         sg.memberEmails = sg.members;
         sg.applicantEmails = sg.applicants;
@@ -161,9 +158,18 @@ function mapMembersToGroup(sg){
 
 SmallGroup.prototype.save = function(callback) {
     //save to internal array
+    //additional processing to stop heisenbuglike errors with our files
+    if (!isDBReady(this)){
+        sg.leaders = sg.leaderEmails
+        sg.members = sg.memberEmails;
+        sg.applicants = sg.applicantEmails;
+        delete sg.leaderEmails;
+        delete sg.memberEmails;
+        delete sg.applicantEmails;
+        delete sg.isLeader;
+        delete sg.isMember;
+    }
     SmallGroup.list[this.uniqueName] = this;
-
-    console.trace("Writing!");
 
     //persist to file
     fs.writeFileSync(SmallGroupDataDir + this.uniqueName + '.json', JSON.stringify(this), 'utf8');
@@ -193,9 +199,15 @@ SmallGroup.getFileName = function getFileName(name) {
     return name.replace(/[^a-zA-Z0-9]/g, '');
 };
 
-//stored in array with week number will work cuz sg only functions on 1 day of the week
 SmallGroup.prototype.addProgram = function(program, date, time, location, taskList) {
     var p = new Program(program, date, time, location, taskList);
+    this.futurePrograms.push(p.id);
+    this.futurePrograms.sort();
+    this.save();
 };
+
+function isDBReady(sg){
+    return (sg.leaderEmails === undefined && sg.memberEmails === undefined);
+}
 
 module.exports = SmallGroup;
