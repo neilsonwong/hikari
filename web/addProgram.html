@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="page" content="AddProgram">
+    <title>T3C Small Groups</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800,400italic,300italic,600italic,700italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+  </head>
+  <body class="addProgram">
+    <div id="content">
+        <div>
+          <h1>Add New Program</h1>
+        </div>
+        <div class="left">
+          <form>
+            <div class="line CGL"><input id="programName" type="text" placeholder="Name" class="textbox" pattern=".{1,}" required /></div>
+            <div class="line CGL">
+              <div id="programDate" class="dateInput">
+                <input type="text" list="dlDateWeekday" placeholder="Monday" id="programWeekday" class="textbox" required />
+                <input type="text" list="dlDateMonth" placeholder="January" id="programMonth" class="textbox" required />
+                <input type="text" list="dlDateDay" placeholder="1" id="programDay" class="textbox" required />
+                <input type="text" list="dlDateYear" placeholder="2016" id="programYear" class="textbox" required />
+                <datalist id="dlDateWeekday"></datalist>
+                <datalist id="dlDateMonth"></datalist>
+                <datalist id="dlDateDay"></datalist>
+                <datalist id="dlDateYear"></datalist>
+              </div>
+            </div>
+            <div class="line CGL">
+              <div class="timeInput">
+                <input type="text" list="dlTime" pattern="[0-9]{1,2}[:][0-9]{1,2}[ ]?[AP][M]" placeholder="hh:mm" id="programTime" class="textbox" required />
+                <datalist id="dlTime"></datalist>
+              </div>
+            </div>
+            <div class="line CGL"><input id="programLocation" type="text" placeholder="location" class="textbox" /></div>
+            <div class="line CGL"><textarea id="programDescription" placeholder="description" class="textbox" rows="4" /></textarea></div>
+            <div class="line CGL">
+              <div id="programResponsibilities">
+                <a>Add New Responsibility!</a>
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
