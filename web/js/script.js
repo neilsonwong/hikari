@@ -238,7 +238,7 @@ $(function() {
             e.preventDefault();
 
             //load the small list
-            $.get('/api/sgDetailList', function(groups) {
+            $.get('/api/getSgDetailList', function(groups) {
                 var keys = Object.keys(groups);
                 //populate the sg list
                 var i, groupButton;
@@ -275,7 +275,7 @@ $(function() {
 
     Admin.init = function() {
         //load sg list
-        $.get('/api/sgDetailList', function(groups) {
+        $.get('/api/getSgDetailList', function(groups) {
             var keys = Object.keys(groups);
             //populate the sg list
             var i;
