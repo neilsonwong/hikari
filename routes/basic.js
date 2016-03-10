@@ -1,6 +1,8 @@
 //basic routes
-
 var express = require('express');
+
+var Auth = require('../auth');
+var SmallGroup = require('../SmallGroup');
 var common = require('./common');
 
 module.exports = (function() {
@@ -14,14 +16,14 @@ module.exports = (function() {
         if (email !== undefined) {
             //we have a cookie and now their email, move them to their sg
             sg = SmallGroup.memberMap[email];
-            console.log(SmallGroup.memberMap)
+            // console.log(SmallGroup.memberMap)
             if (sg) {
                 //valid sg found
                 //redirecting
                 return res.redirect('/sg/' + encodeURIComponent(sg));
             }
         }
-        common.nope(req, res);
+        common.goToWelcome(req, res);
     });
 
     basic.get('/welcome', function(req, res) {
@@ -43,7 +45,7 @@ module.exports = (function() {
             return;
         }
 
-        return common.oops(res);
+        return common.notFound(res);
     });
 
     basic.get('/letmein/:kagi', function(req, res) {
@@ -52,7 +54,6 @@ module.exports = (function() {
                 maxAge: 900000000,
                 httpOnly: true
             });
-            console.log('cookie created successfully');
         }
 
         res.sendFile('web/letmein.html', common.SITEROOT);

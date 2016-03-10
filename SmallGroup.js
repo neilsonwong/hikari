@@ -42,6 +42,9 @@ function instance(smallGroupData){
 
 SmallGroup.getFullDetails = function(uname){
     var sg = SmallGroup.load(uname);
+    if (!sg) {
+        return false;
+    }
     //check if it is an instance
     if (isDBReady(this)){
         sg.leaderEmails = sg.leaders;

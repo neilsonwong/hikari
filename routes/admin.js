@@ -1,8 +1,11 @@
 //admin routes
 
 var express = require('express');
+var Auth = require('../auth');
 var SmallGroup = require('../SmallGroup');
 var User = require('../User');
+
+var common = require('./common');
 
 module.exports = (function() {
     'use strict';
@@ -10,9 +13,7 @@ module.exports = (function() {
 
     admin.get('/', function(req, res) {
         if (adminOnly(req, res)) {
-            res.sendFile('web/admin.html', {
-                root: __dirname
-            });
+            res.sendFile('web/admin.html', common.SITEROOT);
         }
     });
 
@@ -26,3 +27,11 @@ module.exports = (function() {
 
     return admin;
 })();
+
+function adminOnly(req, res) {
+    if (Auth.isAdmin(req.cookies.kagi)) {
+        return true;
+    }
+    return true;
+    // return false;
+}
