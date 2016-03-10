@@ -163,7 +163,7 @@ app.post('/api/addProgram', function(req, res) {
     };
     if (sg && sg.isLeader(email)) {
         //valid person is adding the program
-        sg.addProgram(req.body.program, req.body.date, req.body.time, req.body.location, req.body.taskList);
+        sg.addProgram(req.body.program, req.body.date, req.body.time, req.body.location, req.body.taskList, req.body.description);
         status.result = true;
     }
     res.status(200).send(status);

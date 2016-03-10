@@ -329,8 +329,6 @@ $(function() {
         //injection magic
         //var smallgroup = getSmallGroup();
         //var responsibilityList = getTaskList();
-        console.log(smallGroup)
-
 
         initTimeInputs();
         initDateInputs();
@@ -365,7 +363,13 @@ $(function() {
                 list: 'dlMembers',
                 class: 'textbox'
             });
-            div.append(task).append(users);
+            var remove = $('<i>', {
+                class: 'material-icons md-48 remove',
+                html: 'clear'
+            }).click(function(){
+                $(this).parent().remove();
+            });
+            div.append(task).append(users).append(remove);
             div.insertBefore($('#addTask'));
             return;
         });
@@ -385,7 +389,8 @@ $(function() {
                 date: new Date(programYear, programMonth, programDay),
                 time: $('#programTime').val(),
                 location: $('#programName').val(),
-                taskList: taskList
+                taskList: taskList,
+                description: $('#programDescription').val()
             }, function(res) {
                 if (res.result) {
                     console.log('program added');

@@ -160,7 +160,7 @@ SmallGroup.prototype.save = function(callback) {
     //save to internal array
     //additional processing to stop heisenbuglike errors with our files
     var sg = this;
-    
+
     if (!isDBReady(sg)){
         sg.leaders = sg.leaderEmails
         sg.members = sg.memberEmails;
@@ -202,8 +202,8 @@ SmallGroup.getFileName = function getFileName(name) {
     return name.replace(/[^a-zA-Z0-9]/g, '');
 };
 
-SmallGroup.prototype.addProgram = function(program, date, time, location, taskList) {
-    var p = new Program(program, date, time, location, taskList);
+SmallGroup.prototype.addProgram = function(program, date, time, location, taskList, description) {
+    var p = new Program(program, date, time, location, taskList, description);
     this.futurePrograms.push(p.id);
     this.futurePrograms.sort();
     this.save();

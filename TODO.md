@@ -1,26 +1,33 @@
-Welcome Page
-	strange scrolling on sgList
+HIGH
+
+add Program function
+	respond to add function with something e.g. redirect or put a message at least
+
+	Program details front end page
 
 SG Page
+	program display
 	edit functionality for admin
 	approve functionality for admin
 
-add Program function
-	add Program front end page
-	Program details front end page
+
+user profile
+
+MEDIUM
 
 Util
 	sharing randomizer
 	person random picker
 
+refactor webserver
 mouse wheel debounce for laptop scrolls that fire many times
 
-user profile
+LOW
+
+Welcome Page
+	strange scrolling on sgList
 
 antispam / CD filter
 
-refactor css again
-
-refactor webserver
-
 debug messages
+refactor css again

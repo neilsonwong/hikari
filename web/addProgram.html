@@ -6,6 +6,7 @@
     <meta name="page" content="AddProgram">
     <title>T3C Small Groups</title>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800,400italic,300italic,600italic,700italic' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
     <link rel="stylesheet" href="/css/base.css" />
   </head>
@@ -16,8 +17,8 @@
         </div>
         <div>
           <form id="addNewProgramForm">
-            <div class="line CGL"><input id="programName" type="text" placeholder="Name" class="textbox" pattern=".{1,}" required /></div>
-            <div class="line CGL">
+            <div class="line ooki"><input id="programName" type="text" placeholder="Name" class="textbox" pattern=".{1,}" required /></div>
+            <div class="line ooki">
               <div id="programDate" class="dateInput">
                 <input type="text" list="dlDateWeekday" placeholder="Monday" id="programWeekday" class="textbox" required />
                 <input type="text" list="dlDateMonth" placeholder="January" id="programMonth" class="textbox" required />
@@ -29,22 +30,22 @@
                 <datalist id="dlDateYear"></datalist>
               </div>
             </div>
-            <div class="line CGL">
+            <div class="line ooki">
               <div class="timeInput">
                 <input type="text" list="dlTime" pattern="[0-9]{1,2}[:][0-9]{1,2}[ ]?[AP][M]" placeholder="hh:mm" id="programTime" class="textbox" required />
                 <datalist id="dlTime"></datalist>
               </div>
             </div>
-            <div class="line CGL"><input id="programLocation" type="text" placeholder="location" class="textbox" /></div>
-            <div class="line CGL"><textarea id="programDescription" placeholder="description" class="textbox" rows="4" /></textarea></div>
-            <div class="line CGL">
+            <div class="line ooki"><input id="programLocation" type="text" placeholder="location" class="textbox" /></div>
+            <div class="line ooki"><textarea id="programDescription" placeholder="description" class="textbox" rows="4" /></textarea></div>
+            <div class="line ooki">
               <div id="programResponsibilities">
-                <a id="addTask">+ Add New Responsibility!</a>
+                <a id="addTask">Add New Responsibility</a>
                 <datalist id="dlResponsibilities"></datalist>
                 <datalist id="dlMembers"></datalist>
               </div>
             </div>
-            <div class="line CGL"><button id="addNewProgram" class="action" type="submit" form="addNewProgramForm">Add</button></div>
+            <div class="line ooki"><button id="addNewProgram" class="action" type="submit" form="addNewProgramForm">Add</button></div>
           </form>
         </div>
     </div>

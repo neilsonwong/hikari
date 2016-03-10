@@ -326,8 +326,14 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
 #addTask {
     margin-left: 2%;
     cursor: pointer;
+    /*text-decoration: underline;*/
 }
 
+#addTask:before {
+    content: '+ ';
+}
+
+.newTask .remove:hover,
 #addTask:hover {
     color: #1C657D;
 }
@@ -338,10 +344,16 @@ h2 { font-weight: 300; font-size: 2em; margin: 0px; }
 }
 
 .newTask input {
-    width: 47%;
-}
-.newTask input:first-child {
+    width: 40%;
     margin-right: 2%;
+}
+
+.newTask .remove {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
 }
 
 /* User Profile */
